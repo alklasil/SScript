@@ -1,12 +1,14 @@
 #include <iostream>
 #include "SScript.h"
-#include "configuration.h"
+#include "Configuration.h"
 
 int main()
 {
   // not tested as of yet
 
-  sScript.setFunctions(&functions);
+  void(*(*_functions))(int32_t *leftValue, int32_t *rightValue) = functions;
+
+  sScript.setFunctions(_functions);
 
   while (1) {
 

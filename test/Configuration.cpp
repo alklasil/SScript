@@ -3,8 +3,6 @@
 //
 
 #include "Configuration.h"
-#include "sensors.h"
-#include "SScript.h"
 
 // basic operations
 void add(int32_t *leftValue, int32_t *rightValue) { *leftValue += *rightValue; }
@@ -24,20 +22,20 @@ void _if(int32_t *leftValue, int32_t *rightValue) { if (*rightValue == 0) sScrip
 void _abortExpressionExecution(int32_t *leftValue, int32_t *rightValue) { sScript.abortExpressionExecution = 1; };
 
 // sensor read (transform inline void Sernsors::(int &, int) to void (int &, int))
-void mpu_readSensor(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue }
-void mpu_getAccelX_mss(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue }
-void mpu_getAccelY_mss(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue }
-void mpu_getAccelZ_mss(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue }
-void mpu_getGyroX_rads(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue }
-void mpu_getGyroY_rads(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue }
-void mpu_getGyroZ_rads(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue }
-void mpu_getMagX_uT(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue }
-void mpu_getMagY_uT(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue }
-void mpu_getMagZ_uT(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue }
-void mpu_getTemperature_C(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue }
+void mpu_readSensor(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
+void mpu_getAccelX_mss(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
+void mpu_getAccelZ_mss(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
+void mpu_getAccelY_mss(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
+void mpu_getGyroX_rads(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
+void mpu_getGyroY_rads(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
+void mpu_getGyroZ_rads(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
+void mpu_getMagX_uT(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
+void mpu_getMagY_uT(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
+void mpu_getMagZ_uT(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
+void mpu_getTemperature_C(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
 
 // print
-void printInt(int32_t *leftValue, int32_t *rightValue) { std::cout << *leftValue << std::endl; }
+void printInt(int32_t *leftValue, int32_t *rightValue) { printf("%d", *leftValue); }
 
 void(*functions[])(int32_t *leftValue, int32_t *rightValue) = {
     // basic operations
