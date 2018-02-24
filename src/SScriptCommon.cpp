@@ -14,7 +14,7 @@ int32_t getInt(char *s) {
 
     char *next = strchr(s, ' ');
     if (next != NULL) { // if not last element
-        *next = NULL;   // null terminate
+        *next = '\0';   // null terminate
         next++;         // move to the beginning og the next element
     }
 

@@ -5,11 +5,6 @@
 #include "SScript.h"
 #include "Expression.h"
 
-void print(int32_t *leftValue, int32_t *rightValue) {
-    Serial.println(*rightValue);
-}
-
-
 Expression::~Expression() {
 
     delete[] elements;
