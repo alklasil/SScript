@@ -42,6 +42,8 @@ class SScript
      // functions used in scripts (pointers)
      // void(*functions[])(int32_t *leftValue, int32_t *rightValue);
 
+	  char *str;
+
 };
 
 extern SScript sScript;

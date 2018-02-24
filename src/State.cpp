@@ -13,8 +13,9 @@ State::~State() {
 int32_t State::set(char *s)
 {
 
-    expressionCount = getInt(s);
+    expressionCount = getInt();
     expressions = new Expression[expressionCount];
+    DEBUG_PRINT("expressions: %d\n", expressionCount);
 
     for (int32_t i = 0; i < expressionCount; i++) {
 
