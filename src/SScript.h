@@ -5,7 +5,7 @@
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "wprogram.h"
-#else
+#elif defined(ARDUINO)
 	#include "WProgram.h"
 #endif
 
@@ -41,6 +41,8 @@ class SScript
 
      // functions used in scripts (pointers)
      // void(*functions[])(int32_t *leftValue, int32_t *rightValue);
+
+	  char *str;
 
 };
 

@@ -5,11 +5,6 @@
 #include "SScript.h"
 #include "Expression.h"
 
-void print(int32_t *leftValue, int32_t *rightValue) {
-    Serial.println(*rightValue);
-}
-
-
 Expression::~Expression() {
 
     delete[] elements;
@@ -18,11 +13,13 @@ Expression::~Expression() {
 
 int32_t Expression::set(char *s) {
 
-    elementCount = getInt(s);
+    elementCount = getInt();
     elements = new int32_t[elementCount];
+    DEBUG_PRINT("elements: %d\n", elementCount);
 
     for (int32_t i = 0; i < elementCount; i++) {
-        elements[i] = getInt(s);
+        elements[i] = getInt();
+        DEBUG_PRINT("element[%d]: %d\n", i, elements[i]);
     }
 }
 

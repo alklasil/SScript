@@ -5,7 +5,7 @@
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "wprogram.h"
-#else
+#elif defined(ARDUINO)
 	#include "WProgram.h"
 #endif
 
