@@ -1,10 +1,10 @@
-** Example compiler for SScript **
+**Example compiler for SScript**
 
 
-** Compile **
+**Compile**
 
 python3 filename.py
 
-** Other **
+**Other**
 
 This folder is not required in order to use the library. This folder may or may not get relocated to a new repo in the future depending on certain factors.  
