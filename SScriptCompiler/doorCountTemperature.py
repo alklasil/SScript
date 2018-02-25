@@ -19,14 +19,9 @@ from src.SCompiler     import SCompiler     as co
 
 def main():
 
-   # functions
-   f = sl(
-      stdf().getAllSTDFunctions()
-   );
-
    # states
    st = sl([
-      sf("main"), sf("init"), sf(">t"), sf("<t"),
+      sf("main"), sf("init"), sf(">t"), sf("<t>"), sf("<t"),
    ]);
 
    # variables
@@ -42,57 +37,60 @@ def main():
       sv("tmp")                         # bin
    ]);
 
+   # functions
+   f = stdf(st, v)
+
    s = sl([
       # main state always first
       ss("main", [
          # goto execute the sate set by variable "state"
-         se([v.get("state"), v.get("ZERO"), f.get("executeState")]),
+         f.executeState(),
       ]),
       ss("init", [
          # calibrate (thresholds), set tUP and tDOWN & only then set state = "process"
          # (TODO)
 
          # set state = '>t' (above threshold)
-         se([v.get("state"), v.get("ZERO"), f.get("access2value"),
-           st.get(">t"), f.get("="), f.get("access2pointer")
-         ]),
+         f.setState(">t")
+
       ]),
       ss(">t", [
          # read mpu sensor
-         se([v.get("tmp"), v.get("ONE"), f.get("mpu_readSensor")]),
+         f.readMPU(),
 
          # get temperature
-         se([v.get("temperature"), v.get("ONE"), f.get("mpu_getTemperature_C")]),
+         f.getTemperature(),
 
-         # ? = temperature < tDOWN
-         se([v.get("?"), v.get("tDOWN"), f.get("="), v.get("temperature"), f.get("<")]),
+         # [?] = temperature < tDOWN
+         f.setConditional("temperature", "<", "tDOWN"),
 
-         # if ? != 0, i.e., temperature < tDOWN: state = "<t"
-         se([v.get("state"), v.get("?"), f.get("if"), v.get("ZERO"), f.get("access2value"),
-           st.get("<t"), f.get("="), f.get("access2pointer")
-         ]),
-
-         se([v.get("count"), v.get("ONE"), f.get("+")]),
-         se([v.get("count"), v.get("ZERO"), f.get("print")])
+         # if [?] state = "<t>" for processing
+         f.conditionalSetState("<t>"),
+      ]),
+      ss("<t>", [
+         # door closed -> process and set state = "<t"
+         # increase count by one
+         f.inc("count"),
+         # "debug" print the increased value
+         f.printInt("count"),
+         # set state
+         f.setState(">t")
       ]),
       ss("<t", [
          # read mpu sensor
-         se([v.get("tmp"), v.get("ONE"), f.get("mpu_readSensor")]),
+         f.readMPU(),
 
          # get temperature
-         se([v.get("temperature"), v.get("ONE"), f.get("mpu_getTemperature_C")]),
+         f.getTemperature(),
 
-         # ? = temperature > tUP
-         se([v.get("?"), v.get("tUP"), f.get("="), v.get("temperature"), f.get(">")]),
+         # [?] = temperature > tDOWN
+         f.setConditional("temperature", ">", "tDOWN"),
 
-         # if ? != 0, i.e., temperature > tUP: state = ">t"
-         se([v.get("state"), v.get("?"), f.get("if"), v.get("ZERO"), f.get("access2value"),
-           st.get(">t"), f.get("="), f.get("access2pointer")
-         ]),
+         # if [?] state = "<t"
+         f.conditionalSetState(">t")
 
          # do not add door opened count here, as we already did when opening the door
       ]),
-
    ])
 
    c = co(s, f, v)

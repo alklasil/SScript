@@ -27,8 +27,7 @@ class SCompiler:
                c.append(str(variable.getValue()))
        # number of states
        c.append(str(s.getLen()))
-       #print("aaba")
-       print(s.getValue())
+       # states::expressions
        for si, state in enumerate(s.getValue()):
            # number of expressions in state
            c.append(str(state.getLen()))
