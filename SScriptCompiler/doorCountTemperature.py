@@ -68,7 +68,7 @@ def main():
          f.conditionalSetState("<t>"),
       ]),
       ss("<t>", [
-         # door closed -> process and set state = "<t"
+         # state = "closing the door", do not execute when opening the door
          # increase count by one
          f.inc("count"),
          # "debug" print the increased value
@@ -88,8 +88,6 @@ def main():
 
          # if [?] state = "<t"
          f.conditionalSetState(">t")
-
-         # do not add door opened count here, as we already did when opening the door
       ]),
    ])
 
