@@ -74,7 +74,7 @@ def main():
          # "debug" print the increased value
          f.printInt("count"),
          # set state
-         f.setState(">t")
+         f.setState("<t")
       ]),
       ss("<t", [
          # read mpu sensor
