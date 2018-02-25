@@ -68,7 +68,7 @@ def main():
          f.conditionalSetState("<t>"),
       ]),
       ss("<t>", [
-         # state = "closing the door", do not execute when opening the door
+         # state = "opening the door", do not execute when closing the door
          # increase count by one
          f.inc("count"),
          # "debug" print the increased value
@@ -84,7 +84,7 @@ def main():
          f.getTemperature(),
 
          # [?] = temperature > tDOWN
-         f.setConditional("temperature", ">", "tDOWN"),
+         f.setConditional("temperature", ">", "tUP"),
 
          # if [?] state = "<t"
          f.conditionalSetState(">t")
