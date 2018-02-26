@@ -30,10 +30,10 @@ def main():
       sv("count"),                      # = door opened "count" times
       sv("tUP", 15),                    # threshold up (assume roomTemperature > 15)
       sv("tDOWN", 10),                  # threshold down (assume outsideTemperature < 10)
-      sv("ZERO", 0),                    # constant(0), fast access
+      sv("ZERO"),                    # constant(0), fast access
       sv("ONE", 1),                     # constant(1), fast access
       sv("state", st.get("init")),      # first state is "init" state
-      sv("?", 0),                       # variable, used to store the result of conditional calculations
+      sv("?"),                       # variable, used to store the result of conditional calculations
       sv("tmp")                         # bin
    ]);
 
