@@ -8,7 +8,7 @@ from src.SCompiler     import SCompiler     as co
 
 # DESCRIPTION:
 #   This script prints 0 in loop
-
+#   (confirmed to work on teensy)
 
 def main():
 
