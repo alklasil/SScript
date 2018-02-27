@@ -35,7 +35,7 @@ void mpu_getMagZ_uT(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rig
 void mpu_getTemperature_C(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
 
 // print
-void printInt(int32_t *leftValue, int32_t *rightValue) { printf("%d", *leftValue); }
+void printInt(int32_t *leftValue, int32_t *rightValue) { printf("%d", *rightValue); }
 
 void(*functions[])(int32_t *leftValue, int32_t *rightValue) = {
     // basic operations

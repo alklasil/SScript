@@ -19,7 +19,6 @@ int main(int argc, char* argv[])
   sScript.setFunctions(_functions);
   char *buffer = argv[1];
   sScript.set(buffer);
-  return 0;
 
   while (1) {
 
