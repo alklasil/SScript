@@ -23,23 +23,15 @@ def main():
    st = sl([
       sf("main"), sf("init"), sf(">t"), sf("<t>"), sf("<t"),
    ]);
-
    # variables
-   v = sl([
-      sv("temperature"),                # = door opened "count" times
+   v = sl( sv.stdVariables(st, intialState = "init") + [
       sv("count"),                      # = door opened "count" times
       sv("tUP", 15),                    # threshold up (assume roomTemperature > 15)
       sv("tDOWN", 10),                  # threshold down (assume outsideTemperature < 10)
-      sv("ZERO"),                    # constant(0), fast access
-      sv("ONE", 1),                     # constant(1), fast access
-      sv("state", st.get("init")),      # first state is "init" state
-      sv("?"),                       # variable, used to store the result of conditional calculations
-      sv("tmp")                         # bin
-   ]);
-
+   ])
    # functions
    f = stdf(st, v)
-
+   # program
    s = sl([
       # main state always first
       ss("main", [
@@ -62,10 +54,11 @@ def main():
          f.getTemperature(),
 
          # [?] = temperature < tDOWN
-         f.setConditional("temperature", "<", "tDOWN"),
+         f.setConditional("mpu_temperature_C", "<", "tDOWN"),
 
          # if [?] state = "<t>" for processing
          f.conditionalSetState("<t>"),
+
       ]),
       ss("<t>", [
          # state = "opening the door", do not execute when closing the door
@@ -84,7 +77,7 @@ def main():
          f.getTemperature(),
 
          # [?] = temperature > tDOWN
-         f.setConditional("temperature", ">", "tUP"),
+         f.setConditional("mpu_temperature_C", ">", "tUP"),
 
          # if [?] state = "<t"
          f.conditionalSetState(">t")
@@ -92,7 +85,6 @@ def main():
    ])
 
    c = co(s, f, v)
-
    print( c.compile() )
 
 if __name__ == "__main__":

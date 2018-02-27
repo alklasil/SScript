@@ -11,8 +11,8 @@ class STDSFunctions:
          # basic operations
          sf("+"),             # leftValue += righValue
          sf("-"),
-         sf("/"),             # leftValue /= rightValue
-         sf("*"),
+         sf("*"),             # leftValue /= rightValue
+         sf("/"),
          sf("="),             # leftValue = rightValue
          sf("<"),             # leftValue < rightValue
          sf(">"),             # leftValue > rightValue
@@ -54,11 +54,11 @@ class STDSFunctions:
           state (``str``): key by which the state is stored in SVariable[]
                             for now this is assumed
       """
-      return se([self.v.get("state"), self.v.get("ZERO"), self.f.get("executeState")])
+      return se([self.v.get("ZERO"), self.v.get("state"), self.f.get("executeState")])
 
    def setState(self, state):
       return se([self.v.get("state"), self.v.get("ZERO"), self.f.get("access2value"),
-         self.st.get(state), self.f.get("="), self.f.get("access2pointer")
+         self.st.get(state), self.f.get("="), self.v.get("ZERO"), self.f.get("access2pointer")
       ])
 
    def setConditional(self, left, operator, right):
@@ -68,17 +68,17 @@ class STDSFunctions:
    def conditionalSetState(self, state):
       # if ? != 0, set state
       return se([self.v.get("state"), self.v.get("?"), self.f.get("if"), self.v.get("ZERO"), self.f.get("access2value"),
-         self.st.get(state), self.f.get("="), self.f.get("access2pointer")
+         self.st.get(state), self.f.get("="), self.v.get("ZERO"), self.f.get("access2pointer")
       ])
 
    def readMPU(self):
       return se([self.v.get("tmp"), self.v.get("ONE"), self.f.get("mpu_readSensor")])
 
    def getTemperature(self):
-      return se([self.v.get("temperature"), self.v.get("ONE"), self.f.get("mpu_getTemperature_C")])
+      return se([self.v.get("mpu_temperature_C"), self.v.get("ONE"), self.f.get("mpu_getTemperature_C")])
 
    def printInt(self, i):
-      return se([self.v.get(i), self.v.get("ZERO"), self.f.get("print")])
+      return se([self.v.get("ZERO"), self.v.get(i), self.f.get("print")])
 
    def inc(self, i):
       return se([self.v.get(i), self.v.get("ONE"), self.f.get("+")])

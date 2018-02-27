@@ -1,3 +1,5 @@
+from src.SFunction     import SFunction     as sf
+
 class SState:
    def __init__(self, name, expressions):
       self.name = name
@@ -8,3 +10,9 @@ class SState:
 
    def getLen(self):
       return len(self.expressions)
+
+   @staticmethod
+   def stdStates():
+        return [
+            SState("_main")
+        ]
