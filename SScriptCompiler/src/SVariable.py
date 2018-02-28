@@ -1,40 +1,47 @@
+"""Variable class for SScript."""
+
+
 class SVariable:
-   def __init__(self, name, value=0):
-      self.name = name
-      self.value = value # initial value
+    """class for SScript variables."""
+    def __init__(self, name, value=0):
+        """Set name and value"""
+        self.name = name
+        self.value = value  # initial value
 
-   def getValue(self):
-      return self.value
+    def getValue(self):
+        """Return name"""
+        return self.value
 
-      # stdVariables
-   @staticmethod
-   def stdVariables(st, intialState = "main"):
+        # stdVariables
+    @staticmethod
+    def stdVariables(st, intialState="main"):
+        """Return std variables."""
         return [
-             # basic variables
-             SVariable("?"),
-             SVariable("tmp"),
-             SVariable("ZERO"), SVariable("ONE", 1),
-             SVariable("state", st.get(intialState)),
+            # basic variables
+            SVariable("?"),
+            SVariable("tmp"),
+            SVariable("0"), SVariable("1", 1),
+            SVariable("state", st.get(intialState)),
 
-             # sensor variables
-             # accelerometer
-             SVariable("mpu_accelX_mss"),             # amplitude in x-direction
-             SVariable("mpu_accelZ_mss"),             # amplitude in z-direction
-             SVariable("mpu_accelY_mss"),             # amplitude in y-direction
-             SVariable("mpu_accel_mss"),              # amplitude of [x,y,z]
+            # sensor variables
+            # accelerometer
+            SVariable("AccelX_mss"),             # amplitude in x-direction
+            SVariable("AccelZ_mss"),             # amplitude in z-direction
+            SVariable("AccelY_mss"),             # amplitude in y-direction
+            SVariable("Accel_mss"),              # amplitude of [x,y,z]
 
-             # gyroscope
-             SVariable("mpu_gyroX_rads"),
-             SVariable("mpu_gyroY_rads"),
-             SVariable("mpu_gyroZ_rads"),
-             SVariable("mpu_gyro_rads"),
+            # gyroscope
+            SVariable("GyroX_rads"),
+            SVariable("GyroY_rads"),
+            SVariable("GyroZ_rads"),
+            SVariable("Gyro_rads"),
 
-             # magnetometer
-             SVariable("mpu_magY_uT"),
-             SVariable("mpu_magX_uT"),
-             SVariable("mpu_magZ_uT"),
-             SVariable("mpu_mag_uT"),
+            # magnetometer
+            SVariable("MagY_uT"),
+            SVariable("MagX_uT"),
+            SVariable("MagZ_uT"),
+            SVariable("Mag_uT"),
 
-             # temperature
-             SVariable("mpu_temperature_C"),
-          ]
+            # temperature
+            SVariable("Temperature_C"),
+        ]

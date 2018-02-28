@@ -1,18 +1,18 @@
-from src.SFunction     import SFunction     as sf
+"""State module for SScript."""
+
 
 class SState:
-   def __init__(self, name, expressions):
-      self.name = name
-      self.expressions = expressions
+    """State class for SScript."""
 
-   def getExpressions(self):
-      return self.expressions
+    def __init__(self, name, expressions):
+        """Set name and expressions."""
+        self.name = name
+        self.expressions = expressions
 
-   def getLen(self):
-      return len(self.expressions)
+    def getExpressions(self):
+        """Get expressions."""
+        return self.expressions
 
-   @staticmethod
-   def stdStates():
-        return [
-            SState("_main")
-        ]
+    def getLen(self):
+        """Count expressions."""
+        return len(self.expressions)

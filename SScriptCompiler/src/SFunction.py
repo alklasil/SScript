@@ -1,3 +1,8 @@
+"""Function module for SScript"""
+
+
 class SFunction:
-   def __init__(self, name):
-       self.name = name
+    """Function class for SScript"""
+    def __init__(self, name):
+        """Set name."""
+        self.name = name
