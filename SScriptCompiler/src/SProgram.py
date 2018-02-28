@@ -18,7 +18,12 @@ class SProgram:
         #   [(state, state.expressions) for state in states]
 
         """Set the program."""
-        self._stets = program
+        if len(program) == 1:
+            self._stets = program
+        else:
+            self._stets = [("_main", [
+                ["executeState"]
+            ])] + program
 
         # parse states list
         self.st = []

@@ -19,9 +19,6 @@ def main():
         # program (state, [expressions])
         initialState="init",
         program=[
-            ("main", [
-                ["executeState"]
-            ]),
             ("init", [
                 ["setState", ">t"]
             ]),
