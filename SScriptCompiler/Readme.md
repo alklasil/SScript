@@ -1,5 +1,12 @@
 **Example compiler for SScript**
 
+* TODO: combine st (states) and v (variables)
+   (There is no reason why we would need both of them
+   & states [constants] are faster to access if they
+   are stored as variables. This takes up a few memory
+   places but not that many (unless one uses up to
+   hundreds of states in one program, which is not
+   recommended))
 
 **Compile**
 
