@@ -7,6 +7,7 @@
    places but not that many (unless one uses up to
    hundreds of states in one program, which is not
    recommended))
+ * Or, better yet: remove constanst alltogether, are they really needed?
 
 **Compile**
 
