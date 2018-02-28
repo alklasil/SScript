@@ -17,6 +17,7 @@ def main():
         # variables (count & thresholds)
         ["count", ("tUP", 15), ("tDOWN", 10)],
         # program (state, [expressions])
+        initialState="init",
         program=[
             ("main", [
                 ["executeState"]
