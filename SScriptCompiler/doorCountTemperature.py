@@ -20,6 +20,10 @@ def main():
         initialState="init",
         program=[
             ("init", [
+                # TODO: add sensor-configuring here
+                #   (Otherwise whis state is not required)
+
+                # for now, assume: door is initially closed
                 ["setState", ">t"]
             ]),
             (">t", [
