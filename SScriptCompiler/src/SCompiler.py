@@ -3,11 +3,11 @@
 
 class SCompiler:
     """Compiler class for SScript."""
-    def __init__(self, s, f, v):
+    def __init__(self, p):
         """Set states, functions and variables."""
-        self.s = s
-        self.f = f
-        self.v = v
+        self.s = p.getSoftware()
+        self.f = p.getFunctions()
+        self.v = self.f.getVariables()
         self.compiled = []
 
     def compile(self):

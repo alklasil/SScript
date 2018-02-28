@@ -1,4 +1,5 @@
 """Variable class for SScript."""
+from src.SList import SList as sl
 
 
 class SVariable:
@@ -45,3 +46,18 @@ class SVariable:
             # temperature
             SVariable("Temperature_C"),
         ]
+
+    @staticmethod
+    def create(nameValuePairs, st, initialState="init", useSTDVariables=True):
+        """NameValuePairs -> variables(name, value)."""
+        v = []
+        if useSTDVariables:
+            v = SVariable.stdVariables(st, initialState)
+        for nvp in nameValuePairs:
+            if type(nvp) is tuple:
+                # (name, value)
+                v.append(SVariable(nvp[0], nvp[1]))
+            else:
+                # name
+                v.append(SVariable(nvp))
+        return sl(v)

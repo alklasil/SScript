@@ -1,34 +1,21 @@
-"""Print 0 in a loop."""
-
-from src.SFunction import SFunction as sf
-from src.STDSFunctions import STDSFunctions as stdf
-from src.SVariable import SVariable as sv
-from src.SState import SState as ss
-from src.SExpression import SExpression as se
-from src.SList import SList as sl
-from src.SCompiler import SCompiler as co
+"""Print 123 in a loop."""
+from src.SProgram import SProgram as program
 
 
 def main():
-    """Print 0 in loop."""
-    # states
-    st = sl([sf("main")])
-    # variables
-    v = sl(sv.stdVariables(st) + [
-        sv("i")
-    ])
-    # functions
-    f = stdf(st, v)
+    """Print 123 in loop."""
     # program
-    s = sl([
-        # main state always first
-        ss("main", [
-            f.printInt("i"),
-        ]),
-    ])
-
-    c = co(s, f, v)
-    print(c.compile())
+    p = program(
+        # variables ["var1", ("var2", value), "var3", ("var4", value)]
+        [("i", 123)],
+        # program (state, [expressions])
+        program=[
+            ("main", [
+                ["printInt", "i"]
+            ])
+        ])
+    # compile and print the program
+    p.compile()
 
 
 if __name__ == "__main__":

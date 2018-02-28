@@ -1,4 +1,6 @@
 """State module for SScript."""
+from src.SList import SList as sl
+from src.SFunction import SFunction as sf
 
 
 class SState:
@@ -16,3 +18,10 @@ class SState:
     def getLen(self):
         """Count expressions."""
         return len(self.expressions)
+
+    @staticmethod
+    def create(names):
+        """List of names -> States."""
+        return sl([
+            sf(name) for name in names
+        ])

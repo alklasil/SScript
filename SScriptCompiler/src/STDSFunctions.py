@@ -10,48 +10,71 @@ from src.SCompiler import SCompiler as co
 class STDSFunctions:
     """Standard functions class for SScript."""
 
-    def __init__(self, st=None, v=None):
+    def __init__(self,
+                 stateNames=["main"],
+                 variableNameValuePairs=None,
+                 initialState="main",
+                 useSTDVariables=True,
+                 useSTDFunctions=True):
         """Set functions, states and variables."""
-        self.f = sl([
-            # basic operations
-            sf("+"),             # leftValue += righValue
-            sf("-"),
-            sf("*"),             # leftValue /= rightValue
-            sf("/"),
-            sf("="),             # leftValue = rightValue
-            sf("<"),             # leftValue < rightValue
-            sf(">"),             # leftValue > rightValue
-            sf("=="),            # leftValue == rightValue
-            # helper functions
-            sf("access2pointer"),  # set accessmode = pointer (for variables)
-            sf("access2value"),   # set accessmode = value (for constants)
-            sf("executeState"),
-            # currentState, currentElement = goto(state, element)
-            # (if rightValue != 0) execute, otherwise stop execution
-            sf("if"),
-            sf(";"),              # abort expression execution,
-                                  # leftvalue does not change
-            # sensor
-            sf("mpu_readSensor"),
-            sf("mpu_getAccelX_mss"),
-            sf("mpu_getAccelY_mss"),
-            sf("mpu_getAccelZ_mss"),
-            sf("mpu_getGyroX_rads"),
-            sf("mpu_getGyroY_rads"),
-            sf("mpu_getGyroZ_rads"),
-            sf("mpu_getMagX_uT"),
-            sf("mpu_getMagY_uT"),
-            sf("mpu_getMagZ_uT"),
-            sf("mpu_getTemperature_C"),
-            # print (only int32_t for now)
-            sf("print"),
-        ])
-        self.st = st
-        self.v = v
+
+        self.st = ss.create(
+            names=stateNames
+        )
+
+        self.v = sv.create(
+            nameValuePairs=variableNameValuePairs,
+            st=self.st,
+            initialState=initialState,
+            useSTDVariables=useSTDVariables)
+
+        if useSTDFunctions:
+            self.f = sl([
+                # basic operations
+                sf("+"),                # leftValue += righValue
+                sf("-"),
+                sf("*"),                # leftValue /= rightValue
+                sf("/"),
+                sf("="),                # leftValue = rightValue
+                sf("<"),                # leftValue < rightValue
+                sf(">"),                # leftValue > rightValue
+                sf("=="),               # leftValue == rightValue
+                # helper functions
+                sf("access2pointer"),   # set accessmode =
+                                        #   pointer (for variables)
+                sf("access2value"),     # set accessmode =
+                                        #   value (for constants)
+                sf("executeState"),
+                sf("if"),
+                sf(";"),                # abort expression execution,
+                                        # leftvalue does not change
+                # sensor
+                sf("mpu_readSensor"),
+                sf("mpu_getAccelX_mss"),
+                sf("mpu_getAccelY_mss"),
+                sf("mpu_getAccelZ_mss"),
+                sf("mpu_getGyroX_rads"),
+                sf("mpu_getGyroY_rads"),
+                sf("mpu_getGyroZ_rads"),
+                sf("mpu_getMagX_uT"),
+                sf("mpu_getMagY_uT"),
+                sf("mpu_getMagZ_uT"),
+                sf("mpu_getTemperature_C"),
+                # print (only int32_t for now)
+                sf("print"),
+            ])
 
     def getAllSTDFunctions(self):
         """Return standard functions."""
         return self.f
+
+    def getStates(self):
+        """Return all states."""
+        return self.st
+
+    def getVariables(self):
+        """Return all variables."""
+        return self.v
 
     # helper functions
 
