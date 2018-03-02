@@ -40,10 +40,6 @@ class STDSFunctions:
                 sf(">"),                # leftValue > rightValue
                 sf("=="),               # leftValue == rightValue
                 # helper functions
-                sf("access2pointer"),   # set accessmode =
-                                        #   pointer (for variables)
-                sf("access2value"),     # set accessmode =
-                                        #   value (for constants)
                 sf("executeState"),
                 sf("if"),
                 sf(";"),                # abort expression execution,
@@ -100,7 +96,6 @@ class STDSFunctions:
             expression.append(self.v.get(l[0]))
             # the second is always a constant
             expression.append(str(l[1]))
-
             return se(expression)
 
         # if there are >= 3 elements, it's a normal expression
