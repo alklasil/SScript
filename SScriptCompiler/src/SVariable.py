@@ -68,7 +68,6 @@ class SVariable:
                 # [name, size]
                 for i in range(0, nvp[1]):
                     _s = nvp[0] + "[" + str(i) + "]"
-                    print ("_" + _s + "_")
                     v.append(SVariable(_s))
             else:
                 # name

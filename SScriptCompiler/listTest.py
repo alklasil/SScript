@@ -1,14 +1,14 @@
-"""Print 123 in a loop."""
+"""Print 103 in a loop."""
 from src.SProgram import SProgram as program
 
 
 def main():
-    """Print 123 in loop."""
+    """Print 103 in loop."""
     # program
     p = program(
-        # variables ["var1", ("var2", value), "var3", ("var4", value), ["list1", size]]
-        #[["list1", 3]],
-        ["list1[0]", "list1[1]", "list1[2]"],
+        # variables ["var1", ("var2", value), "var3",
+        # ("var4", value), ["list1", size]]
+        [["list1", 3]],
         # program (state, [expressions])
         initialState="init",
         program=[
