@@ -34,9 +34,6 @@ class SScript
      int32_t executeState(int32_t index);
 
      // helper variables
-     const static int32_t accessModePointer = 0;
-     const static int32_t accessModeValue = 1;
-     int32_t accessMode;
      int32_t abortExpressionExecution;
 
      // functions used in scripts (pointers)

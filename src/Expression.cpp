@@ -40,17 +40,8 @@ int32_t Expression::execute() {
             rightValue = &elements[i];
             functionIndex = &elements[i + 1];
 
-            if (sScript.accessMode == sScript.accessModePointer) {
-
-                rightValue = &sScript.variables[*rightValue];
-                _functions[*functionIndex](leftValue, rightValue);
-
-            }
-            else if (sScript.accessMode == sScript.accessModeValue) {
-
-                _functions[*functionIndex](leftValue, rightValue);
-
-            }
+            rightValue = &sScript.variables[*rightValue];
+            _functions[*functionIndex](leftValue, rightValue);
 
             if (sScript.abortExpressionExecution != 0) {
 

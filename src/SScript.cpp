@@ -13,8 +13,6 @@ SScript::SScript() {
 
     stateCount = 0;
     states = new State[stateCount];
-
-    accessMode = accessModePointer;
 }
 
 int32_t SScript::setFunctions(void(*(*__functions))(int32_t *leftValue, int32_t *rightValue)) {

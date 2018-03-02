@@ -24,6 +24,13 @@ class SVariable:
             SVariable("0"), SVariable("1", 1),
             SVariable("state", st.get(intialState)),
 
+            # a few 'registers' for general use
+
+            SVariable("r1"), SVariable("r2"),
+            SVariable("r3"), SVariable("r4"),
+            SVariable("r5"), SVariable("r6"),
+            SVariable("r7"), SVariable("r8"),
+
             # sensor variables
             # accelerometer
             SVariable("AccelX_mss"),             # amplitude in x-direction

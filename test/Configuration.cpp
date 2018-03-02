@@ -15,8 +15,6 @@ void gt(int32_t *leftValue, int32_t *rightValue) { *leftValue = int32_t(*leftVal
 void eq(int32_t *leftValue, int32_t *rightValue) { *leftValue = int32_t(*leftValue == *rightValue); }
 
 // helpers
-void access2pointer(int32_t *leftValue, int32_t *rightValue) { sScript.accessMode = sScript.accessModePointer; }
-void access2value(int32_t *leftValue, int32_t *rightValue) { sScript.accessMode = sScript.accessModeValue; }
 void executeState(int32_t *leftValue, int32_t *rightValue) { sScript.executeState(*rightValue); };
 void _if(int32_t *leftValue, int32_t *rightValue) { if (*rightValue == 0) sScript.abortExpressionExecution = 1; };
 void _abortExpressionExecution(int32_t *leftValue, int32_t *rightValue) { sScript.abortExpressionExecution = 1; };
@@ -48,8 +46,6 @@ void(*functions[])(int32_t *leftValue, int32_t *rightValue) = {
     gt,
     eq,
     // helpers
-    access2pointer,
-    access2value,
     executeState,
     _if,
     _abortExpressionExecution,

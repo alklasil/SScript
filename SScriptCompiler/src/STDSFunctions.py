@@ -77,6 +77,8 @@ class STDSFunctions:
         return self.v
 
     # helper functions
+    #   all helper functions return either:
+    #       se(expression) or se(expression)[]
 
     def expr(self, l):
         """Enable simpler expression creation.
@@ -140,10 +142,16 @@ class STDSFunctions:
 
     def conditionalSetState(self, state):
         """If ? != 0, next_state = state."""
-        return self.expr([
-            "state", "?", "if", "0", "access2value",
-            int(self.st.get(state)), "=", "0", "access2pointer"
+        # move new state into "tmp" variable
+        state_new = self.expr([
+            "tmp", int(self.st.get(state))
         ])
+        # set state if conditional != 0
+        conditional_set = self.expr([
+            "state", "?", "if", "tmp", "="
+        ])
+        # return the expression [subexpression1, subexpression2]
+        return [state_new, conditional_set]
 
     def readMPU(self, errorVariable=None):
         """Read the mpu sensor."""

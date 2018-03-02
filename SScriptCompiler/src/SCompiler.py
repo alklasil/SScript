@@ -37,9 +37,17 @@ class SCompiler:
             # number of expressions in state
             c.append(str(state.getLen()))
             for ei, expression in enumerate(state.getExpressions()):
-                # number of elements in expression
-                c.append(str(expression.getLen()))
-                c.append(expression.get())
+                if type(expression) is list:
+                    # expressions can be lists still here
+                    # (for example: set variable, use variable)
+                    for sei, subexpression in enumerate(expression):
+                        # number of elements in expression
+                        c.append(str(subexpression.getLen()))
+                        c.append(subexpression.get())
+                else:
+                    # number of elements in expression
+                    c.append(str(expression.getLen()))
+                    c.append(expression.get())
 
         self.compiled = c
         return self.getCompiled()
