@@ -64,6 +64,12 @@ class SVariable:
             if type(nvp) is tuple:
                 # (name, value)
                 v.append(SVariable(nvp[0], nvp[1]))
+            elif type(nvp) is list:
+                # [name, size]
+                for i in range(0, nvp[1]):
+                    _s = nvp[0] + "[" + str(i) + "]"
+                    print ("_" + _s + "_")
+                    v.append(SVariable(_s))
             else:
                 # name
                 v.append(SVariable(nvp))

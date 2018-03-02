@@ -129,6 +129,12 @@ class STDSFunctions:
             "state", int(self.st.get(state))
         ])
 
+    def set(self, name, value):
+        """Set variable[name].value = value."""
+        return self.expr([
+            name, value
+        ])
+
     def setConditional(self, left, operator, right):
         """Set [?] = int(left < right)."""
         return self.expr([

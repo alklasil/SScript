@@ -44,12 +44,12 @@ class SProgram:
             for expression in stet[1]:
                 if len(expression) == 1:
                     function = getattr(self.f, expression[0])
-                    expression = function()
+                    _expression = function()
                 else:
                     function = getattr(self.f, expression[0])
                     args = expression[1:]
-                    expression = function(*args)
-                expressions.append(expression)
+                    _expression = function(*args)
+                expressions.append(_expression)
             self.stets.append((stet[0], expressions))
 
         # software, the code of the program
