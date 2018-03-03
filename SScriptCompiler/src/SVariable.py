@@ -60,10 +60,18 @@ class SVariable:
         v = []
         if useSTDVariables:
             v = SVariable.stdVariables(st, initialState)
+        varCount = len(v)
+        names = [nvp[0] for nvp in nameValuePairs]
         for nvp in nameValuePairs:
             if type(nvp) is tuple:
                 # (name, value)
-                v.append(SVariable(nvp[0], nvp[1]))
+                if type(nvp[1]) is str:
+                    for i, name in enumerate(names):
+                        if name == nvp[1]:
+                            print(nvp[0], nvp[1], i, varCount + i)
+                            v.append(SVariable(nvp[0], varCount + i))
+                else:
+                    v.append(SVariable(nvp[0], nvp[1]))
             elif type(nvp) is list:
                 # [name, size]
                 for i in range(0, nvp[1]):

@@ -10,14 +10,18 @@ class SList:
 
     def get(self, name):
         """Get index ('address') by name."""
+        # check if it is a pointer
+        isPointer = False
+        if name[0] == "*":
+            isPointer = True
         for i, val in enumerate(self.value):
+            if isPointer and val.name == name[1:]:
+                if hasattr(val, "value"):
+                    # it's variable pointer,
+                    # functions do not have value
+                    # pointers are negative indexes (-1 points to 1)
+                    return "-" + str(i)
             if val.name == name:
-                if val.name[0] == "*":
-                    if hasattr(val, "value"):
-                        # it's variable pointer,
-                        # functions do not have value
-                        # pointers are negative indexes (-1 points to 1)
-                        return "-" + self.get(val.value)
                 return str(i)
         print ("Error: " + name + " Not found in " + str(val))
         raise NameError

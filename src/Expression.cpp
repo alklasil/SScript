@@ -41,11 +41,14 @@ int32_t Expression::execute() {
             functionIndex = &elements[i + 1];
 
             if (*rightValue < 0) {
-               // pointer: &variables[i])
-               *rightValue = -(*rightValue);
+               // pointer
+               rightValue = &sScript.variables[
+                  sScript.variables[-(*rightValue)]
+               ];
+            } else {
+               // value
                rightValue = &sScript.variables[*rightValue];
             }
-            rightValue = &sScript.variables[*rightValue];
             _functions[*functionIndex](leftValue, rightValue);
 
             if (sScript.abortExpressionExecution != 0) {
