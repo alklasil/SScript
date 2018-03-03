@@ -23,6 +23,12 @@ int32_t Expression::set(char *s) {
     }
 }
 
+inline int32_t *parseIndex(int32_t *p) {
+   // in SScript pointers are represented with '-' sign
+   if (*p < 0) p = &sScript.variables[-(*p)];
+   return &sScript.variables[*p];
+}
+
 int32_t Expression::execute() {
 
     int32_t *leftValue;
@@ -33,26 +39,24 @@ int32_t Expression::execute() {
     // leftValue must alywas be of mode pointer, it does not care about accessMode (-> somewhat restricted self modification of scripts, but faster)
     if (elementCount >= 3) { // "0 1" -> variables[0] = variables[1] or 1, TODO: perhaps combine this and the branch below into one -> clearer
         leftValue = &elements[0];
-        leftValue = &sScript.variables[*leftValue];
+        leftValue = parseIndex(leftValue);
+        // leftValue = &sScript.variables[*leftValue];
         // There can be more elements though
         for (int32_t i = 1; i < elementCount; i += 2) {
 
             rightValue = &elements[i];
             functionIndex = &elements[i + 1];
 
-            if (*rightValue < 0) {
-               // pointer
-               rightValue = &sScript.variables[
-                  sScript.variables[-(*rightValue)]
-               ];
-            } else {
-               // value
-               rightValue = &sScript.variables[*rightValue];
-            }
+            rightValue = parseIndex(rightValue);
+
             _functions[*functionIndex](leftValue, rightValue);
 
-            if (sScript.abortExpressionExecution != 0) {
+            // printf("...%d...%d...%d/%d...%d\n", sScript.abortExpressionExecution, *functionIndex, i, elementCount, elements[i]);
 
+            if (sScript.abortExpressionExecution != 0) {
+                // reset sScript.abortExpressionExecution -> other expressions
+                // can be executed correctly
+                sScript.abortExpressionExecution = 0;
                 return 1;
 
             }
@@ -66,15 +70,13 @@ int32_t Expression::execute() {
          // there is nothing to set, simply return
          return 2;
       } else if (elementCount == 2) {
-         // if elementCount == 2: variable[elements[0]] = elements[1]
-         //  (variable = constant), do not care about access mode
+         //  (variable = constant)
          leftValue = &elements[0];
-         leftValue = &sScript.variables[*leftValue];
+         leftValue = parseIndex(leftValue);
          rightValue = &elements[1];
+         *leftValue = *rightValue;
       }
    }
-
-    *leftValue = *rightValue;
-    return 0;
+   return 0;
 
 }

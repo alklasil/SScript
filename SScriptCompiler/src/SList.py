@@ -12,6 +12,7 @@ class SList:
         """Get index ('address') by name."""
         # check if it is a pointer
         isPointer = False
+
         if name[0] == "*":
             isPointer = True
         for i, val in enumerate(self.value):
@@ -23,8 +24,15 @@ class SList:
                     return "-" + str(i)
             if val.name == name:
                 return str(i)
-        print ("Error: " + name + " Not found in " + str(val))
-        raise NameError
+
+        try:
+            # test if it's a number, may or may not have already been converted
+            # we want to test this last, because numbers can be variables
+            i = int(name)
+            return str(name)
+        except ValueError:
+            print ("raised NameError:" + name + " Not found in " + str(val))
+            raise NameError
 
     def getValue(self):
         """Get value."""

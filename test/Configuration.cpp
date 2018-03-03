@@ -10,13 +10,14 @@ void sub(int32_t *leftValue, int32_t *rightValue) { *leftValue -= *rightValue; }
 void mul(int32_t *leftValue, int32_t *rightValue) { *leftValue *= *rightValue; }
 void div(int32_t *leftValue, int32_t *rightValue) { *leftValue /= *rightValue; }
 void set(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
-void lt(int32_t *leftValue, int32_t *rightValue) { *leftValue = int32_t(*leftValue < *rightValue); }
-void gt(int32_t *leftValue, int32_t *rightValue) { *leftValue = int32_t(*leftValue > *rightValue); }
-void eq(int32_t *leftValue, int32_t *rightValue) { *leftValue = int32_t(*leftValue == *rightValue); }
+void lt(int32_t *leftValue, int32_t *rightValue) { *leftValue = (*leftValue < *rightValue) ? 1 : 0; }
+void gt(int32_t *leftValue, int32_t *rightValue) { *leftValue = (*leftValue > *rightValue) ? 1 : 0; }
+void eq(int32_t *leftValue, int32_t *rightValue) { *leftValue = (*leftValue == *rightValue) ? 1 : 0; }
 
 // helpers
 void executeState(int32_t *leftValue, int32_t *rightValue) { sScript.executeState(*rightValue); };
-void _if(int32_t *leftValue, int32_t *rightValue) { if (*rightValue == 0) sScript.abortExpressionExecution = 1; };
+void _if(int32_t *leftValue, int32_t *rightValue) { if (*rightValue == 0) sScript.abortExpressionExecution = 1; }
+void _else(int32_t *leftValue, int32_t *rightValue) { if (*rightValue != 0) sScript.abortExpressionExecution = 1; }
 void _abortExpressionExecution(int32_t *leftValue, int32_t *rightValue) { sScript.abortExpressionExecution = 1; };
 
 // sensor read (transform inline void Sernsors::(int &, int) to void (int &, int))
@@ -34,6 +35,7 @@ void mpu_getTemperature_C(int32_t *leftValue, int32_t *rightValue) { *leftValue 
 
 // print
 void printInt(int32_t *leftValue, int32_t *rightValue) { printf("%d", *rightValue); }
+void printInt_ln(int32_t *leftValue, int32_t *rightValue) { printf("%d\n", *rightValue); }
 
 void(*functions[])(int32_t *leftValue, int32_t *rightValue) = {
     // basic operations
@@ -48,6 +50,7 @@ void(*functions[])(int32_t *leftValue, int32_t *rightValue) = {
     // helpers
     executeState,
     _if,
+    _else,
     _abortExpressionExecution,
     // sensor read
     mpu_readSensor,
@@ -62,5 +65,6 @@ void(*functions[])(int32_t *leftValue, int32_t *rightValue) = {
     mpu_getMagZ_uT,
     mpu_getTemperature_C,
     // print
-    printInt
+    printInt,
+    printInt_ln
 };

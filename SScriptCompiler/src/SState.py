@@ -19,6 +19,10 @@ class SState:
         """Count expressions."""
         return len(self.expressions)
 
+    def set(self, _expressions):
+        """Set expressions."""
+        self.expressions = _expressions
+
     @staticmethod
     def create(names):
         """List of names -> States."""

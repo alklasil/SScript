@@ -66,9 +66,17 @@ class SVariable:
             if type(nvp) is tuple:
                 # (name, value)
                 if type(nvp[1]) is str:
+                    if nvp[1][0] == "&":
+                        # extract variable name from index if using &
+                        # in initializations, using & is not required,
+                        # though it is recommended, as that is what is
+                        # required in the code
+                        nvp = (nvp[0], nvp[1][1:])
                     for i, name in enumerate(names):
                         if name == nvp[1]:
-                            print(nvp[0], nvp[1], i, varCount + i)
+                            # always set the value as index
+                            # as there is no need for getting the values
+                            # there are better ways of doing so
                             v.append(SVariable(nvp[0], varCount + i))
                 else:
                     v.append(SVariable(nvp[0], nvp[1]))

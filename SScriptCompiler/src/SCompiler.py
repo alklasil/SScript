@@ -16,6 +16,8 @@ class SCompiler:
         f = self.f
         s = self.s
 
+        print("\nCOMPILING...\n")
+
         c = []  # = self.compiled
         # number of variables
         c.append(str(v.getLen()))
@@ -31,23 +33,32 @@ class SCompiler:
                 c.append(str(vi))
                 c.append(str(variable.getValue()))
         # number of states
+        print("states:" + str(s.getLen()))
         c.append(str(s.getLen()))
         # states::expressions
         for si, state in enumerate(s.getValue()):
+            # parse subexpressions
+            _expressions = []
+            for expression in state.getExpressions():
+                if type(expression) is list:
+                    for subexpression in expression:
+                        _expressions.append(subexpression)
+                else:
+                    _expressions.append(expression)
+            # reset expressions
+            state.set(_expressions)
             # number of expressions in state
+            print(" state(" + str(si) + ") expressions: "
+                  + str(state.getLen()))
             c.append(str(state.getLen()))
             for ei, expression in enumerate(state.getExpressions()):
-                if type(expression) is list:
-                    # expressions can be lists still here
-                    # (for example: set variable, use variable)
-                    for sei, subexpression in enumerate(expression):
-                        # number of elements in expression
-                        c.append(str(subexpression.getLen()))
-                        c.append(subexpression.get())
-                else:
-                    # number of elements in expression
-                    c.append(str(expression.getLen()))
-                    c.append(expression.get())
+                # number of elements in expression
+                print("   expression(" + str(ei) + ") elements: "
+                      + str(expression.getLen()))
+                c.append(str(expression.getLen()))
+                c.append(expression.get())
+
+        print("\nCOMPILED...\n")
 
         self.compiled = c
         return self.getCompiled()

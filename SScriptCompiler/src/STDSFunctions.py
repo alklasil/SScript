@@ -42,6 +42,7 @@ class STDSFunctions:
                 # helper functions
                 sf("executeState"),
                 sf("if"),
+                sf("else"),
                 sf(";"),                # abort expression execution,
                                         # leftvalue does not change
                 # sensor
@@ -57,7 +58,8 @@ class STDSFunctions:
                 sf("mpu_getMagZ_uT"),
                 sf("mpu_getTemperature_C"),
                 # print (only int32_t for now)
-                sf("print"),
+                sf("printInt"),
+                sf("printInt_ln"),
             ])
 
     def getAllSTDFunctions(self):
@@ -72,6 +74,17 @@ class STDSFunctions:
         """Return all variables."""
         return self.v
 
+    def get(self, sList, s):
+        """Get variable or function."""
+        try:
+            # either 'integer' or 'variable'
+            _s = sList.get(s)
+        except (TypeError):
+            # was constant (or at least that is assumed for now)
+            # will raise other errors later, if that was not the case
+            _s = str(s)
+        return _s
+
     # helper functions
     #   all helper functions return either:
     #       se(expression) or se(expression)[]
@@ -83,37 +96,30 @@ class STDSFunctions:
             l = str[] (list of strings [states, variables, functions]
             (l = ["var", "var", "fun", "var", "fun", 1, "fun", 2])
         """
+
         expression = []
 
         # if there is only 1 element, it's a function
         if len(l) == 1:
-            expression.append(self.f.get(l[0]))
+            expression.append(self.get(self.f, l[0]))
             return se(expression)
 
         # if there are 2 elements, it's a set
         if len(l) == 2:
-            # the first is always a variable
-            expression.append(self.v.get(l[0]))
-            # the second is always a constant
-            expression.append(str(l[1]))
+            # variable[l[0]] = l[1]
+            # l[0] should always be variable, l[1] constant
+            expression.append(self.get(self.v, l[0]))
+            expression.append(self.get(self.v, l[1]))
             return se(expression)
 
-        # if there are >= 3 elements, it's a normal expression
-        # first variable is always a variable, never a constant
-        expression.append(self.v.get(l[0]))
+        expression.append(self.get(self.v, l[0]))
         for i in range(1, len(l)):
-            s = l[i]
-            # if element is str, get it's index, otherwise it's a constant
-            if isinstance(s, str):
-                # if i % 2 == 0, it's a function
-                if i % 2 == 0:
-                    s = self.f.get(l[i])
-                # otherwise it's a variable
-                else:
-                    s = self.v.get(l[i])
-            # add the element into the expression
-            expression.append(str(s))
-
+            if i % 2 == 0:
+                # function
+                expression.append(self.get(self.f, l[i]))
+            else:
+                # variable
+                expression.append(self.get(self.v, l[i]))
         # convert expression into SExpression and return it
         return se(expression)
 
@@ -130,16 +136,67 @@ class STDSFunctions:
         ])
 
     def set(self, name, value):
-        """Set variable[name].value = value."""
-        return self.expr([
-            name, value
-        ])
+        """Set variable value.
+
+        if constant:     variable[name].value = value.
+        elif index:      variable[name].value = indexOf(value).
+        else (value):    variable[name].value = variable[value].value.
+        """
+
+        if type(value) is int:
+            # set constant
+            return self.expr([
+                name, value
+            ])
+        elif value[0] == "&":
+            # set index (also constant)
+            value = value[1:]
+            return self.expr([
+                name, value
+            ])
+        else:
+            # set variable value
+            #
+            return self.expr([
+                name, value, "="
+            ])
 
     def setConditional(self, left, operator, right):
         """Set [?] = int(left < right)."""
         return self.expr([
-            "?", left, "=", right, "<"
+            "?", left, "=", right, operator
         ])
+
+    def eval(self, left, operator, right):
+        """Short form for setConditional. may add additional f in future"""
+        return self.setConditional(left, operator, right)
+
+    def createIFELSE(self, evalF, expression):
+        """insert evalIF ("if" or "else") into expression."""
+        function = getattr(self, expression[0])
+        args = expression[1:]
+        _expression = function(*args)
+        _expression = _expression.getList()
+        _expression = [_expression[0], "?", evalF] + _expression[1:]
+        _expression = self.expr(_expression)
+        return _expression
+
+    def IF(self, condition, expression_if, expression_else=None):
+        """If condition: expression"""
+        expressions = []
+        # set condition
+        function = getattr(self, condition[0])
+        args = condition[1:]
+        conditional = function(*args)
+        expressions.append(conditional)
+        # if
+        _expression_if = self.createIFELSE("if", expression_if)
+        expressions.append(_expression_if)
+        # else
+        if expression_else != None:
+            _expression_else = self.createIFELSE("else", expression_else)
+            expressions.append(_expression_else)
+        return expressions
 
     def conditionalSetState(self, state):
         """If ? != 0, next_state = state."""
@@ -171,11 +228,16 @@ class STDSFunctions:
             identifier, str(multiplier), "mpu_get" + identifier
         ])
 
-    def printInt(self, i):
+    def printInt(self, i, endl=False):
         """Print variable as integer to serial port."""
-        return self.expr([
-            "0", i, "print"
-        ])
+        if endl:
+            return self.expr([
+                "0", i, "printInt_ln"
+            ])
+        else:
+            return self.expr([
+                "0", i, "printInt"
+            ])
 
     def inc(self, i):
         """Increase variable value by one."""
