@@ -11,9 +11,8 @@ def main():
         # program (state, [expressions])
         program=[
             ("main", [
-                #   *i is a pointer to variables[i] = b = 555
-                #   pointers can be used the same way
-                #   normal variables can be used.
+                # use i to as 'pointer' for b
+                # *i -> variables[i.value].value
 
                 # print 555
                 ["printInt", "*i"],
