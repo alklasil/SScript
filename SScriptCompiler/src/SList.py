@@ -8,11 +8,14 @@ class SList:
         """Set value (anything[])."""
         self.value = value
 
+    def append(self, val):
+        """Append value into self.value."""
+        self.value.append(val)
+
     def get(self, name):
         """Get index ('address') by name."""
         # check if it is a pointer
         isPointer = False
-
         if name[0] == "*":
             isPointer = True
         for i, val in enumerate(self.value):

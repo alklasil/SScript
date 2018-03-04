@@ -23,14 +23,11 @@ def main():
                 ["set", "i", "&a"],
                 # print a
                 ["printInt", "*i", True],
-                # hox do not use constants here,
-                # constanst only in initializations and simple sets
-                #   init:('c', value) & code:["c", value]
-                #   (this may or may not change in the future,
-                #   depending on need)
+                # if else example
                 ["IF",
                     # if (*i < 1000, i.e., a < 1000)
-                    ["eval", "*i", "<", "th"],
+                    ["eval", "*i", "<", th],
+                    #["eval", "*i", "<", 1000], # or this, both can be used
                         # then a++
                         ["inc", "*i"],
                         # else a = 0

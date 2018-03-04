@@ -119,6 +119,15 @@ class STDSFunctions:
                 expression.append(self.get(self.f, l[i]))
             else:
                 # variable
+                if type(l[i]) is int:
+                    # we do not want constat variables, thus
+                    # add this "constant" as variable with value
+                    # this could be inserter into either self.get or SList.get
+                    # but we do not want all expressions
+                    # (such as ["variable",value]) to be stored in memory,
+                    # as there is no need to do so
+                    self.v.append(sv(str(l[i]), int(l[i])))
+                    l[i] = str(l[i])
                 expression.append(self.get(self.v, l[i]))
         # convert expression into SExpression and return it
         return se(expression)
