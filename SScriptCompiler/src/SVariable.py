@@ -19,8 +19,8 @@ class SVariable:
         """Return std variables."""
         return [
             # basic variables
-            SVariable("?"),
             SVariable("tmp"),
+            SVariable("?"),
             SVariable("0"), SVariable("1", 1),
             SVariable("state", st.get(intialState)),
 
