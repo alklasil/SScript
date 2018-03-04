@@ -26,7 +26,7 @@ def main():
                 # if else example
                 ["IF",
                     # if (*i < 1000, i.e., a < 1000)
-                    ["eval", "*i", "<", th],
+                    ["eval", "*i", "<", "th"],
                     #["eval", "*i", "<", 1000], # or this, both can be used
                         # then a++
                         ["inc", "*i"],

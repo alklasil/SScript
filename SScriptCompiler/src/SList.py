@@ -10,7 +10,12 @@ class SList:
 
     def append(self, val):
         """Append value into self.value."""
+        # append only if a value with the name does not already exist
+        for v in self.value:
+            if v.name == val.name:
+                return False
         self.value.append(val)
+        return True
 
     def get(self, name):
         """Get index ('address') by name."""
