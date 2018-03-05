@@ -35,6 +35,8 @@ class SScript
 
      // helper variables
      int32_t abortExpressionExecution;
+     int32_t abortStateExecution;
+     int32_t millis;
 
      // functions used in scripts (pointers)
      // void(*functions[])(int32_t *leftValue, int32_t *rightValue);

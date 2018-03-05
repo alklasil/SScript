@@ -1,7 +1,6 @@
 //
 //
 //
-
 #include "Configuration.h"
 
 // basic operations
@@ -19,6 +18,7 @@ void executeState(int32_t *leftValue, int32_t *rightValue) { sScript.executeStat
 void _if(int32_t *leftValue, int32_t *rightValue) { if (*rightValue == 0) sScript.abortExpressionExecution = 1; }
 void _else(int32_t *leftValue, int32_t *rightValue) { if (*rightValue != 0) sScript.abortExpressionExecution = 1; }
 void _abortExpressionExecution(int32_t *leftValue, int32_t *rightValue) { sScript.abortExpressionExecution = 1; };
+void _abortStateExecution(int32_t *leftValue, int32_t *rightValue) { sScript.abortStateExecution = 1; };
 
 // sensor read (transform inline void Sernsors::(int &, int) to void (int &, int))
 void mpu_readSensor(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
@@ -32,6 +32,26 @@ void mpu_getMagX_uT(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rig
 void mpu_getMagY_uT(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
 void mpu_getMagZ_uT(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
 void mpu_getTemperature_C(int32_t *leftValue, int32_t *rightValue) { *leftValue = *rightValue; }
+
+// timer
+void readTimer(int32_t *leftValue, int32_t *rightValue) {
+   // offset is not needed in teensy, as the millis() initializes to 0
+   static clock_t offset = clock();
+   clock_t c = clock() - offset;
+   int32_t c_f = (((float)c)/CLOCKS_PER_SEC)*1000;
+   sScript.millis = (c_f % LONG_MAX);
+}
+void getTime(int32_t *leftValue, int32_t *rightValue) {
+   *leftValue = sScript.millis;
+}
+void timeout(int32_t *leftValue, int32_t *rightValue){
+   // abort executeState if timeOut
+   if (sScript.millis - *leftValue < *rightValue) {
+      sScript.abortStateExecution = 1;
+   } else {
+      *leftValue = sScript.millis;
+   }
+}
 
 // print
 void printInt(int32_t *leftValue, int32_t *rightValue) { printf("%d", *rightValue); }
@@ -52,6 +72,11 @@ void(*functions[])(int32_t *leftValue, int32_t *rightValue) = {
     _if,
     _else,
     _abortExpressionExecution,
+    _abortStateExecution,
+    // timer
+    readTimer,
+    getTime,
+    timeout,
     // sensor read
     mpu_readSensor,
     mpu_getAccelX_mss,

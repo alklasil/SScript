@@ -44,7 +44,13 @@ class STDSFunctions:
                 sf("if"),
                 sf("else"),
                 sf(";"),                # abort expression execution,
+                sf("return"),           # abort state execution
                                         # leftvalue does not change
+                # timer
+                sf("readTimer"),
+                sf("getTime"),
+                sf("timeout"),
+
                 # sensor
                 sf("mpu_readSensor"),
                 sf("mpu_getAccelX_mss"),
@@ -137,6 +143,28 @@ class STDSFunctions:
         return self.expr([
             "0", "state", "executeState"
         ])
+
+    def readTimer(self):
+        """Get time in ms."""
+        return self.expr([
+            "readTimer"
+        ])
+
+    def getTime(self, timeVariable):
+        """Get time (which was stored when readTimer was last executed)."""
+        return self.expr([
+            timeVariable, "0", "getTime",
+        ])
+
+    def timeout(self, lastTimeout, length):
+        """If timeout, abort state execution."""
+        return self.expr([
+            lastTimeout, length, "timeout"
+        ])
+
+    def _conditionalReturn(self):
+        """Abort executing state, i.e., return from state."""
+        return self.createIFELSE("if", ["tmp", "return"])
 
     def setState(self, state):
         """Set next_state = state."""

@@ -13,6 +13,9 @@ SScript::SScript() {
 
     stateCount = 0;
     states = new State[stateCount];
+
+    abortStateExecution = 0;
+    abortExpressionExecution = 0;
 }
 
 int32_t SScript::setFunctions(void(*(*__functions))(int32_t *leftValue, int32_t *rightValue)) {

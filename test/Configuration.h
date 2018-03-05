@@ -13,6 +13,8 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
+#include <climits>
 #include "SScript.h"
 
 #define CONFIGURATION_TEST ""

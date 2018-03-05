@@ -31,6 +31,9 @@ class SVariable:
             SVariable("r5"), SVariable("r6"),
             SVariable("r7"), SVariable("r8"),
 
+            # timer
+            SVariable("millis"),
+
             # sensor variables
             # accelerometer
             SVariable("AccelX_mss"),             # amplitude in x-direction
@@ -52,6 +55,7 @@ class SVariable:
 
             # temperature
             SVariable("Temperature_C"),
+
         ]
 
     @staticmethod

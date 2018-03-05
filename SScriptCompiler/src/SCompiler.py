@@ -54,7 +54,8 @@ class SCompiler:
             for ei, expression in enumerate(state.getExpressions()):
                 # number of elements in expression
                 print("   expression(" + str(ei) + ") elements: "
-                      + str(expression.getLen()))
+                      + str(expression.getLen())
+                      + " [" + str(expression.get()) + "]")
                 c.append(str(expression.getLen()))
                 c.append(expression.get())
 
