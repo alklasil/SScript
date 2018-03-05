@@ -1,5 +1,5 @@
-//
-//
+// This is exaple configuration "library" for SScript
+// The configuration must provide the functions that can be called in SScript
 //
 #include "ESPConfiguration.h"
 
