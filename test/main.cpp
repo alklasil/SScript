@@ -21,8 +21,16 @@ int main(int argc, char* argv[])
   void(*(*_functions))(int32_t *leftValue, int32_t *rightValue) = functions;
 
   sScript.setFunctions(_functions);
-  char *buffer = argv[1];
+  char buffer[1024];
+  strcpy(buffer, argv[1]);
   sScript.set(buffer);
+  // HOX! when setting sScript. the buffer is destroyed
+  // If there is a change you may need to reuse the configuration,
+  // Do copy it somewhere safe first.
+  //  (This approach was chosen due to having limited memory in arduino devices)
+  //  (This may change in the future to be optional depending on need and time)
+  //strcpy(buffer, argv[1]);
+  //sScript.set(buffer);
 
   while (1) {
 
