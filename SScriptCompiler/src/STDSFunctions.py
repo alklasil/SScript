@@ -12,7 +12,7 @@ class STDSFunctions:
 
     def __init__(self,
                  stateNames=["main"],
-                 variableNameValuePairs=None,
+                 nameValuePairs=None,
                  initialState="main",
                  useSTDVariables=True,
                  useSTDFunctions=True):
@@ -23,7 +23,7 @@ class STDSFunctions:
         )
 
         self.v = sv.create(
-            nameValuePairs=variableNameValuePairs,
+            nameValuePairs=nameValuePairs,
             st=self.st,
             initialState=initialState,
             useSTDVariables=useSTDVariables)
@@ -66,6 +66,11 @@ class STDSFunctions:
                 # print (only int32_t for now)
                 sf("printInt"),
                 sf("printInt_ln"),
+                sf("printString"),
+                sf("printString_ln"),
+                sf("clearString"),
+                sf("concatString_String"),
+                sf("concatString_Int"),
             ])
 
     def getAllSTDFunctions(self):
@@ -275,6 +280,35 @@ class STDSFunctions:
             return self.expr([
                 "0", i, "printInt"
             ])
+
+    def printString(self, i, endl=False):
+        """Print string to serial port."""
+        if endl:
+            return self.expr([
+                "0", i, "printString_ln"
+            ])
+        else:
+            return self.expr([
+                "0", i, "printString"
+            ])
+
+    def clearString(self, var):
+        """Var = ''."""
+        return self.expr([
+            var, "0", "clearString"
+        ])
+
+    def concatString_String(self, leftValue, rightValue):
+        """LeftValue += rightValue."""
+        return self.expr([
+            leftValue, rightValue, "concatString_String"
+        ])
+
+    def concatString_Int(self, leftValue, rightValue):
+        """LeftValue += str(rightValue)."""
+        return self.expr([
+            leftValue, rightValue, "concatString_Int"
+        ])
 
     def inc(self, i):
         """Increase variable value by one."""

@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <stdio.h>
 #include <string.h>
+#include "SScript.h"
 
 #if defined(ARDUINO) && ARDUINO >= 100
 	#include "wprogram.h"
@@ -23,5 +24,6 @@
 
 extern void(*(*_functions))(int32_t *leftValue, int32_t *rightValue);
 int32_t getInt();
+String getString();
 
 #endif

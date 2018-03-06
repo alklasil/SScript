@@ -1,7 +1,15 @@
 #include "SScriptCommon.h"
-#include "SScript.h"
 
 void(*(*_functions))(int32_t *leftValue, int32_t *rightValue);
+
+char *getNext(char sep) {
+   char *next = strchr(sScript.str, sep);
+   if (next != NULL) { // if not last element
+      *next = '\0';   // null terminate
+      next++;         // move to the beginning og the next element
+   }
+   return next;
+}
 
 int32_t getInt() {
 
@@ -10,17 +18,18 @@ int32_t getInt() {
 
     // return: parsed int32_t.
     // set s = NULL if last_element else next_element
-
-    int32_t i;
-    char *next = strchr(sScript.str, ' ');
-    if (next != NULL) { // if not last element
-        *next = '\0';   // null terminate
-        next++;         // move to the beginning og the next element
-    }
-    i = atoi(sScript.str);
+    char *next = getNext(' ');
+    int32_t i = atoi(sScript.str);
     sScript.str = next;
-    // getchar();
-    // DEBUG_PRINT("getInt[%d]\n", i);
 
     return i;
+}
+
+String getString() {
+   // strings are separated by ';' in the buffer
+
+   char *next = getNext(';') + 1;
+   String s = String(sScript.str);
+   sScript.str = next;
+   return s;
 }

@@ -7,7 +7,7 @@ def main():
     # program
     p = program(
         # variables ["var1", ("var2", value), "var3", ("var4", value)]
-        ["lastTimedOut", ("timeout_length", 1000), ("i", 123)],
+            ["lastTimedOut", ("timeout_length", 1000), ("i", 123)],
         # set fps to manual
         fps=None,
         # program (state, [expressions])

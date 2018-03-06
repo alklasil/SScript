@@ -9,6 +9,12 @@
 	#include "WProgram.h"
 #endif
 
+#if !defined(ARDUINO)
+   #include <iostream>
+   using namespace std;
+   //#define String string
+   typedef string String;
+#endif
 #include "SScriptCommon.h"
 #include "State.h"
 
@@ -24,6 +30,9 @@ class SScript
 
      int32_t variableCount;
      int32_t *variables;
+
+     int32_t stringCount;
+     String *strings;
 
      SScript();
      // int32_t setFunctions(void(**__functions)(int32_t *leftValue, int32_t *rightValue));

@@ -45,13 +45,29 @@ int32_t SScript::set(char *buffer) {
     if (variablesToInitialize != 0) {
         for (int32_t i = 0; i < variablesToInitialize; i++) {
             int32_t index = getInt();
-            int32_t value = getInt();
-
-            variables[index] = value;
+            variables[index] = getInt();
             DEBUG_PRINT("variables[%d]: %d\n", index, variables[index]);
         }
     }
 
+    // allocate strings
+    stringCount = getInt();
+    DEBUG_PRINT("stringCount:%d\n", stringCount);
+    delete[] strings;
+    strings = new String[stringCount];
+    for (int32_t i = 0; i < stringCount; i++) strings[i] = String(" ");
+
+    // initialize strings
+    int32_t stringsToInitialize = getInt();
+    DEBUG_PRINT("stringsToInitialize:%d\n", stringsToInitialize);
+    if (stringsToInitialize != 0) {
+        for (int32_t i = 0; i < stringsToInitialize; i++) {
+            int32_t index = getInt();
+            strings[index] = getString();
+            cout << strings[index] << endl;
+            //DEBUG_PRINT("strings[%d]: %d\n", index, strings[index]);
+        }
+    }
     // allocate states
     stateCount = getInt();
     DEBUG_PRINT("stateCount: %d\n", stateCount);
@@ -65,7 +81,6 @@ int32_t SScript::set(char *buffer) {
         states[i].set(s);
 
     }
-
 
 }
 

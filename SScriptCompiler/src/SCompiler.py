@@ -19,19 +19,39 @@ class SCompiler:
         print("\nCOMPILING...\n")
 
         c = []  # = self.compiled
+        vs = self.v.getValue2SLists()
+        variables = vs[0]
+        strings = vs[1]
+
         # number of variables
-        c.append(str(v.getLen()))
+        c.append(str(variables.getLen()))
         # initialize values (number of values to initialize)
         num = 0  # number/count of values to initialize
-        for vi, variable in enumerate(v.getValue()):
+        for vi, variable in enumerate(variables.getValue()):
             if variable.getValue() != 0:
                 num += 1
         c.append(str(num))
         # initialize values (initialize values)
-        for vi, variable in enumerate(v.getValue()):
+        for vi, variable in enumerate(variables.getValue()):
             if variable.getValue() != 0:
                 c.append(str(vi))
                 c.append(str(variable.getValue()))
+
+        # number of strings
+        c.append(str(strings.getLen()))
+        subc = []
+        # initialize values (number of values to initialize)
+        num = 0  # number/count of values to initialize
+        for si, s1 in enumerate(strings.getValue()):
+            if s1.getValue() != "":
+                num += 1
+        c.append(str(num))
+        # initialize values (initialize values)
+        for si, s1 in enumerate(strings.getValue()):
+            if s1.getValue() != "":
+                c.append(str(si))
+                c.append(str(s1.getValue()) + ";")
+
         # number of states
         print("states:" + str(s.getLen()))
         c.append(str(s.getLen()))

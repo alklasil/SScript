@@ -8,7 +8,8 @@ from src.SCompiler import SCompiler as co
 class SProgram:
     """Program class for SScript."""
     def __init__(self,
-                 variableNameValuePairs=None,
+                 variableNameValuePairs=[],
+                 stringNameValuePairs=[],
                  initialState="main",
                  useSTDVariables=True,
                  useSTDFunctions=True,
@@ -29,12 +30,17 @@ class SProgram:
                 ["executeState"]
             ])] + program
 
+        nameValuePairs = [
+            variableNameValuePairs,
+            stringNameValuePairs
+        ]
+
         if fps is not None:
             # create variable for timeout with the fps provided
-            variableNameValuePairs = [
+            nameValuePairs[0] = [
                 "_lastTimedOut",
                 ("_timeoutLength", int((1/fps)*1000)),
-            ] + variableNameValuePairs
+            ] + nameValuePairs[0]
             # add readTimer & timeout into main
             # (hox! if fps is None and user wants to use timer,
             #  readTimer is required to be added manually,
@@ -61,7 +67,7 @@ class SProgram:
 
         self.f = stdf(
             stateNames=self.st,
-            variableNameValuePairs=variableNameValuePairs,
+            nameValuePairs=nameValuePairs,
             initialState=initialState,
             useSTDVariables=useSTDVariables,
             useSTDFunctions=useSTDFunctions)
@@ -93,7 +99,7 @@ class SProgram:
         self.compiled = None
 
         print("variables:")
-        print(variableNameValuePairs)
+        print(nameValuePairs)
         print("")
         print("PROGRAM INITIALIZED")
 

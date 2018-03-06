@@ -21,7 +21,6 @@ int32_t State::set(char *s)
     for (int32_t i = 0; i < expressionCount; i++) {
 
         expressions[i].set(s);
-
     }
 }
 
