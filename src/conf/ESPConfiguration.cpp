@@ -35,11 +35,15 @@ void mpu_getTemperature_C(int32_t *leftValue, int32_t *rightValue) { *leftValue 
 
 // timer
 void readTimer(int32_t *leftValue, int32_t *rightValue) {
+#if defined(ARDUINO)
+   sScript.millis = millis();
+#else
    // offset is not needed in teensy, as the millis() initializes to 0
    static clock_t offset = clock();
    clock_t c = clock() - offset;
    int32_t c_f = (((float)c)/CLOCKS_PER_SEC)*1000;
    sScript.millis = (c_f % LONG_MAX);
+#endif
 }
 void getTime(int32_t *leftValue, int32_t *rightValue) {
    *leftValue = sScript.millis;
@@ -54,8 +58,20 @@ void timeout(int32_t *leftValue, int32_t *rightValue){
 }
 
 // print
-void printInt(int32_t *leftValue, int32_t *rightValue) { printf("%d", *rightValue); }
-void printInt_ln(int32_t *leftValue, int32_t *rightValue) { printf("%d\n", *rightValue); }
+void printInt(int32_t *leftValue, int32_t *rightValue) {
+#if defined(ARDUINO)
+    Serial.print(*rightValue);
+#else
+    printf("%d", *rightValue);
+#endif
+}
+void printInt_ln(int32_t *leftValue, int32_t *rightValue) {
+#if defined(ARDUINO)
+    Serial.println(*rightValue);
+#else
+    printf("%d\n", *rightValue);
+#endif
+}
 
 void(*functions[])(int32_t *leftValue, int32_t *rightValue) = {
     // basic operations
