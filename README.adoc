@@ -1,6 +1,7 @@
 = SScript scripting Library for Arduino =
 
 * SScript is a relatively high performance scripting library.
+* The library enables the use of gustom c++ functions easily.
 * The compiler is coded in python for ease of use.
 * The 'intepreter' is coded in c++ for performance.
 
@@ -192,6 +193,70 @@ sys	0m15.792s
 ```
 
 ###### On a teensy3.2 board (coming...)
+
+
+#### Example configuration file (provided in a configuration c++ file, e.g., configuration.cpp)
+
+* Configuration file provides the functions for SScript.
+* HOX! all the functions definitions are not shown. 
+
+*ESPConfiguration.cpp*
+```c++
+#include "ESPConfiguration.h"
+
+void add(int32_t *leftValue, int32_t *rightValue) { *leftValue += *rightValue; }
+void sub(int32_t *leftValue, int32_t *rightValue) { *leftValue -= *rightValue; }
+....
+void readTimer(int32_t *leftValue, int32_t *rightValue) { ... }
+...
+
+void(*functions[])(int32_t *leftValue, int32_t *rightValue) = {
+    add,
+    sub,
+    ...
+    readTimer,
+    ...
+};
+```
+*ESPConfiguration.h*
+```c++
+...
+extern void(*functions[])(int32_t *leftValue, int32_t *rightValue);
+...
+```
+
+ * The functions must match the SScript functions defined in STDSfunctions.py and vise versa (at least the order of functions, not neseccarily the names).
+ * The functions in STDSfunctions.py are for now hardcoded, this will change in the future. 
+
+*STDSFunctions.py*
+```python
+...
+            self.f = sl([
+                ...
+                sf("+"),                # leftValue += righValue
+                sf("-"),
+                ...
+                sf("readTimer"),
+                ...
+            ])
+...
+```
+
+*How to use the functions and configure the device:*
+
+ * HOX! see the c++ (example) file above
+
+```c++
+...
+  void(*(*_functions))(int32_t *leftValue, int32_t *rightValue) = functions;
+  sScript.setFunctions(_functions);
+  
+  sScript.set(configuration_str); // where configuration_str might be '29 2 3 1 4 0 1 1 0 Hello world! ; 1 3 3 27 3 0 3 2 28 29 3 2 27 28'
+```
+
+
+
+
 
 For more information about this library please visit us at
 https://github.com/alklasil/SScript
