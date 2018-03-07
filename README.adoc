@@ -193,7 +193,6 @@ sys	0m15.792s
 
 ###### On a teensy3.2 board (coming...)
 
-
 For more information about this library please visit us at
 https://github.com/alklasil/SScript
 
