@@ -7,8 +7,8 @@
 // for more detail
 #include "ESPConfiguration.h"
 
-// example configuration (not working anymore, too old):
-// ./main "9 4 2 15 3 10 5 1 6 1 4 1 3 6 4 10 1 6 6 4 9 2 4 8 6 3 8 5 13 3 0 5 23 5 7 3 4 0 5 8 6 7 11 4 9 3 4 8 3 1 5 0 3 1 4 24 4 3 8 5 13 3 0 5 23 5 7 2 4 0 6 8 6 7 11 4 9 2 4 8"
+// example usage:
+// ./main "31 3 3 1 4 0 28 1000 1 1 0 Hello world! ; 1 5 1 13 3 27 28 15 3 29 3 0 3 2 30 29 3 2 29 28"
 
 int main(int argc, char* argv[])
 {
@@ -29,13 +29,12 @@ int main(int argc, char* argv[])
   // Do copy it somewhere safe first.
   //  (This approach was chosen due to having limited memory in arduino devices)
   //  (This may change in the future to be optional depending on need and time)
-  //strcpy(buffer, argv[1]);
-  //sScript.set(buffer);
 
   while (1) {
+      // do here what ever you want!
+      // for example: check if there are requests for a web page.
+      //              or do what ever it is that needs doing.
 
       sScript.loop();
-
   }
-
 }
