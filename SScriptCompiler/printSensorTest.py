@@ -1,18 +1,23 @@
-"""Print 123 in a loop."""
+"""Print in a loop."""
 from src.SProgram import SProgram as program
 
 
 def main():
-    """Print 123 in loop."""
+    """Print 'Hello world!' and similar texts in loop."""
     # program
     p = program(
-        # variables ["var1", ("var2", value), "var3", ("var4", value)]
-        [("p", 123)],
         fps=2,
-        # program (state, [expressions])
         program=[
             ("main", [
-                ["printInt", "p"]
+                # read MPU
+                ["readMPU"],
+
+                # get temperature
+                ["getMpuValue", "Temperature_C"],
+
+                # print
+                ["printInt", "Temperature_C", True],
+
             ])
         ])
     # compile and print the program

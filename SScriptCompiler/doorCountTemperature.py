@@ -15,7 +15,9 @@ def main():
     # program
     p = program(
         # variables (count & thresholds)
-        ["count", ("tUP", 15), ("tDOWN", 10)],
+        ["count", ("tUP", 17), ("tDOWN", 12)],
+        [("_count", "count: ")],
+        fps=100,
         # program (state, [expressions])
         initialState="init",
         program=[
@@ -23,8 +25,9 @@ def main():
                 # TODO: add sensor-configuring here
                 #   (Otherwise whis state is not required)
 
-                # for now, assume: door is initially closed
-                ["setState", ">t"]
+                # set door open (closing does not add count)
+                ["setState", "<t"],
+                ["printInt", "Temperature_C"]
             ]),
             (">t", [
                 # read MPU
@@ -37,7 +40,9 @@ def main():
                 ["setConditional", "Temperature_C",  "<", "tDOWN"],
 
                 # if [?] state = "<t>" for processing
-                ["conditionalSetState", "<t>"]
+                ["conditionalSetState", "<t>"],
+
+                ["printInt", "Temperature_C", True]
             ]),
             ("<t>", [
                 # state = "opening the door",
@@ -45,7 +50,8 @@ def main():
                 # increase count by one
                 ["inc", "count"],
                 # "debug" print the increased value
-                ["printInt", "count"],
+                ["printString", "count"],
+                ["printInt", "count", True],
                 # set state
                 ["setState", "<t"]
             ]),
@@ -60,7 +66,9 @@ def main():
                 ["setConditional", "Temperature_C", ">", "tUP"],
 
                 # if [?] state = "<t"
-                ["conditionalSetState", ">t"]
+                ["conditionalSetState", ">t"],
+
+                ["printInt", "Temperature_C", True]
             ]),
         ])
     # compile and print the program
