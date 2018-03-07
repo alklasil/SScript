@@ -159,8 +159,9 @@ Hello world! 15
 
 #### Performance
 
-* HOX! performance depends on the platform, the script used and the SScript version used. 
+* HOX! Performance depends on the platform, the script used and the SScript version used. 
 * HOX! Printing the characters to the concole slows the execution down.
+* HOX! The script file was modified (fps=None, which means there is no active fps limiter). 
 
 ##### On a laptop
  * Intel(R) Core(TM) i3-5010U CPU @ 2.10GHz
