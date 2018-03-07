@@ -1,5 +1,169 @@
 = SScript scripting Library for Arduino =
 
+* SScript is a high performance scripting library.
+* The compiler is coded in python for ease of use.
+* The 'intepreter' is coded in c++ for performance.
+
+
+### Hello world
+
+#### Script file:
+
+```python
+"""Print in a loop."""
+from src.SProgram import SProgram as program
+
+
+def main():
+    """Print 'Hello world!' int(count) in a loop."""
+    # program
+    p = program(
+        variableNameValuePairs=[
+            # initialize count = 0
+            "count"
+            # initialize count = 1
+            # ("count", 1)
+            # create list("count", 3) (= count[0], count[1], count[2])
+            # ["count", 3]
+        ],
+        # set strings
+        stringNameValuePairs=[
+            ("helloworld_str", "Hello world! "),
+        ],
+        # set frames/second = 1
+        #   (How to set fps for invidual states: See timerTest)
+        #   (i.e., simple multithreading)
+        fps=1,
+        # program (state, [expressions])
+        program=[
+            ("main", [
+                # increase count by one
+                ["inc", "count"],
+                # print("Hello world!", endl=False)
+                ["printString", "helloworld_str"],
+                # print(count, endl = True)
+                ["printInt", "count", True],
+            ])
+        ])
+    # compile and print the program
+    p.compile()
+
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
+```
+
+#### Script compilation:
+
+```bash
+$ python3 simpleHelloworld.py
+
+INITIALIZING PROGRAM...
+
+states:
+('main', [['readTimer'], ['timeout', '_lastTimedOut', '_timeoutLength'], ['inc', 'count'], ['printString', 'helloworld_str'], ['printInt', 'count', True]])
+
+variables:
+[['_lastTimedOut', ('_timeoutLength', 1000), 'count'], [('helloworld_str', 'Hello world! ')]]
+
+PROGRAM INITIALIZED
+
+COMPILING...
+
+states:1
+ state(0) expressions: 5
+   expression(0) elements: 1 [13]
+   expression(1) elements: 3 [27 28 15]
+   expression(2) elements: 3 [29 3 0]
+   expression(3) elements: 3 [2 30 29]
+   expression(4) elements: 3 [2 29 28]
+
+COMPILED...
+
+31 3 3 1 4 0 28 1000 1 1 0 Hello world! ; 1 5 1 13 3 27 28 15 3 29 3 0 3 2 30 29 3 2 29 28
+
+```
+
+##### C++ file (example)
+
+```c++
+#include <iostream>
+#include "SScript.h"
+// ESPConfiguration can be changed to another
+// The configuration file must provide extern
+// functions, nothing else.
+// see https://github.com/alklasil/ESP/blob/master/teensySoftware/teensySoftware/ESPConfiguration.cpp
+// for more detail
+#include "ESPConfiguration.h"
+
+// example configuration (not working anymore, too old):
+// ./main "31 3 3 1 4 0 28 1000 1 1 0 Hello world! ; 1 5 1 13 3 27 28 15 3 29 3 0 3 2 30 29 3 2 29 28"
+
+int main(int argc, char* argv[])
+{
+
+  if (argc < 2) {
+     printf("Usage: %s %s \n", argv[0], "<CONFIGURATION>");
+     return 1;
+  }
+
+  void(*(*_functions))(int32_t *leftValue, int32_t *rightValue) = functions;
+
+  sScript.setFunctions(_functions);
+  char buffer[1024];
+  strcpy(buffer, argv[1]);
+  sScript.set(buffer);
+  // HOX! when setting sScript. the buffer is destroyed
+  // If there is a change you may need to reuse the configuration,
+  // Do copy it somewhere safe first.
+  //  (This approach was chosen due to having limited memory in arduino devices)
+  //  (This may change in the future to be optional depending on need and time)
+
+  while (1) {
+      sScript.loop();
+  }
+}
+```
+
+#### C++ compile
+Platform depended. Can be compiled for arduino and linux (windows not supported yet).
+ 
+#### (C++ test) compile (example)
+
+```bash
+$ g++ *.cpp ../src/*.cpp <Other files (such as configuration.cpp, sensors.cpp, etc), depends> -std=c++11 -I ../src -I <Other paths> -o main
+```
+
+#### (C++ test) run (DEBUG disabled)
+
+```c++
+$ ./main '31 3 3 1 4 0 28 1000 1 1 0 Hello world! ; 1 5 1 13 3 27 28 15 3 29 3 0 3 2 30 29 3 2 29 28'
+Hello world! 1
+Hello world! 2
+Hello world! 3
+Hello world! 4
+Hello world! 5
+Hello world! 6
+Hello world! 7
+Hello world! 8
+Hello world! 9
+Hello world! 10
+Hello world! 11
+Hello world! 12
+Hello world! 13
+Hello world! 14
+Hello world! 15
+...
+```
+
+
+
+
+
+
+
+
 For more information about this library please visit us at
 https://github.com/alklasil/SScript
 
