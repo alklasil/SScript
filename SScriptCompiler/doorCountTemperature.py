@@ -15,8 +15,16 @@ def main():
     # program
     p = program(
         # variables (count & thresholds)
-        ["count", ("tUP", 17), ("tDOWN", 12)],
-        [("_count", "count: ")],
+        [
+            "count",
+            ("tUP", 17),
+            ("tDOWN", 12)
+        ],
+        [
+            # HOX! there cannot be similarly named variables and strings
+            # count and _count are equal,
+            ("count_str", "count(door opened): ")
+        ],
         fps=100,
         # program (state, [expressions])
         initialState="init",
@@ -42,7 +50,7 @@ def main():
                 # if [?] state = "<t>" for processing
                 ["conditionalSetState", "<t>"],
 
-                ["printInt", "Temperature_C", True]
+                #["printInt", "Temperature_C", True]
             ]),
             ("<t>", [
                 # state = "opening the door",
@@ -50,7 +58,7 @@ def main():
                 # increase count by one
                 ["inc", "count"],
                 # "debug" print the increased value
-                ["printString", "count"],
+                ["printString", "count_str"],
                 ["printInt", "count", True],
                 # set state
                 ["setState", "<t"]
@@ -68,7 +76,7 @@ def main():
                 # if [?] state = "<t"
                 ["conditionalSetState", ">t"],
 
-                ["printInt", "Temperature_C", True]
+                #["printInt", "Temperature_C", True]
             ]),
         ])
     # compile and print the program

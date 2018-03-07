@@ -87,7 +87,13 @@ class SVariable:
         # (this can be optimized by optional initializations, TODO)
         nameValuePairs[0] = nameValuePairs[0] + [
             # strings' variables are named as name, instead of _name
-            (nvp[0][1:] if type(nvp) is tuple else nvp[1:], nvpi)
+            (nvp[0] if type(nvp) is tuple else nvp, nvpi)
+            for nvpi, nvp in enumerate(nameValuePairs[1])
+        ]
+
+        nameValuePairs[1] = [
+            # strings are named as '_name'
+            (("_" + nvp[0], nvp[1]) if type(nvp) is tuple else "_" + nvp)
             for nvpi, nvp in enumerate(nameValuePairs[1])
         ]
 

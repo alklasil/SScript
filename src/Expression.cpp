@@ -43,14 +43,10 @@ int32_t Expression::execute() {
         // leftValue = &sScript.variables[*leftValue];
         // There can be more elements though
         for (int32_t i = 1; i < elementCount; i += 2) {
-
             rightValue = &elements[i];
             functionIndex = &elements[i + 1];
-
             rightValue = parseIndex(rightValue);
-
             _functions[*functionIndex](leftValue, rightValue);
-
             // printf("...%d...%d...%d/%d...%d\n", sScript.abortExpressionExecution, *functionIndex, i, elementCount, elements[i]);
 
             if (sScript.abortExpressionExecution != 0) {

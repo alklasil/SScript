@@ -11,10 +11,10 @@ def main():
             ("p", "&pointerText"),
         ],
         [
-            ("_text", "Hello world!"),
-            ("_pointerText", "Hello pointer!"),
-            ("_sep", " - "),
-            ("_text_concat"),
+            ("text", "Hello world!"),
+            ("pointerText", "Hello pointer!"),
+            ("sep", " - "),
+            ("text_concat"),
         ],
         # or (if there are only strings, no int variables)
         #stringNameValuePairs=[
