@@ -18,10 +18,11 @@ def main():
         stringNameValuePairs=[
             ("helloworld_str", "Hello world! "),
         ],
-        # set frames/second = 1
+        # set frames/second = None == no fps limiter
+        # (used for testing)
         #   (How to set fps for invidual states: See timerTest)
         #   (i.e., simple multithreading)
-        fps=1,
+        fps=None,
         # program (state, [expressions])
         program=[
             ("main", [

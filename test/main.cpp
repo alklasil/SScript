@@ -34,7 +34,6 @@ int main(int argc, char* argv[])
       // do here what ever you want!
       // for example: check if there are requests for a web page.
       //              or do what ever it is that needs doing.
-
       sScript.loop();
   }
 }

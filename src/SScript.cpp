@@ -84,9 +84,9 @@ int32_t SScript::set(char *buffer) {
 
 }
 
-int32_t SScript::executeState(int32_t index) {
+void SScript::executeState(int32_t index) {
 
-    return states[index].execute();
+    states[index].execute();
 
 }
 

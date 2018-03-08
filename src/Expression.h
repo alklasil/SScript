@@ -24,7 +24,6 @@ class Expression
      ~Expression();
      int32_t set(char *s);
 
-     int32_t *nextElement(int32_t *element);
      int32_t execute();
 
 };

@@ -39,8 +39,8 @@ class SScript
      int32_t setFunctions(void(*(*__functions))(int32_t *leftValue, int32_t *rightValue));
      int32_t set(char *buffer);
 
+     void executeState(int32_t index);
      void loop();
-     int32_t executeState(int32_t index);
 
      // helper variables
      int32_t abortExpressionExecution;
