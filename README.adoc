@@ -272,9 +272,108 @@ extern void(*functions[])(int32_t *leftValue, int32_t *rightValue);
   sScript.set(configuration_str); // where configuration_str might be '29 2 3 1 4 0 1 1 0 Hello world! ; 1 3 3 27 3 0 3 2 28 29 3 2 27 28'
 ```
 
+#### Simple c++ arduino example
 
+* The code is only an example, it is not supposed to do anything fancy.
+* The code was tested using DCcduino UNO (see below: test run)
 
+##### Simple c++ arduino example code
 
+```c++
+#include <SScript.h>
+
+// functions provided for sScript
+//   function prototype must always be: int32_t function_name(int32_t *leftValue, int32_t *rightValue);
+void add(int32_t *leftValue, int32_t *rightValue) { *leftValue += *rightValue; }
+void printInt_ln(int32_t *leftValue, int32_t *rightValue) {
+    Serial.println(*rightValue);
+}
+
+// array of function pointers provided for sScript.
+//   We only provide the pointer to the array of function ponters for sScript. It can use that to call the functions with indented parameters
+void(*functions[])(int32_t *leftValue, int32_t *rightValue) = {
+    // basic operations
+    add,
+    printInt_ln
+};
+
+void setup() {
+  Serial.begin(9600);
+  // Example program (set available functions)
+  void(*(*_functions))(int32_t *leftValue, int32_t *rightValue) = functions;
+  sScript.setFunctions(_functions);
+  // Example program (configure):
+  // 1 variables, 
+  // 1 variable initializations
+  // 0 2 set variables[0] = 2
+  // 0 strings, 
+  // 0 string initializations,
+  // 1 state
+  // 2 expressions
+  // 3 elements (
+  //   0 variables[0] 
+  //   0 variables[0]
+  //   0 = add (The functions that adds leftValue and rightValue & stores the result into leftValue)
+  //     (in this case: variables[0] += variables[0];)
+  // 3 elements (
+  //    0 variables[0] [left value does not matter, but is required for > 1 element expressions, 2 elements -> constant set], 1 element -> function without arguments
+  //    0 variables[0] (the variable that gets printed)
+  //    1 printInt_ln (the function, that prints variables[0])
+  //     (in this case: Serial.println(variables[0]))
+  char buffer[] = "1 1 0 2 0 0 1 2 3 0 0 0 3 0 0 1";
+  sScript.set(buffer);
+}
+
+void loop() {
+  // Example program (loop):
+  //    variables[0] += variables[0];
+  //    Serial.println(variables[0]);
+  sScript.loop();
+}
+
+//   (coming SOON...)
+// Support for external libraries in the compiler is coming. for now though, it is required for the configuration_str to be assembled/compiled by hand
+
+```
+##### Simple c++ arduino example test run (DCcduino UNO)
+```bash
+...
+256
+512
+1024
+2048
+4096
+8192
+16384
+32768
+65536
+131072
+262144
+524288
+...
+Result: OK!
+```
+##### Simple c++ arduino example test run extra information (DCcduino UNO)
+```bash
+Used 16% of program memory (max 32256 B)
+Used 13% (270 B) of dynamic memory by global variables, leaves 1778 B for local variables (max 2048 B).
+   (most of the memory is used by the configuration buffer)
+   (The buffer must be dynamic, or at least not constant, as that would defead the purpose (scripting, reconfiguring))
+Used ~100 B of dynamic memory by local variables when configured.
+
+conclusion:
+   sScript does not require much memory and the memory usage is likely to be even less in the future.
+   execution is fast even with somewhat lower end hardware.
+
+More testing:
+
+char buffer[] = "1 1 0 2 0 0 1 40 3 0 0 0 3 0 0 1 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 1 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0 3 0 0 0";
+(Works fine, with 80 expressions worked too, but it's really too little memory to work with comfortably, and some artifacts are to be expected [see below optional way of interpreting the script {TODO}])
+
+conclusion:
+   optionally enabled "assenbly line" interpreter todo in the future, as buffer may take too much space
+   (idea: until(lastElementReceived) receive 1 element at a time, interpret it
+```
 
 For more information about this library please visit us at
 https://github.com/alklasil/SScript
