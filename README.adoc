@@ -207,6 +207,7 @@ conclusion: The performance is good.
  TODO: make flush optional in printString, as that is what causes the 2s difference in execution time.
  TODO: This test is not conclusive, as the real slowdown here is caused py printing the data.
        (would require different kind of test for conclusive result, perhaps in the future).
+       Nevertheless, the performance is good enough for now, optimizations can be done in the future by flattening call stack (for example indirect function calls, etc..), but that is not required for now.
        
 ```
 
