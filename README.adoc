@@ -199,14 +199,15 @@ Hello world! 1022511
 Hello world! 1022512
 Hello world! 1022513^C
 
-real	0m5.618s
+real	0m5.618s (or ~7.5 if flush after "Helloworld!")
 user	0m0.593s
 sys	0m2.681s
 
-conclusion: Still somewhat to optimize, but fast enough for now.
- (we can flatten the code structure with indirect function calls, but that will have to wait).
- (+the performance needs to be tested on teensy or similar arduino board, as that is the indented end platform).
-
+conclusion: The performance is good.
+ TODO: make flush optional in printString, as that is what causes the 2s difference in execution time.
+ TODO: This test is not conclusive, as the real slowdown here is caused py printing the data.
+       (would require different kind of test for conclusive result, perhaps in the future).
+       
 ```
 
 ###### On a teensy3.2 board (coming...)
