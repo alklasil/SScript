@@ -192,11 +192,16 @@ real	0m7.634s
 user	0m1.123s
 sys	0m4.494s
 
-vs (while(1) printf("Hello world! %d\n", i++);)
+vs (while(1) cout << "Hello world! " << i++ << endl;)
 
-real	0m5.559s
-user	0m0.595s
-sys	0m2.630s
+Hello world! 1022510
+Hello world! 1022511
+Hello world! 1022512
+Hello world! 1022513^C
+
+real	0m5.618s
+user	0m0.593s
+sys	0m2.681s
 
 conclusion: Still somewhat to optimize, but fast enough for now.
  (we can flatten the code structure with indirect function calls, but that will have to wait).
