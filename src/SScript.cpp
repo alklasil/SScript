@@ -64,7 +64,7 @@ int32_t SScript::set(char *buffer) {
         for (int32_t i = 0; i < stringsToInitialize; i++) {
             int32_t index = getInt();
             strings[index] = getString();
-            cout << strings[index] << endl;
+            // cout << strings[index] << endl;
             //DEBUG_PRINT("strings[%d]: %d\n", index, strings[index]);
         }
     }

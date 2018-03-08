@@ -3,10 +3,8 @@
 #ifndef _STATE_h
 #define _STATE_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "wprogram.h"
-#elif defined(ARDUINO)
-	#include "WProgram.h"
+#if defined(ARDUINO)
+	#include "Arduino.h"
 #endif
 
 #include "SScriptCommon.h"

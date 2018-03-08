@@ -1,16 +1,16 @@
 #ifndef _SSCRIPTCOMMON_h
 #define _SSCRIPTCOMMON_h
 
-#include <cstdint>
-#include <cstdlib>
+#include <inttypes.h>
+#if !defined(ARDUINO)
+    #include <cstdlib>
+#endif
 #include <stdio.h>
 #include <string.h>
 #include "SScript.h"
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "wprogram.h"
-#elif defined(ARDUINO)
-	#include "WProgram.h"
+#if defined(ARDUINO)
+	#include "Arduino.h"
 #endif
 
 #define DEBUG

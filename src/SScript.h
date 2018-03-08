@@ -3,10 +3,8 @@
 #ifndef _SSCRIPT_h
 #define _SSCRIPT_h
 
-#if defined(ARDUINO) && ARDUINO >= 100
-	#include "wprogram.h"
-#elif defined(ARDUINO)
-	#include "WProgram.h"
+#if defined(ARDUINO)
+	#include "Arduino.h"
 #endif
 
 #if !defined(ARDUINO)
