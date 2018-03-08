@@ -188,9 +188,19 @@ Hello world! 1018430
 Hello world! 1018431
 ^C
 
-real	0m7.881s
-user	0m1.063s
-sys	0m4.644s
+real	0m7.634s
+user	0m1.123s
+sys	0m4.494s
+
+vs (while(1) printf("Hello world! %d\n", i++);)
+
+real	0m5.559s
+user	0m0.595s
+sys	0m2.630s
+
+conclusion: Still somewhat to optimize, but fast enough for now.
+ (we can flatten the code structure with indirect function calls, but that will have to wait).
+ (+the performance needs to be tested on teensy or similar arduino board, as that is the indented end platform).
 
 ```
 
