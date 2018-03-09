@@ -5,7 +5,7 @@
 * The compiler is coded in python for ease of use.
 * The 'intepreter' is coded in c++ for performance.
 * SScript is a close cousing of [S2Script](https://github.com/alklasil/S2Script)
-
+* TODO: separate stdFunctions & stdVariables from gustomFunctions & gustomVariables
 
 ### Hello world
 
