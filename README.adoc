@@ -4,6 +4,7 @@
 * The library enables the use of gustom c++ functions easily.
 * The compiler is coded in python for ease of use.
 * The 'intepreter' is coded in c++ for performance.
+* SScript is a close cousing of [S2Script](https://github.com/alklasil/S2Script)
 
 
 ### Hello world
