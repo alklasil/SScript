@@ -3,6 +3,7 @@ from src.SState import SState as ss
 from src.SList import SList as sl
 from src.STDSFunctions import STDSFunctions as stdf
 from src.SCompiler import SCompiler as co
+from src.conf.std import Std as Std
 
 
 class SProgram:
@@ -11,8 +12,7 @@ class SProgram:
                  variableNameValuePairs=[],
                  stringNameValuePairs=[],
                  initialState="main",
-                 useSTDVariables=True,
-                 useSTDFunctions=True,
+                 confs=[Std()],
                  fps=60,
                  program=[]):
         """parse program states & state, expression pairs (program)."""
@@ -69,8 +69,7 @@ class SProgram:
             stateNames=self.st,
             nameValuePairs=nameValuePairs,
             initialState=initialState,
-            useSTDVariables=useSTDVariables,
-            useSTDFunctions=useSTDFunctions)
+            confs=confs)
         # execute expression functions
         #   (easier job for the compiler)
         self.stets = []

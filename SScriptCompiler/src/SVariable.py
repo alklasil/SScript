@@ -17,7 +17,6 @@ class SVariable:
         """Return name"""
         return self.value
 
-        # stdVariables
     @staticmethod
     def stdVariables(st, intialState="main"):
         """Return std variables."""
@@ -30,42 +29,12 @@ class SVariable:
             SVariable("0"), SVariable("1", 1),
             SVariable("state", st.get(intialState)),
 
-            # a few 'registers' for general use
-
-            SVariable("r1"), SVariable("r2"),
-            SVariable("r3"), SVariable("r4"),
-            SVariable("r5"), SVariable("r6"),
-            SVariable("r7"), SVariable("r8"),
-
             # timer
             SVariable("millis"),
-
-            # sensor variables
-            # accelerometer
-            SVariable("AccelX_mss"),             # amplitude in x-direction
-            SVariable("AccelZ_mss"),             # amplitude in z-direction
-            SVariable("AccelY_mss"),             # amplitude in y-direction
-            SVariable("Accel_mss"),              # amplitude of [x,y,z]
-
-            # gyroscope
-            SVariable("GyroX_rads"),
-            SVariable("GyroY_rads"),
-            SVariable("GyroZ_rads"),
-            SVariable("Gyro_rads"),
-
-            # magnetometer
-            SVariable("MagY_uT"),
-            SVariable("MagX_uT"),
-            SVariable("MagZ_uT"),
-            SVariable("Mag_uT"),
-
-            # temperature
-            SVariable("Temperature_C"),
-
         ]
 
     @staticmethod
-    def create(nameValuePairs, st, initialState="init", useSTDVariables=True):
+    def create(nameValuePairs, st, confs, initialState="init"):
         """nameValuePairs -> [[variables(name, value)],[strings(name, value)]]."""
         vs = []
 
@@ -110,8 +79,14 @@ class SVariable:
 
         for nvpi, nvps in enumerate(nameValuePairs):
             v = []
-            if nvpi == 0 and useSTDVariables:
-                v = SVariable.stdVariables(st, initialState)
+            if nvpi == 0 and confs is not None:
+                # get variables from the configurations used
+                for conf in confs:
+                    v += conf.getVariables({
+                        "st": st,
+                        "initialState": initialState
+                    })
+
                 vn = [
                     var.getName()
                     for var in v

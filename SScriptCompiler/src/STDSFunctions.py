@@ -1,10 +1,9 @@
 """Helper module for accessing functions."""
-from src.SFunction import SFunction as sf
 from src.SVariable import SVariable as sv
 from src.SState import SState as ss
 from src.SExpression import SExpression as se
 from src.SList import SList as sl
-from src.SCompiler import SCompiler as co
+from src.conf.std import Std as Std
 
 
 class STDSFunctions:
@@ -14,8 +13,7 @@ class STDSFunctions:
                  stateNames=["main"],
                  nameValuePairs=None,
                  initialState="main",
-                 useSTDVariables=True,
-                 useSTDFunctions=True):
+                 confs=[Std()]):
         """Set functions, states and variables."""
 
         self.st = ss.create(
@@ -25,53 +23,14 @@ class STDSFunctions:
         self.v = sv.create(
             nameValuePairs=nameValuePairs,
             st=self.st,
-            initialState=initialState,
-            useSTDVariables=useSTDVariables)
+            confs=confs,
+            initialState=initialState)
 
-        if useSTDFunctions:
-            self.f = sl([
-                # basic operations
-                sf("+"),                # leftValue += righValue
-                sf("-"),
-                sf("*"),                # leftValue /= rightValue
-                sf("/"),
-                sf("="),                # leftValue = rightValue
-                sf("<"),                # leftValue < rightValue
-                sf(">"),                # leftValue > rightValue
-                sf("=="),               # leftValue == rightValue
-                # helper functions
-                sf("executeState"),
-                sf("if"),
-                sf("else"),
-                sf(";"),                # abort expression execution,
-                sf("return"),           # abort state execution
-                                        # leftvalue does not change
-                # timer
-                sf("readTimer"),
-                sf("getTime"),
-                sf("timeout"),
-
-                # sensor
-                sf("mpu_readSensor"),
-                sf("mpu_getAccelX_mss"),
-                sf("mpu_getAccelY_mss"),
-                sf("mpu_getAccelZ_mss"),
-                sf("mpu_getGyroX_rads"),
-                sf("mpu_getGyroY_rads"),
-                sf("mpu_getGyroZ_rads"),
-                sf("mpu_getMagX_uT"),
-                sf("mpu_getMagY_uT"),
-                sf("mpu_getMagZ_uT"),
-                sf("mpu_getTemperature_C"),
-                # print (only int32_t for now)
-                sf("printInt"),
-                sf("printInt_ln"),
-                sf("printString"),
-                sf("printString_ln"),
-                sf("clearString"),
-                sf("concatString_String"),
-                sf("concatString_Int"),
-            ])
+        # get functions in different configurations
+        self.f = []
+        for conf in confs:
+            self.f += conf.getFunctions()
+        self.f = sl(self.f)
 
     def getAllSTDFunctions(self):
         """Return standard functions."""

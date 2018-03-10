@@ -8,7 +8,8 @@ Example output:
     4 3 1 3 13 3 17 3 23 5 0 17 4 19 5 9 4 0 11 2 9 2 4 2 8
 """
 from src.SProgram import SProgram as program
-
+from src.conf.std import Std as Std
+from src.conf.mpu9250 import Mpu9250 as Mpu9250
 
 def main():
     """Count how many times a door has been opened based on temperature."""
@@ -25,6 +26,7 @@ def main():
             # count and _count are equal,
             ("count_str", "count(door opened): ")
         ],
+        confs=[Std(), Mpu9250()],
         fps=100,
         # program (state, [expressions])
         initialState="init",

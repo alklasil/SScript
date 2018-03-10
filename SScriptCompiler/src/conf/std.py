@@ -1,0 +1,58 @@
+"""Helper module for accessing functions."""
+from src.SFunction import SFunction as sf
+from src.SVariable import SVariable as sv
+
+
+class Std:
+    """Standard functions class for SScript."""
+    def __init__(self):
+        """"""
+        pass
+
+    def getFunctions(self):
+        """"Return a list of functions."""
+        return [
+            # basic operations
+            sf("+"),                # leftValue += righValue
+            sf("-"),
+            sf("*"),                # leftValue /= rightValue
+            sf("/"),
+            sf("="),                # leftValue = rightValue
+            sf("<"),                # leftValue < rightValue
+            sf(">"),                # leftValue > rightValue
+            sf("=="),               # leftValue == rightValue
+            # helper functions
+            sf("executeState"),
+            sf("if"),
+            sf("else"),
+            sf(";"),                # abort expression execution,
+            sf("return"),           # abort state execution
+                                    # leftvalue does not change
+            # timer
+            sf("readTimer"),
+            sf("getTime"),
+            sf("timeout"),
+
+            # print (only int32_t for now)
+            sf("printInt"),
+            sf("printInt_ln"),
+            sf("printString"),
+            sf("printString_ln"),
+            sf("clearString"),
+            sf("concatString_String"),
+            sf("concatString_Int"),
+        ]
+
+    def getVariables(self, sdict):
+        """Return list of variables."""
+        return [
+            # basic variables
+            sv("tmp"),
+            sv("?"),
+            sv("0"), sv("1", 1),
+            sv("state", sdict["st"].get(sdict["initialState"])),
+
+            # timer
+            sv("millis"),
+        ]
+        pass
