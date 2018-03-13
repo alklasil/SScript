@@ -15,7 +15,7 @@
 
 #define DEBUG
 #if defined(DEBUG) && defined(ARDUINO)
-   #define DEBUG_PRINT(fmt, ...) ;//sprintf(DEBUG_BUFFER, fmt, ##__VA_ARGS__); Serial.print(DEBUG_BUFFER);
+   #define DEBUG_PRINT(fmt, ...) Serial.println(fmt);//sprintf(DEBUG_BUFFER, fmt, ##__VA_ARGS__); Serial.print(DEBUG_BUFFER);
 #elif defined(DEBUG)
    #define DEBUG_PRINT(fmt, ...) printf(fmt, ##__VA_ARGS__);
 #else

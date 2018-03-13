@@ -3,9 +3,13 @@
 void(*(*_functions))(int32_t *leftValue, int32_t *rightValue);
 
 char *getNext(char sep) {
+
    char *next = strchr(sScript.str, sep);
+
    if (next != NULL) { // if not last element
+
       *next = '\0';   // null terminate
+
       next++;         // move to the beginning og the next element
    }
    return next;
@@ -18,8 +22,11 @@ int32_t getInt() {
 
     // return: parsed int32_t.
     // set s = NULL if last_element else next_element
+
     char *next = getNext(' ');
+
     int32_t i = atoi(sScript.str);
+
     sScript.str = next;
 
     return i;

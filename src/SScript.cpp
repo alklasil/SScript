@@ -9,10 +9,13 @@ SScript sScript;
 SScript::SScript() {
 
     variableCount = 0;
-    variables = new int32_t[variableCount];
+    variables = NULL; //new int32_t[variableCount];
+
+    stringCount = 0;
+    strings = NULL;
 
     stateCount = 0;
-    states = new State[stateCount];
+    states = NULL; //new State[stateCount];
 
     abortStateExecution = 0;
     abortExpressionExecution = 0;
@@ -28,14 +31,18 @@ int32_t SScript::setFunctions(void(*(*__functions))(int32_t *leftValue, int32_t 
 }
 
 int32_t SScript::set(char *buffer) {
+    DEBUG_PRINT("SScript::set");
 
     char *s = buffer;
     str = buffer;
-
     // allocate variables
     variableCount = getInt();
     DEBUG_PRINT("variableCount:%d\n", variableCount);
-    delete[] variables;
+    DEBUG_PRINT("delete[] variables\n");
+    if (variables != NULL)
+        delete[] variables;
+
+    DEBUG_PRINT(variableCount);
     variables = new int32_t[variableCount];
     for (int32_t i = 0; i < variableCount; i++) variables[i] = 0;
 
@@ -53,7 +60,8 @@ int32_t SScript::set(char *buffer) {
     // allocate strings
     stringCount = getInt();
     DEBUG_PRINT("stringCount:%d\n", stringCount);
-    delete[] strings;
+    if (strings != NULL)
+        delete[] strings;
     strings = new String[stringCount];
     for (int32_t i = 0; i < stringCount; i++) strings[i] = String(" ");
 
@@ -71,10 +79,12 @@ int32_t SScript::set(char *buffer) {
     // allocate states
     stateCount = getInt();
     DEBUG_PRINT("stateCount: %d\n", stateCount);
-    delete[] states;
+    if (states != NULL)
+        delete[] states;
     states = new State[stateCount];
 
     // initialize states
+
     DEBUG_PRINT("Initialize states\n");
     for (int32_t i = 0; i < stateCount; i++) {
 
@@ -91,10 +101,21 @@ void SScript::executeState(int32_t index) {
 }
 
 void SScript::loop() {
+    // Serial.println("a");
 
     // execute "main"-state. the index of "main"-state should always be 0
     // int32_t i = 24; _functions[i](&i, &i); // should print 24 (and does, at least 24.2.2018), i may have changed
     if (stateCount > 0) { // if configured with states
+
+#if defined(ARDUINO) // for testing, remove when ok (TODO)
+        static auto lastTime = millis();
+        auto _time = millis();
+        if (_time - lastTime > 30) {
+            lastTime = _time;
+            executeState(0);
+        }
+#else
         executeState(0);
+#endif
     }
 }
