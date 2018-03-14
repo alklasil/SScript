@@ -23,7 +23,7 @@ int32_t Expression::set(char *s) {
     }
 }
 
-inline int32_t *parseIndex(int32_t *p) {
+int32_t *parseIndex(int32_t *p) {
    // in SScript pointers are represented with '-' sign
    if (*p < 0) p = &sScript.variables[-(*p)];
    return &sScript.variables[*p];
@@ -31,9 +31,20 @@ inline int32_t *parseIndex(int32_t *p) {
 
 int32_t Expression::execute() {
 
-    int32_t *leftValue;
-    int32_t *rightValue;
+   int32_t *functionIndex;
+
+   for (int32_t i = 0; i < elementCount; i++) {
+
+      // TODO: enable function pointrs
+      functionIndex = &elements[i];
+      _functions[*functionIndex]();
+   }
+
+#ifdef NOT_DEFINED
+
     int32_t *functionIndex;
+    int32_t *rightValue;
+    int32_t *leftValue;
 
     // There are always at least 1 elements:
     // leftValue must alywas be of mode pointer, it does not care about accessMode (-> somewhat restricted self modification of scripts, but faster)
@@ -73,5 +84,8 @@ int32_t Expression::execute() {
          *leftValue = *rightValue;
       }
    }
+
+#endif
+
    return 0;
 }

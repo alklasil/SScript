@@ -1,6 +1,6 @@
 #include "SScriptCommon.h"
 
-void(*(*_functions))(int32_t *leftValue, int32_t *rightValue);
+void(*(*_functions))();
 
 char *getNext(char sep) {
 

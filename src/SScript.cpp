@@ -21,7 +21,7 @@ SScript::SScript() {
     abortExpressionExecution = 0;
 }
 
-int32_t SScript::setFunctions(void(*(*__functions))(int32_t *leftValue, int32_t *rightValue)) {
+int32_t SScript::setFunctions(void(*(*__functions))()) {
 
     _functions = __functions;
 
@@ -42,7 +42,7 @@ int32_t SScript::set(char *buffer) {
     if (variables != NULL)
         delete[] variables;
 
-    DEBUG_PRINT(variableCount);
+    // DEBUG_PRINT(variableCount);
     variables = new int32_t[variableCount];
     for (int32_t i = 0; i < variableCount; i++) variables[i] = 0;
 

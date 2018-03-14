@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
      return 1;
   }
 
-  void(*(*_functions))(int32_t *leftValue, int32_t *rightValue) = functions;
+  void(*(*_functions))() = functions;
 
   sScript.setFunctions(_functions);
   char buffer[1024];

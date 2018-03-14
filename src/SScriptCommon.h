@@ -22,7 +22,7 @@
    #define DEBUG_PRINT(fmt, ...) ;
 #endif
 
-extern void(*(*_functions))(int32_t *leftValue, int32_t *rightValue);
+extern void(*(*_functions))();
 int32_t getInt();
 String getString();
 
