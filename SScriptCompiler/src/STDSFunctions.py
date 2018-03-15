@@ -64,27 +64,33 @@ class STDSFunctions:
 
         Args:
             l = str[] (list of strings [states, variables, functions]
-            (l = ["var", "var", "fun", "var", "fun", 1, "fun", 2])
+            (l = ["fun", "var", "var", "var", "fun", 1, "fun"])
         """
 
         expression = []
 
         # if there is only 1 element, it's a function
+        # (This already works in 0.2)
         if len(l) == 1:
             expression.append(self.get(self.f, l[0]))
             return se(expression)
 
         # if there are 2 elements, it's a set
-        if len(l) == 2:
-            # variable[l[0]] = l[1]
-            # l[0] should always be variable, l[1] constant
-            expression.append(self.get(self.v, l[0]))
-            expression.append(self.get(self.v, l[1]))
-            return se(expression)
 
-        expression.append(self.get(self.v, l[0]))
-        for i in range(1, len(l)):
-            if i % 2 == 0:
+        # This is not allowed in 0.2 anymore, use set("=") instead
+        # TODO: clean up other places, where ts related to this may appear
+        #if len(l) == 2:
+        #    # variable[l[0]] = l[1]
+        #    # l[0] should always be variable, l[1] constant
+        #    expression.append(self.get(self.v, l[0]))
+        #    expression.append(self.get(self.v, l[1]))
+        #    return se(expression)
+
+        # expression.append(self.get(self.v, l[0]))
+        # for now: fun, var, var, fun, var, var, fun, var, var
+        # TODO 0.2: allow free order
+        for i in range(0, len(l)):
+            if i % 3 == 0:
                 # function
                 expression.append(self.get(self.f, l[i]))
             else:
@@ -98,6 +104,8 @@ class STDSFunctions:
                     # as there is no need to do so
                     self.v.append(sv(str(l[i]), int(l[i])))
                     l[i] = str(l[i])
+                # print(l[i])
+                # input("")
                 expression.append(self.get(self.v, l[i]))
         # convert expression into SExpression and return it
         return se(expression)
@@ -105,7 +113,7 @@ class STDSFunctions:
     def executeState(self):
         """Execute state."""
         return self.expr([
-            "0", "state", "executeState"
+            "executeState", "0", "state"
         ])
 
     def readTimer(self):
@@ -117,13 +125,13 @@ class STDSFunctions:
     def getTime(self, timeVariable):
         """Get time (which was stored when readTimer was last executed)."""
         return self.expr([
-            timeVariable, "0", "getTime",
+            "getTime", timeVariable, "0"
         ])
 
     def timeout(self, lastTimeout, length):
         """If timeout, abort state execution."""
         return self.expr([
-            lastTimeout, length, "timeout"
+            "timeout", lastTimeout, length
         ])
 
     def _conditionalReturn(self):
@@ -133,7 +141,7 @@ class STDSFunctions:
     def setState(self, state):
         """Set next_state = state."""
         return self.expr([
-            "state", int(self.st.get(state))
+            "=(const)=", "state", int(self.st.get(state))
         ])
 
     def set(self, name, value):
@@ -147,25 +155,24 @@ class STDSFunctions:
         if type(value) is int:
             # set constant
             return self.expr([
-                name, value
+                "=(const)=", name, value
             ])
         elif value[0] == "&":
             # set index (also constant)
             value = value[1:]
             return self.expr([
-                name, value
+                "=(const)=", name, value
             ])
         else:
             # set variable value
-            #
             return self.expr([
-                name, value, "="
+                "=", name, value
             ])
 
     def setConditional(self, left, operator, right):
         """Set [?] = int(left < right)."""
         return self.expr([
-            "?", left, "=", right, operator
+            "=", "?", left, operator, left, right
         ])
 
     def eval(self, left, operator, right):
@@ -178,7 +185,7 @@ class STDSFunctions:
         args = expression[1:]
         _expression = function(*args)
         _expression = _expression.getList()
-        _expression = [_expression[0], "?", evalF] + _expression[1:]
+        _expression = [evalF, _expression[0], "?"] + _expression[1:]
         _expression = self.expr(_expression)
         return _expression
 
@@ -194,7 +201,7 @@ class STDSFunctions:
         _expression_if = self.createIFELSE("if", expression_if)
         expressions.append(_expression_if)
         # else
-        if expression_else != None:
+        if expression_else is not None:
             _expression_else = self.createIFELSE("else", expression_else)
             expressions.append(_expression_else)
         return expressions
@@ -203,11 +210,11 @@ class STDSFunctions:
         """If ? != 0, next_state = state."""
         # move new state into "tmp" variable
         state_new = self.expr([
-            "tmp", int(self.st.get(state))
+            "=(const)=", "tmp", int(self.st.get(state))
         ])
         # set state if conditional != 0
         conditional_set = self.expr([
-            "state", "?", "if", "tmp", "="
+            "if", "0", "?", "=", "state", "tmp"
         ])
         # return the expression [subexpression1, subexpression2]
         return [state_new, conditional_set]
@@ -220,57 +227,57 @@ class STDSFunctions:
             ])
         else:
             return self.expr([
-                errorVariable, "1", "mpu_readSensor"
+                "mpu_readSensor", errorVariable, "1"
             ])
 
     def getMpuValue(self, identifier, multiplier=1):
         """Read sensor value to matching stdVariable."""
         return self.expr([
-            identifier, str(multiplier), "mpu_get" + identifier
+            "mpu_get" + identifier, identifier, str(multiplier)
         ])
 
     def printInt(self, i, endl=False):
         """Print variable as integer to serial port."""
         if endl:
             return self.expr([
-                "0", i, "printInt_ln"
+                "printInt_ln", "0", i
             ])
         else:
             return self.expr([
-                "0", i, "printInt"
+                "printInt", "0", i
             ])
 
     def printString(self, i, endl=False):
         """Print string to serial port."""
         if endl:
             return self.expr([
-                "0", i, "printString_ln"
+                "printString_ln", "0", i
             ])
         else:
             return self.expr([
-                "0", i, "printString"
+                "printString", "0", i
             ])
 
     def clearString(self, var):
         """Var = ''."""
         return self.expr([
-            var, "0", "clearString"
+            "clearString", var, "0"
         ])
 
     def concatString_String(self, leftValue, rightValue):
         """LeftValue += rightValue."""
         return self.expr([
-            leftValue, rightValue, "concatString_String"
+            "concatString_String", leftValue, rightValue
         ])
 
     def concatString_Int(self, leftValue, rightValue):
         """LeftValue += str(rightValue)."""
         return self.expr([
-            leftValue, rightValue, "concatString_Int"
+            "concatString_Int", leftValue, rightValue
         ])
 
     def inc(self, i):
         """Increase variable value by one."""
         return self.expr([
-            i, "1", "+"
+            "+", i, "1"
         ])

@@ -39,10 +39,18 @@ class SScript
      void executeState(int32_t index);
      void loop();
 
+     inline int32_t *parseIndex(int32_t *p) {
+       // in SScript pointers are represented with '-' sign
+       if (*p < 0) p = &variables[-(*p)];
+       return &variables[*p];
+     }
+
+
      // helper variables
      int32_t abortExpressionExecution;
      int32_t abortStateExecution;
      int32_t millis_var;
+     int32_t *element;
 
 	  char *str;
 

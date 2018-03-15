@@ -18,6 +18,8 @@ class Std:
             sf("*"),                # leftValue /= rightValue
             sf("/"),
             sf("="),                # leftValue = rightValue
+            sf("=(const)="),       # leftValue = const(rightValue),
+                                    # do not parse rightValue
             sf("<"),                # leftValue < rightValue
             sf(">"),                # leftValue > rightValue
             sf("=="),               # leftValue == rightValue

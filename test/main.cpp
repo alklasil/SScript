@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 #include "SScript.h"
 // ESPConfiguration can be changed to another
 // The configuration file must provide extern
@@ -12,12 +13,10 @@
 
 int main(int argc, char* argv[])
 {
-
   if (argc < 2) {
      printf("Usage: %s %s \n", argv[0], "<CONFIGURATION>");
      return 1;
   }
-
   void(*(*_functions))() = functions;
 
   sScript.setFunctions(_functions);
@@ -36,4 +35,5 @@ int main(int argc, char* argv[])
       //              or do what ever it is that needs doing.
       sScript.loop();
   }
+
 }

@@ -23,22 +23,27 @@ int32_t Expression::set(char *s) {
     }
 }
 
-int32_t *parseIndex(int32_t *p) {
-   // in SScript pointers are represented with '-' sign
-   if (*p < 0) p = &sScript.variables[-(*p)];
-   return &sScript.variables[*p];
-}
-
 int32_t Expression::execute() {
+   sScript.element = &elements[0];
 
-   int32_t *functionIndex;
+   while ((sScript.element - &elements[elementCount-1]) <= 0) {
+      //printf("execute %d %d %d\n", *sScript.element, *(sScript.element + 1), *(sScript.element + 2));
+      //getchar();
+      // TODO: enable function pointers
+      _functions[*sScript.element]();
 
-   for (int32_t i = 0; i < elementCount; i++) {
+      // TODO: 0.2: remove abortExpressionExecution
+      //            It is enough to simply set sScript.element = &elements[elementCount]
+      /*if (sScript.abortExpressionExecution != 0) {
+          // reset sScript.abortExpressionExecution -> other expressions
+          // can be executed correctly
+          sScript.abortExpressionExecution = 0;
+          return 1;
 
-      // TODO: enable function pointrs
-      functionIndex = &elements[i];
-      _functions[*functionIndex]();
+      }*/
    }
+
+   return 0;
 
 #ifdef NOT_DEFINED
 
@@ -85,7 +90,7 @@ int32_t Expression::execute() {
       }
    }
 
-#endif
-
    return 0;
+
+#endif
 }
