@@ -23,10 +23,10 @@ class Std:
             sf("<"),                # leftValue < rightValue
             sf(">"),                # leftValue > rightValue
             sf("=="),               # leftValue == rightValue
+            sf("!="),               # leftValue != rightValue
             # helper functions
             sf("executeState"),
             sf("if"),
-            sf("else"),
             sf(";"),                # abort expression execution,
             sf("return"),           # abort state execution
                                     # leftvalue does not change
@@ -57,4 +57,3 @@ class Std:
             # timer
             sv("millis"),
         ]
-        pass

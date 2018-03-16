@@ -20,18 +20,19 @@ class SVariable:
     @staticmethod
     def stdVariables(st, intialState="main"):
         """Return std variables."""
-        return [
-            # basic variables
-            # If you do not use stdVariables, the first variable is not allowed
-            # to be a list
-            SVariable("tmp"),
-            SVariable("?"),
-            SVariable("0"), SVariable("1", 1),
-            SVariable("state", st.get(intialState)),
-
-            # timer
-            SVariable("millis"),
-        ]
+        #return [
+        #    # basic variables
+        #    # If you do not use stdVariables, the first variable is not allowed
+        #    # to be a list
+        #    SVariable("tmp"),
+        #    SVariable("?"),
+        #    SVariable("0"), SVariable("1", 1),
+        #    SVariable("state", st.get(intialState)),
+        #
+        #    # timer
+        #    SVariable("millis"),
+        #]
+        pass
 
     @staticmethod
     def create(nameValuePairs, st, confs, initialState="init"):

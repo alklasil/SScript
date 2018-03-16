@@ -95,25 +95,14 @@ class STDSFunctions:
                 expression.append(self.get(self.f, l[i]))
             else:
                 # variable
-                if type(l[i]) is int:
-                    # we do not want constat variables, thus
-                    # add this "constant" as variable with value
-                    # this could be inserter into either self.get or SList.get
-                    # but we do not want all expressions
-                    # (such as ["variable",value]) to be stored in memory,
-                    # as there is no need to do so
-                    self.v.append(sv(str(l[i]), int(l[i])))
-                    l[i] = str(l[i])
-                # print(l[i])
-                # input("")
                 expression.append(self.get(self.v, l[i]))
         # convert expression into SExpression and return it
         return se(expression)
 
-    def executeState(self):
+    def executeState(self, var="state"):
         """Execute state."""
         return self.expr([
-            "executeState", "0", "state"
+            "executeState", "0", var
         ])
 
     def readTimer(self):
@@ -134,14 +123,14 @@ class STDSFunctions:
             "timeout", lastTimeout, length
         ])
 
-    def _conditionalReturn(self):
+    def conditionalReturn(self):
         """Abort executing state, i.e., return from state."""
         return self.createIFELSE("if", ["tmp", "return"])
 
-    def setState(self, state):
+    def setState(self, state, var="state"):
         """Set next_state = state."""
         return self.expr([
-            "=(const)=", "state", int(self.st.get(state))
+            "=(const)=", var, int(self.st.get(state))
         ])
 
     def set(self, name, value):
@@ -151,9 +140,10 @@ class STDSFunctions:
         elif index:      variable[name].value = indexOf(value).
         else (value):    variable[name].value = variable[value].value.
         """
-
+        # print ("set value:", value)
         if type(value) is int:
             # set constant
+            # print ("set constant:", value)
             return self.expr([
                 "=(const)=", name, value
             ])
@@ -170,54 +160,24 @@ class STDSFunctions:
             ])
 
     def setConditional(self, left, operator, right):
-        """Set [?] = int(left < right)."""
+        """Set [?] = int(left operator right), e.g., left < right."""
         return self.expr([
-            "=", "?", left, operator, left, right
+            "=", "?", left, operator, "?", right
         ])
-
-    def eval(self, left, operator, right):
-        """Short form for setConditional. may add additional f in future"""
-        return self.setConditional(left, operator, right)
-
-    def createIFELSE(self, evalF, expression):
-        """insert evalIF ("if" or "else") into expression."""
-        function = getattr(self, expression[0])
-        args = expression[1:]
-        _expression = function(*args)
-        _expression = _expression.getList()
-        _expression = [evalF, _expression[0], "?"] + _expression[1:]
-        _expression = self.expr(_expression)
-        return _expression
-
-    def IF(self, condition, expression_if, expression_else=None):
-        """If condition: expression"""
-        expressions = []
-        # set condition
-        function = getattr(self, condition[0])
-        args = condition[1:]
-        conditional = function(*args)
-        expressions.append(conditional)
-        # if
-        _expression_if = self.createIFELSE("if", expression_if)
-        expressions.append(_expression_if)
-        # else
-        if expression_else is not None:
-            _expression_else = self.createIFELSE("else", expression_else)
-            expressions.append(_expression_else)
-        return expressions
 
     def conditionalSetState(self, state):
         """If ? != 0, next_state = state."""
         # move new state into "tmp" variable
-        state_new = self.expr([
-            "=(const)=", "tmp", int(self.st.get(state))
-        ])
+        #state_new = self.expr([
+        #    "=(const)=", "tmp", int(self.st.get(state))
+        #])
         # set state if conditional != 0
-        conditional_set = self.expr([
-            "if", "0", "?", "=", "state", "tmp"
+        return self.expr([
+            "if", "0", "?",
+            "=(const)=", "state", int(self.st.get(state))
         ])
         # return the expression [subexpression1, subexpression2]
-        return [state_new, conditional_set]
+        #return [state_new, conditional_set]
 
     def readMPU(self, errorVariable=None):
         """Read the mpu sensor."""

@@ -30,17 +30,20 @@ int32_t Expression::execute() {
       //printf("execute %d %d %d\n", *sScript.element, *(sScript.element + 1), *(sScript.element + 2));
       //getchar();
       // TODO: enable function pointers
+      //printf("_begin_");
+      //printf("Expression::execute: %d|%d|%d", *sScript.element, elements[*(sScript.element + 1)], elements[*sScript.parseIndex(sScript.element + 2)]);
+      //printf("_end_\n");
       _functions[*sScript.element]();
-
+      //printf("_after_\n");
       // TODO: 0.2: remove abortExpressionExecution
       //            It is enough to simply set sScript.element = &elements[elementCount]
-      /*if (sScript.abortExpressionExecution != 0) {
+      if (sScript.abortExpressionExecution != 0) {
           // reset sScript.abortExpressionExecution -> other expressions
           // can be executed correctly
           sScript.abortExpressionExecution = 0;
           return 1;
 
-      }*/
+      }
    }
 
    return 0;

@@ -23,17 +23,12 @@ def main():
                 ["set", "i", "&a"],
                 # print a
                 ["printInt", "*i", True],
-                # if else example
-                ["IF",
-                    # if (*i < 1000, i.e., a < 1000)
-                    ["eval", "*i", "<", "th"],
-                    #["eval", "*i", "<", 1000], # or this, both can be used
-                        # then a++
-                        ["inc", "*i"],
-                        # else a = 0
-                        ["set", "*i", "0"],
-                ],
-                #["set", "a", 0]
+                # if *i < th: set "?" = 1 else set "?" = 0
+                ["expr", ["=", "?", "*i", "<", "?", "th"]],
+                    # if "?" == 1, i.e., *i < th:
+                    ["expr", ["if", "?", "1", "+", "*i", "1"]],
+                    # if "?" == 0, i.e., *i >= th
+                    ["expr", ["if", "?", "0", "=", "*i", "0"]]
             ])
         ])
     # compile and print the program

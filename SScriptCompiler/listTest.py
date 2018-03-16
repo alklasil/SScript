@@ -10,19 +10,21 @@ def main():
         # ("var4", value), ["list1", size]]
         [["list1", 3]],
         # program (state, [expressions])
+        fps=None,
         initialState="init",
         program=[
             ("init", [
-                ["set", "list1[0]", 1],
+                ["set", "list1[0]", "1"],
                 # ["list1[1]", 0], variables initialize to 0
                 ["set", "list1[2]", 3],
+                ["printInt", "list1[2]"],
                 ["setState", "main"],
             ]),
             ("main", [
                 # print "103"
-                ["printInt", "list1[0]"],
-                ["printInt", "list1[1]"],
-                ["printInt", "list1[2]"]
+                ["printInt", "list1[0]", True],
+                ["printInt", "list1[1]", True],
+                ["printInt", "list1[2]", True]
             ])
         ])
     # compile and print the program

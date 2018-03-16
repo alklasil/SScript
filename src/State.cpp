@@ -28,7 +28,7 @@ int32_t State::execute() {
 
     sScript.abortStateExecution = 0;
     for (int32_t i = 0; i < expressionCount; i++) {
-
+        //printf("State::execute: %d", i);
         expressions[i].execute();
 
         if (sScript.abortStateExecution) {
