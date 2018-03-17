@@ -19,20 +19,14 @@ def main():
                 # execute tmp (=="case") as a state
                 ["executeState", "tmp"],
 
-                # asynchronous execution
-                # This will be executed in the next loop
-                #  (unless the state changes before that)
-                # ["setState", "case"],
-                # HOX! return state can be stored into a variable
-                # in which case:
-                #   state::main:
-                #     # store the return ('address')
-                #     ["setState", "main", "nextState"],
-                #     # set state
-                #     ["setState", "case"],
-                #   state::case
-                #     # nextState is a variable, use 'set' to set state
-                #     ["set", "state", "nextState"],
+                # The switch-case statement (state) can also be executed asynchronously:
+                # (i.e., execute in the next loop.)
+                # (may be good option if switch-case statement is more complex)
+                # (There are multiple ways of executing the switch-case statement
+                #  asynchronously: below is one of them)
+                #   Set state=proxy, set proxyState=case, set returnState=main
+                #      (nextLoop) state::proxy::executeState(proxyState)
+                #      (nextLoop) state::proxy::set state=returnState
             ]),
             ("case", [
                 # switch(i) {
@@ -47,10 +41,6 @@ def main():
                     # default (i != 0 && i != 1, e.g., i == 3)
                     ["expr", ["=", "i", "0"]],
                 # }
-
-                # if asynchronous execution
-                # go back to the main state in the next loop
-                # #["setState", "main"],
             ]),
 
         ])
