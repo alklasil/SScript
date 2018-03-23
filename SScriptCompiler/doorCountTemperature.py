@@ -37,48 +37,49 @@ def main():
 
                 # set door open (closing does not add count)
                 ["setState", "<t"],
-                ["printInt", "Temperature_C"]
+                ["expr", ["$printInt_ln", "0", "Temperature_C"]]
+
             ]),
             (">t", [
                 # read MPU
-                ["readMPU"],
+                ["expr", ["$mpu_readSensor", "tmp", "1"]],
 
                 # get temperature
-                ["getMpuValue", "Temperature_C"],
+                ["expr", ["$mpu_getTemperature_C", "Temperature_C", "1"]],
 
                 # [?] = temperature < tDOWN
-                ["setConditional", "Temperature_C",  "<", "tDOWN"],
+                ["expr", ["$=", "?", "Temperature_C", "$<", "?", "tDOWN"]],
 
                 # if [?] state = "<t>" for processing
                 ["conditionalSetState", "<t>"],
 
-                #["printInt", "Temperature_C", True]
+                ["expr", ["$printInt_ln", "0", "Temperature_C"]],
             ]),
             ("<t>", [
                 # state = "opening the door",
                 #   (do not execute when closing the door)
                 # increase count by one
-                ["inc", "count"],
+                ["expr", ["$+", "count", "1"]],
                 # "debug" print the increased value
-                ["printString", "count_str"],
-                ["printInt", "count", True],
+                ["expr", ["$printString", "0", "count_str"]],
+                ["expr", ["$printInt_ln", "0", "count"]],
                 # set state
                 ["setState", "<t"]
             ]),
             ("<t", [
-                # read mpu sensor
-                ["readMPU"],
+                # read MPU
+                ["expr", ["$mpu_readSensor", "tmp", "1"]],
 
                 # get temperature
-                ["getMpuValue", "Temperature_C"],
+                ["expr", ["$mpu_getTemperature_C", "Temperature_C", "1"]],
 
-                # [?] = temperature > tDOWN
-                ["setConditional", "Temperature_C", ">", "tUP"],
+                # [?] = temperature < tDOWN
+                ["expr", ["$=", "?", "Temperature_C", "$>", "?", "tUP"]],
 
-                # if [?] state = "<t"
+                # if [?] state = "<t>" for processing
                 ["conditionalSetState", ">t"],
 
-                #["printInt", "Temperature_C", True]
+                ["expr", ["$printInt_ln", "0", "Temperature_C"]],
             ]),
         ])
     # compile and print the program

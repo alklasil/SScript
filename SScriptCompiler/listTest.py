@@ -3,28 +3,23 @@ from src.SProgram import SProgram as program
 
 
 def main():
-    """Print 103 in loop."""
+    """Print 101 in loop."""
     # program
     p = program(
-        # variables ["var1", ("var2", value), "var3",
-        # ("var4", value), ["list1", size]]
         [["list1", 3]],
-        # program (state, [expressions])
         fps=None,
         initialState="init",
         program=[
             ("init", [
-                ["set", "list1[0]", "1"],
-                # ["list1[1]", 0], variables initialize to 0
-                ["set", "list1[2]", 3],
-                ["printInt", "list1[2]"],
+                ["expr", ["$=", "list1[0]", "1"]],
+                ["expr", ["$=", "list1[2]", "1"]],
                 ["setState", "main"],
             ]),
             ("main", [
-                # print "103"
-                ["printInt", "list1[0]", True],
-                ["printInt", "list1[1]", True],
-                ["printInt", "list1[2]", True]
+                # print "101"
+                ["expr", ["$printInt", "list1[0]", "list1[0]"]],
+                ["expr", ["$printInt", "0", "list1[1]"]],
+                ["expr", ["$printInt_ln", "0", "list1[2]"]]
             ])
         ])
     # compile and print the program

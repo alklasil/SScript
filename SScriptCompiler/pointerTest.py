@@ -15,20 +15,10 @@ def main():
                 # use i to as 'pointer' for a
                 # *i -> variables[i.value].value == variables["a"].value
 
-                # set i to point to b
-                ["set", "i", "&b"],
+                # set i to point to b (const == address, not the value)
+                ["expr", ["$=(const)=", "i", "b"]],
                 # print b
-                ["printInt", "*i", True],
-                # point i to point to a
-                ["set", "i", "&a"],
-                # print a
-                ["printInt", "*i", True],
-                # if *i < th: set "?" = 1 else set "?" = 0
-                ["expr", ["=", "?", "*i", "<", "?", "th"]],
-                    # if "?" == 1, i.e., *i < th:
-                    ["expr", ["if", "?", "1", "+", "*i", "1"]],
-                    # if "?" == 0, i.e., *i >= th
-                    ["expr", ["if", "?", "0", "=", "*i", "0"]]
+                ["expr", ["$printInt_ln", "0", "*i"]]
             ])
         ])
     # compile and print the program

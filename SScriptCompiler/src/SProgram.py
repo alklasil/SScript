@@ -27,7 +27,7 @@ class SProgram:
             self._stets = program
         else:
             self._stets = [("_main", [
-                ["executeState"]
+                ["expr", ["$executeState", "0", "state"]]
             ])] + program
 
         nameValuePairs = [
@@ -53,10 +53,10 @@ class SProgram:
                     # readTimer does not store millis in,
                     # use getTime to do that
                     # first readTimer
-                    ["readTimer"],
+                    ["expr", ["$readTimer"]],
                     # then check if timeout
                     #  if timeout: abort stateExecution
-                    ["timeout", "_lastTimedOut", "_timeoutLength"]
+                    ["expr", ["$timeout", "_lastTimedOut", "_timeoutLength"]]
                 ] + self._stets[0][1]
             )
 

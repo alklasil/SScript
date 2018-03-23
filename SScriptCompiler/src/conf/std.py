@@ -51,7 +51,8 @@ class Std:
             # basic variables
             sv("tmp"),
             sv("?"),
-            sv("0"), sv("1", 1),
+            sv("0"),
+            sv("1", 1),
             sv("state", sdict["st"].get(sdict["initialState"])),
 
             # timer

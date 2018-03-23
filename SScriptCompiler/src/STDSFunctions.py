@@ -40,6 +40,10 @@ class STDSFunctions:
         """Return all states."""
         return self.st
 
+    def getState(self, state="state"):
+        """Return state index."""
+        return int(self.st.get(state))
+
     def getVariables(self):
         """Return all variables."""
         return self.v
@@ -68,34 +72,13 @@ class STDSFunctions:
         """
 
         expression = []
-
-        # if there is only 1 element, it's a function
-        # (This already works in 0.2)
-        if len(l) == 1:
-            expression.append(self.get(self.f, l[0]))
-            return se(expression)
-
-        # if there are 2 elements, it's a set
-
-        # This is not allowed in 0.2 anymore, use set("=") instead
-        # TODO: clean up other places, where ts related to this may appear
-        #if len(l) == 2:
-        #    # variable[l[0]] = l[1]
-        #    # l[0] should always be variable, l[1] constant
-        #    expression.append(self.get(self.v, l[0]))
-        #    expression.append(self.get(self.v, l[1]))
-        #    return se(expression)
-
-        # expression.append(self.get(self.v, l[0]))
-        # for now: fun, var, var, fun, var, var, fun, var, var
-        # TODO 0.2: allow free order
-        for i in range(0, len(l)):
-            if i % 3 == 0:
+        for element in l:
+            if type(element) is str and element[0] == '$':
                 # function
-                expression.append(self.get(self.f, l[i]))
+                expression.append(self.get(self.f, element[1:]))
             else:
                 # variable
-                expression.append(self.get(self.v, l[i]))
+                expression.append(self.get(self.v, element))
         # convert expression into SExpression and return it
         return se(expression)
 
@@ -130,7 +113,7 @@ class STDSFunctions:
     def setState(self, state, var="state"):
         """Set next_state = state."""
         return self.expr([
-            "=(const)=", var, int(self.st.get(state))
+            "$=(const)=", var, int(self.st.get(state))
         ])
 
     def set(self, name, value):
@@ -162,7 +145,7 @@ class STDSFunctions:
     def setConditional(self, left, operator, right):
         """Set [?] = int(left operator right), e.g., left < right."""
         return self.expr([
-            "=", "?", left, operator, "?", right
+            "$=", "?", left, "$" + operator, "?", right
         ])
 
     def conditionalSetState(self, state):
@@ -173,8 +156,8 @@ class STDSFunctions:
         #])
         # set state if conditional != 0
         return self.expr([
-            "if", "0", "?",
-            "=(const)=", "state", int(self.st.get(state))
+            "$if", "0", "?",
+            "$=(const)=", "state", int(self.st.get(state))
         ])
         # return the expression [subexpression1, subexpression2]
         #return [state_new, conditional_set]

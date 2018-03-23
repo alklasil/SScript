@@ -27,11 +27,11 @@ def main():
         program=[
             ("main", [
                 # increase count by one
-                ["inc", "count"],
+                ["expr", ["$+", "count", "1"]],
                 # print("Hello world!", endl=False)
-                ["printString", "helloworld_str"],
+                ["expr", ["$printString_ln", "0", "helloworld_str"]],
                 # print(count, endl = True)
-                ["printInt", "count", True],
+                ["expr", ["$printInt_ln", "0", "count"]],
             ])
         ])
     # compile and print the program

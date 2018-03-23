@@ -7,19 +7,21 @@ def main():
     # program
     p = program(
         # variables ["var1", ("var2", value), "var3", ("var4", value)]
-            ["lastTimedOut", ("timeout_length", 1000), ("i", 123)],
+        ["lastTimedOut", ("timeout_length", 1000), ("i", 123)],
         # set fps to manual
         fps=None,
         # program (state, [expressions])
         program=[
             ("main", [
                 # read timer
-                ["readTimer"],
+                ["expr", ["$readTimer"]],
+
                 # check if timeout_length since last tested
                 # if not, return, otherwise, set lastTimedOut = millis
-                ["timeout", "lastTimedOut", "timeout_length"],
+
+                ["expr", ["$timeout", "lastTimedOut", "timeout_length"]],
                 # print
-                ["printInt", "i", True]
+                ["expr", ["$printInt_ln", "0", "i"]],
             ])
         ])
     # compile and print the program

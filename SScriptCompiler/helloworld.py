@@ -29,15 +29,15 @@ def main():
         # program (state, [expressions])
         program=[
             ("main", [
-                ["printString", "text", True],
-                ["printString", "*p", True],
+                ["expr", ["$printString_ln", "0", "text"]],
+                ["expr", ["$printString_ln", "0", "*p"]],
 
-                ["clearString", "text_concat"],
-                ["concatString_String", "text_concat", "text"],
-                ["concatString_String", "text_concat", "sep"],
-                ["concatString_String", "text_concat", "pointerText"],
+                ["expr", ["$clearString", "text_concat", "0"]],
+                ["expr", ["$concatString_String", "text_concat", "text"]],
+                ["expr", ["$concatString_String", "text_concat", "sep"]],
+                ["expr", ["$concatString_String", "text_concat", "pointerText"]],
 
-                ["printString", "text_concat", True],
+                ["expr", ["$printString_ln", "0", "text_concat"]]
 
             ])
         ])
