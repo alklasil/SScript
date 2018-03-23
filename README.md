@@ -1,3 +1,9 @@
+
+**HOX! This readme is somewhat outdated and will be updated for the next version (0.2).**
+
+
+
+
 = SScript scripting Library for Arduino =
 
 * SScript is a relatively high performance scripting library.
