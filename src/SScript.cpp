@@ -107,15 +107,15 @@ void SScript::loop() {
     // int32_t i = 24; _functions[i](&i, &i); // should print 24 (and does, at least 24.2.2018), i may have changed
     if (stateCount > 0) { // if configured with states
 
-#if defined(ARDUINO) // for testing, remove when ok (TODO)
+/*#if defined(ARDUINO) // for testing, remove when ok (TODO)
         static auto lastTime = millis();
         auto _time = millis();
         if (_time - lastTime > 30) {
             lastTime = _time;
             executeState(0);
         }
-#else
+#else*/
         executeState(0);
-#endif
+//#endif
     }
 }
