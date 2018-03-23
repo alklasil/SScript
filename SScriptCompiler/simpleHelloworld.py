@@ -29,9 +29,9 @@ def main():
                 # increase count by one
                 ["expr", ["$+", "count", "1"]],
                 # print("Hello world!", endl=False)
-                ["expr", ["$printString_ln", "0", "helloworld_str"]],
+                ["expr", ["$printString_ln", "helloworld_str"]],
                 # print(count, endl = True)
-                ["expr", ["$printInt_ln", "0", "count"]],
+                ["expr", ["$printInt_ln", "count"]],
             ])
         ])
     # compile and print the program

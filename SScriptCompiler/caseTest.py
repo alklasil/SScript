@@ -11,14 +11,14 @@ def main():
         program=[
             ("main", [
                 # print i
-                ["expr", ["$printInt_ln", "0", "i"]],
+                ["expr", ["$printInt_ln", "i"]],
 
 
                 # synchronous execution
                 # store state "case" into tmp
                 ["setState", "case", "tmp"],
                 # execute tmp (=="case") as a state
-                ["expr", ["$executeState", "0", "tmp"]]
+                ["expr", ["$executeState", "tmp"]]
 
                 # The switch-case statement (state) can also be executed asynchronously:
                 # (i.e., execute in the next loop.)

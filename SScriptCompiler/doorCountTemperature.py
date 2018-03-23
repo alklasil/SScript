@@ -37,12 +37,12 @@ def main():
 
                 # set door open (closing does not add count)
                 ["setState", "<t"],
-                ["expr", ["$printInt_ln", "0", "Temperature_C"]]
+                ["expr", ["$printInt_ln", "Temperature_C"]]
 
             ]),
             (">t", [
                 # read MPU
-                ["expr", ["$mpu_readSensor", "tmp", "1"]],
+                ["expr", ["$mpu_readSensor"]],
 
                 # get temperature
                 ["expr", ["$mpu_getTemperature_C", "Temperature_C", "1"]],
@@ -53,7 +53,7 @@ def main():
                 # if [?] state = "<t>" for processing
                 ["conditionalSetState", "<t>"],
 
-                ["expr", ["$printInt_ln", "0", "Temperature_C"]],
+                ["expr", ["$printInt_ln", "Temperature_C"]],
             ]),
             ("<t>", [
                 # state = "opening the door",
@@ -61,14 +61,14 @@ def main():
                 # increase count by one
                 ["expr", ["$+", "count", "1"]],
                 # "debug" print the increased value
-                ["expr", ["$printString", "0", "count_str"]],
-                ["expr", ["$printInt_ln", "0", "count"]],
+                ["expr", ["$printString", "count_str"]],
+                ["expr", ["$printInt_ln", "count"]],
                 # set state
                 ["setState", "<t"]
             ]),
             ("<t", [
                 # read MPU
-                ["expr", ["$mpu_readSensor", "tmp", "1"]],
+                ["expr", ["$mpu_readSensor"]],
 
                 # get temperature
                 ["expr", ["$mpu_getTemperature_C", "Temperature_C", "1"]],
@@ -79,7 +79,7 @@ def main():
                 # if [?] state = "<t>" for processing
                 ["conditionalSetState", ">t"],
 
-                ["expr", ["$printInt_ln", "0", "Temperature_C"]],
+                ["expr", ["$printInt_ln", "Temperature_C"]],
             ]),
         ])
     # compile and print the program

@@ -13,13 +13,13 @@ def main():
         program=[
             ("main", [
                 # read MPU
-                ["expr", ["$mpu_readSensor", "tmp", "1"]],
+                ["expr", ["$mpu_readSensor"]],
 
                 # get temperature
                 ["expr", ["$mpu_getTemperature_C", "Temperature_C", "1"]],
 
                 # print
-                ["expr", ["$printInt_ln", "0", "Temperature_C"]],
+                ["expr", ["$printInt_ln", "Temperature_C"]],
 
             ])
         ])

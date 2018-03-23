@@ -21,7 +21,7 @@ def main():
 
                 ["expr", ["$timeout", "lastTimedOut", "timeout_length"]],
                 # print
-                ["expr", ["$printInt_ln", "0", "i"]],
+                ["expr", ["$printInt_ln", "i"]],
             ])
         ])
     # compile and print the program

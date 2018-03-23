@@ -17,9 +17,9 @@ def main():
             ]),
             ("main", [
                 # print "101"
-                ["expr", ["$printInt", "list1[0]", "list1[0]"]],
-                ["expr", ["$printInt", "0", "list1[1]"]],
-                ["expr", ["$printInt_ln", "0", "list1[2]"]]
+                ["expr", ["$printInt", "list1[0]"]],
+                ["expr", ["$printInt", "list1[1]"]],
+                ["expr", ["$printInt_ln", "list1[2]"]]
             ])
         ])
     # compile and print the program

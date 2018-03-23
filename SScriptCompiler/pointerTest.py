@@ -18,7 +18,7 @@ def main():
                 # set i to point to b (const == address, not the value)
                 ["expr", ["$=(const)=", "i", "b"]],
                 # print b
-                ["expr", ["$printInt_ln", "0", "*i"]]
+                ["expr", ["$printInt_ln", "*i"]]
             ])
         ])
     # compile and print the program

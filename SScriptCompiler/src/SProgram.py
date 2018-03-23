@@ -27,7 +27,7 @@ class SProgram:
             self._stets = program
         else:
             self._stets = [("_main", [
-                ["expr", ["$executeState", "0", "state"]]
+                ["expr", ["$executeState", "state"]]
             ])] + program
 
         nameValuePairs = [
