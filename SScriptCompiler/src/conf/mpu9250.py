@@ -53,3 +53,11 @@ class Mpu9250:
             # temperature
             sv("Temperature_C"),
         ]
+
+    def firstVariable(self):
+        """Return the first variable. Can be used in indexing lists."""
+        return "Accel_mss"
+
+    def lastVariable(self):
+        """Return the last variable. Can be used in indexing lists."""
+        return "Temperature_C"

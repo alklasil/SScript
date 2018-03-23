@@ -45,6 +45,7 @@ class Std:
             sf("clearString"),
             sf("concatString_String"),
             sf("concatString_Int"),
+            sf("concatString_Int_List"),
         ]
 
     def getVariables(self, sdict):
