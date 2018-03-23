@@ -12,8 +12,8 @@ def main():
     """Count steps."""
     # program
 
-    std = Std();
-    mpu9250 = Mpu9250();
+    std = Std()
+    mpu9250 = Mpu9250()
 
     p = program(
         # variables (count & thresholds)
@@ -60,6 +60,8 @@ def main():
 
                     # print string
                     "$printString_ln", "log_str"
+
+                    # store on the sdcard
                 ]],
 
                 # TODO: store on sd-card
