@@ -29,8 +29,9 @@ int32_t State::execute() {
     sScript.abortStateExecution = 0;
     for (int32_t i = 0; i < expressionCount; i++) {
         //printf("State::execute: %d", i);
+        //Serial.println("expressions[i].execute(); begin");
         expressions[i].execute();
-
+        //Serial.println("expressions[i].execute(); end");
         if (sScript.abortStateExecution) {
            return 1;
         }

@@ -115,7 +115,11 @@ void SScript::loop() {
             executeState(0);
         }
 #else*/
+        //Serial.println("executeState(0); begin");
+
         executeState(0);
+
+        //Serial.println("executeState(0); end");
 //#endif
     }
 }

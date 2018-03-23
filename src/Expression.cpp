@@ -33,7 +33,10 @@ int32_t Expression::execute() {
       //printf("_begin_");
       //printf("Expression::execute: %d|%d|%d", *sScript.element, elements[*(sScript.element + 1)], elements[*sScript.parseIndex(sScript.element + 2)]);
       //printf("_end_\n");
+      //Serial.println("_functions[*sScript.element](); begin");
+      //Serial.println(*sScript.element);
       _functions[*sScript.element]();
+      //Serial.println("_functions[*sScript.element](); end");
       //printf("_after_\n");
       // TODO: 0.2: remove abortExpressionExecution
       //            It is enough to simply set sScript.element = &elements[elementCount]
