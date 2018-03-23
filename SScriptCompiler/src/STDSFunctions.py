@@ -82,70 +82,10 @@ class STDSFunctions:
         # convert expression into SExpression and return it
         return se(expression)
 
-    def executeState(self, var="state"):
-        """Execute state."""
-        return self.expr([
-            "executeState", "0", var
-        ])
-
-    def readTimer(self):
-        """Get time in ms."""
-        return self.expr([
-            "readTimer"
-        ])
-
-    def getTime(self, timeVariable):
-        """Get time (which was stored when readTimer was last executed)."""
-        return self.expr([
-            "getTime", timeVariable, "0"
-        ])
-
-    def timeout(self, lastTimeout, length):
-        """If timeout, abort state execution."""
-        return self.expr([
-            "timeout", lastTimeout, length
-        ])
-
-    def conditionalReturn(self):
-        """Abort executing state, i.e., return from state."""
-        return self.createIFELSE("if", ["tmp", "return"])
-
     def setState(self, state, var="state"):
         """Set next_state = state."""
         return self.expr([
             "$=(const)=", var, int(self.st.get(state))
-        ])
-
-    def set(self, name, value):
-        """Set variable value.
-
-        if constant:     variable[name].value = value.
-        elif index:      variable[name].value = indexOf(value).
-        else (value):    variable[name].value = variable[value].value.
-        """
-        # print ("set value:", value)
-        if type(value) is int:
-            # set constant
-            # print ("set constant:", value)
-            return self.expr([
-                "=(const)=", name, value
-            ])
-        elif value[0] == "&":
-            # set index (also constant)
-            value = value[1:]
-            return self.expr([
-                "=(const)=", name, value
-            ])
-        else:
-            # set variable value
-            return self.expr([
-                "=", name, value
-            ])
-
-    def setConditional(self, left, operator, right):
-        """Set [?] = int(left operator right), e.g., left < right."""
-        return self.expr([
-            "$=", "?", left, "$" + operator, "?", right
         ])
 
     def conditionalSetState(self, state):
@@ -161,66 +101,3 @@ class STDSFunctions:
         ])
         # return the expression [subexpression1, subexpression2]
         #return [state_new, conditional_set]
-
-    def readMPU(self, errorVariable=None):
-        """Read the mpu sensor."""
-        if errorVariable is None:
-            return self.expr([
-                "mpu_readSensor"
-            ])
-        else:
-            return self.expr([
-                "mpu_readSensor", errorVariable, "1"
-            ])
-
-    def getMpuValue(self, identifier, multiplier=1):
-        """Read sensor value to matching stdVariable."""
-        return self.expr([
-            "mpu_get" + identifier, identifier, str(multiplier)
-        ])
-
-    def printInt(self, i, endl=False):
-        """Print variable as integer to serial port."""
-        if endl:
-            return self.expr([
-                "printInt_ln", "0", i
-            ])
-        else:
-            return self.expr([
-                "printInt", "0", i
-            ])
-
-    def printString(self, i, endl=False):
-        """Print string to serial port."""
-        if endl:
-            return self.expr([
-                "printString_ln", "0", i
-            ])
-        else:
-            return self.expr([
-                "printString", "0", i
-            ])
-
-    def clearString(self, var):
-        """Var = ''."""
-        return self.expr([
-            "clearString", var, "0"
-        ])
-
-    def concatString_String(self, leftValue, rightValue):
-        """LeftValue += rightValue."""
-        return self.expr([
-            "concatString_String", leftValue, rightValue
-        ])
-
-    def concatString_Int(self, leftValue, rightValue):
-        """LeftValue += str(rightValue)."""
-        return self.expr([
-            "concatString_Int", leftValue, rightValue
-        ])
-
-    def inc(self, i):
-        """Increase variable value by one."""
-        return self.expr([
-            "+", i, "1"
-        ])
