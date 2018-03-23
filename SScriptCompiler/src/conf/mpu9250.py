@@ -33,22 +33,22 @@ class Mpu9250:
             # to be a list
             # sensor variables
             # accelerometer
+            sv("Accel_mss"),              # amplitude of [x,y,z]
             sv("AccelX_mss"),             # amplitude in x-direction
             sv("AccelZ_mss"),             # amplitude in z-direction
             sv("AccelY_mss"),             # amplitude in y-direction
-            sv("Accel_mss"),              # amplitude of [x,y,z]
 
             # gyroscope
+            sv("Gyro_rads"),
             sv("GyroX_rads"),
             sv("GyroY_rads"),
             sv("GyroZ_rads"),
-            sv("Gyro_rads"),
 
             # magnetometer
+            sv("Mag_uT"),
             sv("MagY_uT"),
             sv("MagX_uT"),
             sv("MagZ_uT"),
-            sv("Mag_uT"),
 
             # temperature
             sv("Temperature_C"),
