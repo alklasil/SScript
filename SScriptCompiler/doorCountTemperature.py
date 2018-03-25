@@ -35,7 +35,7 @@ def main():
                 #   (Otherwise whis state is not required)
 
                 # set door open (closing does not add count)
-                ["setState", "<t"],
+                ["expr", ["$=(const)=", "state", "@<t"]],
                 ["expr", ["$printInt_ln", "Temperature_C"]]
 
             ]),
@@ -50,7 +50,7 @@ def main():
                 ["expr", ["$=", "?", "Temperature_C", "$<", "?", "tDOWN"]],
 
                 # if [?] state = "<t>" for processing
-                ["conditionalSetState", "<t>"],
+                ["expr", ["$if", "0", "?", "$=(const)=", "state", "@<t>"]],
 
                 ["expr", ["$printInt_ln", "Temperature_C"]],
             ]),
@@ -63,7 +63,7 @@ def main():
                 ["expr", ["$printString", "count_str"]],
                 ["expr", ["$printInt_ln", "count"]],
                 # set state
-                ["setState", "<t"]
+                ["expr", ["$=(const)=", "state", "@<t"]],
             ]),
             ("<t", [
                 # read MPU
@@ -76,7 +76,7 @@ def main():
                 ["expr", ["$=", "?", "Temperature_C", "$>", "?", "tUP"]],
 
                 # if [?] state = "<t>" for processing
-                ["conditionalSetState", ">t"],
+                ["expr", ["$if", "0", "?", "$=(const)=", "state", "@>t"]],
 
                 ["expr", ["$printInt_ln", "Temperature_C"]],
             ]),

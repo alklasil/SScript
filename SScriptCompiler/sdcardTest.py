@@ -19,7 +19,7 @@ def main():
         # variables (count & thresholds)
         [],
         [
-            ("filename", "sdcart.test")
+            ("filename", "sdcart.test"),
             ("store_str", "TEST String"),
             "load_str"
         ],

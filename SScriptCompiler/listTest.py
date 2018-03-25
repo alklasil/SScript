@@ -13,7 +13,7 @@ def main():
             ("init", [
                 ["expr", ["$=", "list1[0]", "1"]],
                 ["expr", ["$=", "list1[2]", "1"]],
-                ["setState", "main"],
+                ["expr", ["$=(const)=", "state", "@main"]],
             ]),
             ("main", [
                 # print "101"

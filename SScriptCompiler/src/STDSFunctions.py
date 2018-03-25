@@ -73,31 +73,14 @@ class STDSFunctions:
 
         expression = []
         for element in l:
+            # print(element)
             if type(element) is str and element[0] == '$':
                 # function
                 expression.append(self.get(self.f, element[1:]))
+            elif type(element) is str and element[0] == '@':
+                expression.append(self.st.get(element[1:]))
             else:
                 # variable
                 expression.append(self.get(self.v, element))
         # convert expression into SExpression and return it
         return se(expression)
-
-    def setState(self, state, var="state"):
-        """Set next_state = state."""
-        return self.expr([
-            "$=(const)=", var, int(self.st.get(state))
-        ])
-
-    def conditionalSetState(self, state):
-        """If ? != 0, next_state = state."""
-        # move new state into "tmp" variable
-        #state_new = self.expr([
-        #    "=(const)=", "tmp", int(self.st.get(state))
-        #])
-        # set state if conditional != 0
-        return self.expr([
-            "$if", "0", "?",
-            "$=(const)=", "state", int(self.st.get(state))
-        ])
-        # return the expression [subexpression1, subexpression2]
-        #return [state_new, conditional_set]

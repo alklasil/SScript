@@ -16,9 +16,10 @@ def main():
 
                 # synchronous execution
                 # store state "case" into tmp
-                ["setState", "case", "tmp"],
+                ["expr", ["$=(const)=", "tmp", "@case"]],
+
                 # execute tmp (=="case") as a state
-                ["expr", ["$executeState", "tmp"]]
+                ["expr", ["$executeState", "tmp"]],
 
                 # The switch-case statement (state) can also be executed asynchronously:
                 # (i.e., execute in the next loop.)

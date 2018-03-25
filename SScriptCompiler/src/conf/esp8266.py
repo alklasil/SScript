@@ -13,7 +13,8 @@ class Esp8266:
         """"Return a list of functions."""
         return [
             # basic operations
-            sf("esp_setRequestString")
+            sf("esp_setRequestString"),
+            sf("esp_setRequestStringGenerator")
         ]
 
     def getVariables(self, sdict):
