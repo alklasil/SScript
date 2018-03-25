@@ -21,8 +21,8 @@ def main():
             ("listLen", len(mpu9250.getVariables(None))),
         ],
         [
-            ("count_str", "count(steps): "),
-            ("log_str", "")
+            ("log_str", ""),
+            ("space", " ")
         ],
         confs=[std, mpu9250],
         fps=100,
@@ -33,6 +33,10 @@ def main():
                 # as there are no conditionals of any sort
                 #   (-> pefromance++, size--)
                 ["expr", [
+                    # store get sampling time
+                    "$readTimer",
+                    "$getTime", 'millis',
+                    # sample
                     "$mpu_readSensor",
                     # Accel
                     "$mpu_getAccelX_mss", "AccelX_mss", "1",
@@ -51,6 +55,10 @@ def main():
 
                     # clear log_str
                     "$clearString", "log_str",
+
+                    # add sampling time to log_str
+                    "$concatString_Int", "log_str", "millis",
+                    "$concatString_String", "log_str", "space",
 
                     # sensor values -> val1 val2 val3 ... valn
                     "$concatString_Int_List",

@@ -20,18 +20,13 @@ def main():
             ("count_str", "count(steps): ")
         ],
         confs=[Std(), Mpu9250()],
-        fps=100,
+        fps=20,
         program=[
             ("main", [
                 # read MPU
                 ["expr", ["$mpu_readSensor"]],
-
-                # How do we count the steps
-                #   (1) frequency? (FFT + MAX amplitude + timeout)
-                #   (2) derivative? dAmplitude > tUP -> count++
-                #   (3) integral / mean / max / threshold?
-                #          > tUp -> count
-                #  matlab the data first
+                # get MagZ_uT
+                ["expr", ["$mpu_getMagZ_uT", "MagZ_uT", "1"]],
 
             ])
         ])
