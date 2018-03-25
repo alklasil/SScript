@@ -4,7 +4,7 @@ void(*(*_functions))();
 
 char *getNext(char sep) {
 
-   char *next = strchr(sScript.str, sep);
+   char *next = strchr(sScript->str, sep);
 
    if (next != NULL) { // if not last element
 
@@ -25,9 +25,9 @@ int32_t getInt() {
 
     char *next = getNext(' ');
 
-    int32_t i = atoi(sScript.str);
+    int32_t i = atoi(sScript->str);
 
-    sScript.str = next;
+    sScript->str = next;
 
     return i;
 }
@@ -36,7 +36,7 @@ String getString() {
    // strings are separated by ';' in the buffer
 
    char *next = getNext(';') + 1;
-   String s = String(sScript.str);
-   sScript.str = next;
+   String s = String(sScript->str);
+   sScript->str = next;
    return s;
 }

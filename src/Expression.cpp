@@ -24,26 +24,26 @@ int32_t Expression::set(char *s) {
 }
 
 int32_t Expression::execute() {
-   sScript.element = &elements[0];
+   sScript->element = &elements[0];
 
-   while ((sScript.element - &elements[elementCount-1]) <= 0) {
-      //printf("execute %d %d %d\n", *sScript.element, *(sScript.element + 1), *(sScript.element + 2));
+   while ((sScript->element - &elements[elementCount-1]) <= 0) {
+      //printf("execute %d %d %d\n", *sScript->element, *(sScript->element + 1), *(sScript->element + 2));
       //getchar();
       // TODO: enable function pointers
       //printf("_begin_");
-      //printf("Expression::execute: %d|%d|%d", *sScript.element, elements[*(sScript.element + 1)], elements[*sScript.parseIndex(sScript.element + 2)]);
+      //printf("Expression::execute: %d|%d|%d", *sScript->element, elements[*(sScript->element + 1)], elements[*sScript->parseIndex(sScript->element + 2)]);
       //printf("_end_\n");
-      //Serial.println("_functions[*sScript.element](); begin");
-      //Serial.println(*sScript.element);
-      _functions[*sScript.element]();
-      //Serial.println("_functions[*sScript.element](); end");
+      //Serial.println("_functions[*sScript->element](); begin");
+      //Serial.println(*sScript->element);
+      _functions[*sScript->element]();
+      //Serial.println("_functions[*sScript->element](); end");
       //printf("_after_\n");
       // TODO: 0.2: remove abortExpressionExecution
-      //            It is enough to simply set sScript.element = &elements[elementCount]
-      if (sScript.abortExpressionExecution != 0) {
-          // reset sScript.abortExpressionExecution -> other expressions
+      //            It is enough to simply set sScript->element = &elements[elementCount]
+      if (sScript->abortExpressionExecution != 0) {
+          // reset sScript->abortExpressionExecution -> other expressions
           // can be executed correctly
-          sScript.abortExpressionExecution = 0;
+          sScript->abortExpressionExecution = 0;
           return 1;
 
       }
@@ -62,19 +62,19 @@ int32_t Expression::execute() {
     if (elementCount >= 3) { // "0 1" -> variables[0] = variables[1] or 1, TODO: perhaps combine this and the branch below into one -> clearer
         leftValue = &elements[0];
         leftValue = parseIndex(leftValue);
-        // leftValue = &sScript.variables[*leftValue];
+        // leftValue = &sScript->variables[*leftValue];
         // There can be more elements though
         for (int32_t i = 1; i < elementCount; i += 2) {
             rightValue = &elements[i];
             functionIndex = &elements[i + 1];
             rightValue = parseIndex(rightValue);
             _functions[*functionIndex](leftValue, rightValue);
-            // printf("...%d...%d...%d/%d...%d\n", sScript.abortExpressionExecution, *functionIndex, i, elementCount, elements[i]);
+            // printf("...%d...%d...%d/%d...%d\n", sScript->abortExpressionExecution, *functionIndex, i, elementCount, elements[i]);
 
-            if (sScript.abortExpressionExecution != 0) {
-                // reset sScript.abortExpressionExecution -> other expressions
+            if (sScript->abortExpressionExecution != 0) {
+                // reset sScript->abortExpressionExecution -> other expressions
                 // can be executed correctly
-                sScript.abortExpressionExecution = 0;
+                sScript->abortExpressionExecution = 0;
                 return 1;
 
             }

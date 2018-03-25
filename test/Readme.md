@@ -4,7 +4,7 @@
 
 
 # Link, compile, run (modify the paths as to match yours)
-´´´
-$ g++ -g *.cpp ../src/*.cpp ../../../ESP/ESP/ESP/teensySoftware/teensySoftware/ESP*.cpp ../../../ESP/ESP/ESP/teensySoftware/teensySoftware/sensors.cpp -std=c++11 -I ../src -I ../../../ESP/ESP/ESP/teensySoftware/teensySoftware -o main
+```bash
+$ g++ -g *.cpp ../src/*.cpp ../../../ESP/ESP/ESP/teensySoftware/teensySoftware/ESP*.cpp  -std=c++11 -I ../src -I ../../../ESP/ESP/ESP/teensySoftware/teensySoftware -o main
 $ ./main
-´´´
+```

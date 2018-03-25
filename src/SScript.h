@@ -26,6 +26,8 @@ class SScript
 
  public:
 
+     static SScript *sScript;
+
      int32_t variableCount;
      int32_t *variables;
 
@@ -56,6 +58,6 @@ class SScript
 
 };
 
-extern SScript sScript;
+extern SScript *sScript;
 
 #endif

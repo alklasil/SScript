@@ -9,31 +9,42 @@
 #include "ESPConfiguration.h"
 
 // example usage:
-// ./main "31 3 3 1 4 0 28 1000 1 1 0 Hello world! ; 1 5 1 13 3 27 28 15 3 29 3 0 3 2 30 29 3 2 29 28"
+// ./main '8 2 3 1 4 0 1 1 0 Hello world! ; 1 3 3 0 6 3 2 20 7 2 18 6'
 
 int main(int argc, char* argv[])
 {
   if (argc < 2) {
-     printf("Usage: %s %s \n", argv[0], "<CONFIGURATION>");
+     printf("Usage: %s <CONFIGURATION_1> <CONFIGURATION_2> <CONFIGURATION_N>\n", argv[0]);
      return 1;
   }
   void(*(*_functions))() = functions;
 
-  sScript.setFunctions(_functions);
+  int32_t sScriptInstanceCount = argc - 1;
+  SScript *_sScript = new SScript[sScriptInstanceCount];
+
   char buffer[1024];
-  strcpy(buffer, argv[1]);
-  sScript.set(buffer);
-  // HOX! when setting sScript. the buffer is destroyed
+  for (int i = 0; i < sScriptInstanceCount; i++) {
+
+     sScript = &_sScript[i];
+     sScript->setFunctions(_functions);
+     strcpy(buffer, argv[i + 1]);
+     sScript->set(buffer);
+
+  }
+  // HOX! when setting sScript. the buffer gets destroyed
   // If there is a change you may need to reuse the configuration,
   // Do copy it somewhere safe first.
   //  (This approach was chosen due to having limited memory in arduino devices)
   //  (This may change in the future to be optional depending on need and time)
 
-  while (1) {
+  while (true) {
       // do here what ever you want!
       // for example: check if there are requests for a web page.
       //              or do what ever it is that needs doing.
-      sScript.loop();
+      for (int i = 0; i < sScriptInstanceCount; i++) {
+         sScript = &_sScript[i];
+         sScript->loop();
+      }
   }
 
 }

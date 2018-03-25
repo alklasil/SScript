@@ -4,7 +4,7 @@
 
 #include "SScript.h"
 
-SScript sScript;
+SScript *sScript;
 
 SScript::SScript() {
 
@@ -101,25 +101,8 @@ void SScript::executeState(int32_t index) {
 }
 
 void SScript::loop() {
-    // Serial.println("a");
 
-    // execute "main"-state. the index of "main"-state should always be 0
-    // int32_t i = 24; _functions[i](&i, &i); // should print 24 (and does, at least 24.2.2018), i may have changed
     if (stateCount > 0) { // if configured with states
-
-/*#if defined(ARDUINO) // for testing, remove when ok (TODO)
-        static auto lastTime = millis();
-        auto _time = millis();
-        if (_time - lastTime > 30) {
-            lastTime = _time;
-            executeState(0);
-        }
-#else*/
-        //Serial.println("executeState(0); begin");
-
         executeState(0);
-
-        //Serial.println("executeState(0); end");
-//#endif
     }
 }
