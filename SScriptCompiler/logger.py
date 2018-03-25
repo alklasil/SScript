@@ -19,13 +19,17 @@ def main():
         # variables (count & thresholds)
         [
             ("listLen", len(mpu9250.getVariables(None))),
+            ("AccelMultiplier", 10),
+            ("GyroMultiplier", 10),
+            ("MagnMultiplier", 10),
+            ("TemperatureMultiplier", 1),
         ],
         [
             ("log_str", ""),
             ("space", " ")
         ],
         confs=[std, mpu9250],
-        fps=100,
+        fps=60,
         program=[
             ("main", [
                 # read mpu & get store values to respective variables
@@ -39,19 +43,19 @@ def main():
                     # sample
                     "$mpu_readSensor",
                     # Accel
-                    "$mpu_getAccelX_mss", "AccelX_mss", "1",
-                    "$mpu_getAccelY_mss", "AccelY_mss", "1",
-                    "$mpu_getAccelZ_mss", "AccelZ_mss", "1",
+                    "$mpu_getAccelX_mss", "AccelX_mss", "AccelMultiplier",
+                    "$mpu_getAccelY_mss", "AccelY_mss", "AccelMultiplier",
+                    "$mpu_getAccelZ_mss", "AccelZ_mss", "AccelMultiplier",
                     # Gyro
-                    "$mpu_getGyroX_rads", "GyroX_rads", "1",
-                    "$mpu_getGyroY_rads", "GyroY_rads", "1",
-                    "$mpu_getGyroZ_rads", "GyroZ_rads", "1",
+                    "$mpu_getGyroX_rads", "GyroX_rads", "GyroMultiplier",
+                    "$mpu_getGyroY_rads", "GyroY_rads", "GyroMultiplier",
+                    "$mpu_getGyroZ_rads", "GyroZ_rads", "GyroMultiplier",
                     # Magn
-                    "$mpu_getMagX_uT", "MagX_uT", "1",
-                    "$mpu_getMagY_uT", "MagY_uT", "1",
-                    "$mpu_getMagZ_uT", "MagZ_uT", "1",
+                    "$mpu_getMagX_uT", "MagX_uT", "MagnMultiplier",
+                    "$mpu_getMagY_uT", "MagY_uT", "MagnMultiplier",
+                    "$mpu_getMagZ_uT", "MagZ_uT", "MagnMultiplier",
                     # Temperature
-                    "$mpu_getTemperature_C", "Temperature_C", "1",
+                    "$mpu_getTemperature_C", "Temperature_C", "TemperatureMultiplier",
 
                     # clear log_str
                     "$clearString", "log_str",
