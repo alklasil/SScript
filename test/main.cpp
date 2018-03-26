@@ -1,15 +1,27 @@
 #include <iostream>
 #include <stdio.h>
-#include "SScript.h"
-// ESPConfiguration can be changed to another
-// The configuration file must provide extern
-// functions, nothing else.
-// see https://github.com/alklasil/ESP/blob/master/teensySoftware/teensySoftware/ESPConfiguration.cpp
-// for more detail
-#include "ESPConfiguration.h"
+#include <SScript.h>
+#include <SConf.h>
+#include <SStd.h>
+#include <SMpu9250.h>
+#include <SEsp8266.h>
+#include <SSdcard.h>
 
 // example usage:
 // ./main '8 2 3 1 4 0 1 1 0 Hello world! ; 1 3 3 0 6 3 2 20 7 2 18 6'
+
+void(*functions[])() = {
+    // std
+    SSTD_FUNCTIONS_ALL,
+    // sensor read
+    MPU_FUNCTIONS_ALL,
+    // webServer
+    ESP_FUNCTIONS_ALL,
+    // sdcard
+    SSDCARD_FUNCTIONS_ALL
+};
+
+void(*(*_functions))() = functions;
 
 int main(int argc, char* argv[])
 {
@@ -17,7 +29,6 @@ int main(int argc, char* argv[])
      printf("Usage: %s <CONFIGURATION_1> <CONFIGURATION_2> <CONFIGURATION_N>\n", argv[0]);
      return 1;
   }
-  void(*(*_functions))() = functions;
 
   int32_t sScriptInstanceCount = argc - 1;
   SScript *_sScript = new SScript[sScriptInstanceCount];
