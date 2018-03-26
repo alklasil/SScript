@@ -21,14 +21,14 @@ void(*functions[])() = {
     SSDCARD_FUNCTIONS_ALL
 };
 
-void(*(*_functions))() = functions;
-
 int main(int argc, char* argv[])
 {
   if (argc < 2) {
      printf("Usage: %s <CONFIGURATION_1> <CONFIGURATION_2> <CONFIGURATION_N>\n", argv[0]);
      return 1;
   }
+
+  void(*(*_functions))() = functions;
 
   int32_t sScriptInstanceCount = argc - 1;
   SScript *_sScript = new SScript[sScriptInstanceCount];
