@@ -22,6 +22,8 @@ class SProgram:
         print("INITIALIZING PROGRAM...")
         print("")
 
+        self.confs = confs
+
         """Set the program."""
         if len(program) == 1:
             self._stets = program
@@ -113,6 +115,10 @@ class SProgram:
     def getFunctions(self):
         """Return all (std) functions."""
         return self.f
+
+    def getConfs(self):
+        """Return all (std) confs."""
+        return self.confs
 
     def gf(self):
         """Short verion for getFunctions."""

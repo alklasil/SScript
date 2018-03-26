@@ -61,3 +61,11 @@ class Std:
             # timer
             sv("millis"),
         ]
+
+    def getCpp(self, identifier):
+        """Return c++ code related to this conf."""
+        if identifier == "include":
+            return ["#include <SStd.h>"]
+        elif identifier == "functions_all":
+            return ["SSTD_FUNCTIONS_ALL"]
+        return []

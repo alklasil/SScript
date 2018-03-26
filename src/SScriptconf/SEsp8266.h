@@ -17,7 +17,7 @@ void esp_setRequestString();
 // on need.)
 void esp_setRequestStringGenerator();
 
-#define ESP_FUNCTIONS_ALL esp_setRequestString, \
+#define SESP_FUNCTIONS_ALL esp_setRequestString, \
     esp_setRequestStringGenerator
 
 #endif

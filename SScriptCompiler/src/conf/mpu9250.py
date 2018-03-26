@@ -61,3 +61,11 @@ class Mpu9250:
     def lastVariable(self):
         """Return the last variable. Can be used in indexing lists."""
         return "Temperature_C"
+
+    def getCpp(self, identifier):
+        """Return c++ code related to this conf."""
+        if identifier == "include":
+            return ["#include <SMpu9250.h>"]
+        elif identifier == "functions_all":
+            return ["SMPU_FUNCTIONS_ALL"]
+        return []

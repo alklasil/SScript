@@ -8,6 +8,7 @@ class SCompiler:
         self.s = p.getSoftware()
         self.f = p.getFunctions()
         self.v = self.f.getVariables()
+        self.confs = p.getConfs()
         self.compiled = []
 
     def compile(self):
@@ -79,11 +80,45 @@ class SCompiler:
                 c.append(str(expression.getLen()))
                 c.append(expression.get())
 
-        print("\nCOMPILED...\n")
-
         self.compiled = c
+
+        # print c++ template code
+        self.printCpp()
+
+        print("\nCOMPILED...\n")
         return self.getCompiled()
 
     def getCompiled(self):
         """Get the compiled SScript as string"""
         return ' '.join(self.compiled)
+
+    def printCpp(self):
+        # print c++ template code
+        cppIncludes = []
+        cppFunctionsAll = []
+        for conf in self.confs:
+            if hasattr(conf, "getCpp"):
+                cppIncludes = cppIncludes + conf.getCpp("include")
+                cppFunctionsAll = cppFunctionsAll + conf.getCpp("functions_all")
+
+        print("\n" + "*"*20 + "\nC++ template code\n"+ "*"*20 + "\n")
+        print("\n".join(cppIncludes))
+        print("\nvoid(*functions[])() = {")
+        print("   " + ",\n   ".join(cppFunctionsAll))
+        print("}")
+        print("\nint main(int argc, char* argv[]) {\n")
+        print("   // create SScript instance & set sScript to point to the created instance.")
+        print("   //    To switch between different sScript instances, simply point sScript to a different instance")
+        print("   SScript _sScript;")
+        print("   sScript = &_sScript;\n")
+        print("   // Set functions.")
+        print("   void(*(*_functions))() = functions;")
+        print("   sScript->setFunctions(_functions);\n")
+        print("   // Configure.")
+        print('   char *buffer = "' + self.getCompiled() + '"')
+        print("   sScript->set(buffer);\n")
+        print("   // Execute.")
+        print("   while (true) {")
+        print("      sScript->loop();")
+        print("   }\n")
+        print("}")

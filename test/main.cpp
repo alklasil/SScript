@@ -14,9 +14,9 @@ void(*functions[])() = {
     // std
     SSTD_FUNCTIONS_ALL,
     // sensor read
-    MPU_FUNCTIONS_ALL,
+    SMPU_FUNCTIONS_ALL,
     // webServer
-    ESP_FUNCTIONS_ALL,
+    SESP_FUNCTIONS_ALL,
     // sdcard
     SSDCARD_FUNCTIONS_ALL
 };
@@ -46,8 +46,8 @@ int main(int argc, char* argv[])
   // If there is a change you may need to reuse the configuration,
   // Do copy it somewhere safe first.
   //  (This approach was chosen due to having limited memory in arduino devices)
-  //  (This may change in the future to be optional depending on need and time)
 
+  //  (This may change in the future to be optional depending on need and time)
   while (true) {
       // do here what ever you want!
       // for example: check if there are requests for a web page.

@@ -23,3 +23,11 @@ class Sdcard:
     def getVariables(self, sdict):
         """Return list of variables."""
         return []
+
+    def getCpp(self, identifier):
+        """Return c++ code related to this conf."""
+        if identifier == "include":
+            return ["#include <SSdcard.h>"]
+        elif identifier == "functions_all":
+            return ["SSDCARD_FUNCTIONS_ALL"]
+        return []

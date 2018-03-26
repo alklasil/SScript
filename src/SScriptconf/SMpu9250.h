@@ -26,7 +26,7 @@ void mpu_getMagY_uT();
 void mpu_getMagZ_uT();
 void mpu_getTemperature_C();
 
-#define MPU_FUNCTIONS_ALL mpu_readSensor, \
+#define SMPU_FUNCTIONS_ALL mpu_readSensor, \
     mpu_getAccelX_mss, \
     mpu_getAccelY_mss, \
     mpu_getAccelZ_mss, \
@@ -36,6 +36,6 @@ void mpu_getTemperature_C();
     mpu_getMagX_uT, \
     mpu_getMagY_uT, \
     mpu_getMagZ_uT, \
-    mpu_getTemperature_C \
+    mpu_getTemperature_C
 
 #endif
