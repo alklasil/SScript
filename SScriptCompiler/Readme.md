@@ -74,7 +74,9 @@ void(*functions[])() = {
 }
 ```
 
-#### 2. Memory reduction and performance boost when there are no if statements in the script
+#### 2. Memory reduction and performance boost
+
+As longs as there are no if statements in consecutive expressions, the expressions can be merged.
 
 **Instead of**
 ```
