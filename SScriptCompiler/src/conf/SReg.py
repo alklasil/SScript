@@ -4,9 +4,8 @@ from src.SVariable import SVariable as sv
 
 class SReg:
     """Standard functions class for SScript."""
-    def __init__(self):
-        """"""
-        pass
+    def __init__(self, useVariables=True):
+        self.useVariables = useVariables
 
     def getFunctions(self):
         """"Return a list of functions."""
@@ -14,6 +13,9 @@ class SReg:
 
     def getVariables(self, sdict):
         """Return list of variables."""
+        if not self.useVariables:
+            return []
+
         return [
             # a few 'registers' for general use
             sv("r1"), sv("r2"),

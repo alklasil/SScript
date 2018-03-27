@@ -56,9 +56,9 @@ $ python3
 >>> from simpleHelloworld import main as simpleHelloworldMain
 >>> from sdcardTest import main as sdcardTestMain
 
->>> simpleHelloworldMain(None, [SStd(), SMpu9250(), SSdcard()])
->>> sdcardTestMain(None, [SStd(), SMpu9250(), SSdcard()])
->>> thresholdCounterMain(['100', '-100', 'GyroZ_rads', '10'], [SStd(), SMpu9250(), SSdcard()])
+>>> simpleHelloworldMain(None, [SStd(), SMpu9250(False), SSdcard(False)])
+>>> sdcardTestMain(None, [SStd(), SMpu9250(False), SSdcard()])
+>>> thresholdCounterMain(['100', '-100', 'GyroZ_rads', '10'], [SStd(), SMpu9250(), SSdcard(False)])
 ```
 **which would result into all the scripts using the same functions pointer array, there by reducing memory among other goodies.**
 ```c++

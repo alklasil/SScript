@@ -7,9 +7,8 @@ from src.SVariable import SVariable as sv
 
 class SStd:
     """Standard functions class for SScript."""
-    def __init__(self):
-        """"""
-        pass
+    def __init__(self, useVariables=True):
+        self.useVariables = useVariables
 
     def getFunctions(self):
         """"Return a list of functions."""
@@ -50,6 +49,9 @@ class SStd:
 
     def getVariables(self, sdict):
         """Return list of variables."""
+        if not self.useVariables:
+            return []
+
         return [
             # basic variables
             sv("tmp"),

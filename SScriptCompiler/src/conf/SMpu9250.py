@@ -5,9 +5,8 @@ from src.SVariable import SVariable as sv
 
 class SMpu9250:
     """Standard functions class for SScript."""
-    def __init__(self):
-        """"""
-        pass
+    def __init__(self, useVariables=True):
+        self.useVariables = useVariables
 
     def getFunctions(self):
         """"Return a list of functions by mpu9250."""
@@ -27,6 +26,9 @@ class SMpu9250:
 
     def getVariables(self, sdict):
         """Return list of variables by mpu9250."""
+        if not self.useVariables:
+            return []
+
         return [
             # basic variables
             # If you do not use stdVariables, the first variable is not allowed

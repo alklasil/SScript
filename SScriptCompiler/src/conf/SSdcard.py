@@ -5,9 +5,8 @@ from src.SVariable import SVariable as sv
 
 class SSdcard:
     """Standard functions class for SScript."""
-    def __init__(self):
-        """"""
-        pass
+    def __init__(self, useVariables=True):
+        self.useVariables = useVariables
 
     def getFunctions(self):
         """"Return a list of functions."""
