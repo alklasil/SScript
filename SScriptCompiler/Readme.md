@@ -10,8 +10,6 @@ python3 filename.py
 
 #### Memory reduction when using multiple instances of SScript
 
-Instead of simply compiling the scripts as shown above, One might want to use the method shown below.
-
 **Instead of using**
 ```bash
 python3 simpleHelloworld.py
@@ -46,16 +44,16 @@ void(*functions[])() = {
    SMPU_FUNCTIONS_ALL
 }
 ```
+
 **One might want to use**
 ```python
 $ python3
 >>> from src.conf.SStd import SStd
 >>> from src.conf.SMpu9250 import SMpu9250
->>> from simpleHelloworld import main
 >>> from src.conf.SSdcard import SSdcard
 >>> from simpleHelloworld import main as simpleHelloworldMain
 >>> from sdcardTest import main as sdcardTestMain
-
+>>> from thresholdCounter import main as thresholdCounterMain
 >>> simpleHelloworldMain(None, [SStd(), SMpu9250(), SSdcard()])
 >>> sdcardTestMain(None, [SStd(), SMpu9250(), SSdcard()])
 >>> thresholdCounterMain(['100', '-100', 'GyroZ_rads', '10'], [SStd(), SMpu9250(), SSdcard()])
