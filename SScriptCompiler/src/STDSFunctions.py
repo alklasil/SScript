@@ -3,7 +3,7 @@ from src.SVariable import SVariable as sv
 from src.SState import SState as ss
 from src.SExpression import SExpression as se
 from src.SList import SList as sl
-from src.conf.std import Std as Std
+from src.conf.SStd import SStd
 
 
 class STDSFunctions:
@@ -13,7 +13,7 @@ class STDSFunctions:
                  stateNames=["main"],
                  nameValuePairs=None,
                  initialState="main",
-                 confs=[Std()]):
+                 confs=[SStd()]):
         """Set functions, states and variables."""
 
         self.st = ss.create(

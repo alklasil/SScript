@@ -1,8 +1,9 @@
 """Print in a loop."""
 from src.SProgram import SProgram as program
+from src.conf.SStd import SStd
 
 
-def main():
+def main(argv=[], confs=[SStd()]):
     """Print 'Hello world!' and similar texts in loop."""
     # program
     p = program(
@@ -25,6 +26,7 @@ def main():
             # must be performed in 'init'-state in that case)
             #("_text", "Hello world!")
         #],
+        confs=confs,
         fps=2,
         # program (state, [expressions])
         program=[

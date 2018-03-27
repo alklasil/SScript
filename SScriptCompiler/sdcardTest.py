@@ -4,16 +4,13 @@ SDCARD test
 
 """
 from src.SProgram import SProgram as program
-from src.conf.std import Std as Std
-from src.conf.sdcard import Sdcard as Sdcard
+from src.conf.SStd import SStd
+from src.conf.SSdcard import SSdcard
 
 
-def main():
+def main(argv=[], confs=[SStd(), SSdcard()]):
     """Write & read data from sdcard."""
     # program
-
-    std = Std()
-    sdcard = Sdcard()
 
     p = program(
         # variables (count & thresholds)
@@ -23,7 +20,7 @@ def main():
             ("store_str", "TEST String"),
             "load_str"
         ],
-        confs=[std, sdcard],
+        confs=confs,
         fps=2,
         program=[
             ("main", [

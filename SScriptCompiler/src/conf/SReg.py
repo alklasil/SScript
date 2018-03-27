@@ -2,7 +2,7 @@
 from src.SVariable import SVariable as sv
 
 
-class Reg:
+class SReg:
     """Standard functions class for SScript."""
     def __init__(self):
         """"""

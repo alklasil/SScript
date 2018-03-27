@@ -19,11 +19,11 @@ import sys
 # import getopt
 
 from src.SProgram import SProgram as program
-from src.conf.std import Std as Std
-from src.conf.mpu9250 import Mpu9250 as Mpu9250
+from src.conf.SStd import SStd
+from src.conf.SMpu9250 import SMpu9250
 
 
-def main(argv):
+def main(argv=[], confs=[SStd(), SMpu9250()]):
     """Increase count based on thresholding."""
     # TODO: better commandline argument parser
     tUP = int(argv[0])
@@ -45,7 +45,7 @@ def main(argv):
             # count and _count are equal,
             ("count_str", "count: ")
         ],
-        confs=[Std(), Mpu9250()],
+        confs=confs,
         fps=60,
         # program (state, [expressions])
         initialState="init",

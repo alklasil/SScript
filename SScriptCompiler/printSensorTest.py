@@ -2,9 +2,10 @@
 from src.SProgram import SProgram as program
 from src.conf.std import Std as Std
 from src.conf.mpu9250 import Mpu9250 as Mpu9250
+from src.conf.SStd import SStd
 
 
-def main():
+def main(argv=[], confs=[SStd()]):
     """Print 'Hello world!' and similar texts in loop."""
     # program
     p = program(

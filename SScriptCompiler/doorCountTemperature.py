@@ -6,11 +6,11 @@ TODO: modify this to be configurable to use either temperature, accl or gyro
       (commandline parameters -> different output)
 """
 from src.SProgram import SProgram as program
-from src.conf.std import Std as Std
-from src.conf.mpu9250 import Mpu9250 as Mpu9250
+from src.conf.SStd import SStd
+from src.conf.SMpu9250 import SMpu9250
 
 
-def main():
+def main(argv=[], confs=[SStd(), SMpu9250()]):
     """Count how many times a door has been opened based on temperature."""
     # program
     p = program(
@@ -25,7 +25,7 @@ def main():
             # count and _count are equal,
             ("count_str", "count(door opened): ")
         ],
-        confs=[Std(), Mpu9250()],
+        confs=confs,
         fps=100,
         # program (state, [expressions])
         initialState="init",

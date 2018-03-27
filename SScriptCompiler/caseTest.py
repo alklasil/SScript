@@ -1,12 +1,14 @@
 """Simple if-else / swicth-case test."""
 from src.SProgram import SProgram as program
+from src.conf.SStd import SStd
 
 
-def main():
+def main(argv=[], confs=[SStd()]):
     """Print 0 1 3 0...."""
     # program
     p = program(
         ["i"],
+        confs=confs,
         # program (state, [expressions])
         program=[
             ("main", [

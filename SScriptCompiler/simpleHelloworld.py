@@ -1,8 +1,10 @@
 """Print in a loop."""
 from src.SProgram import SProgram as program
+from src.conf.SStd import SStd
 
 
-def main():
+def main(argv=[], confs=[SStd()]):
+    print(confs)
     """Print 'Hello world!' int(count) in a loop."""
     # program
     p = program(
@@ -22,6 +24,7 @@ def main():
         # (used for testing)
         #   (How to set fps for invidual states: See timerTest)
         #   (i.e., simple multithreading)
+        confs=confs,
         fps=None,
         # program (state, [expressions])
         program=[

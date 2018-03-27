@@ -1,14 +1,17 @@
 """Print 123 in a loop with manual timers."""
-from src.SProgram import SProgram as program
+from src.SProgram
+confs=confs, import SProgram as program
+from src.conf.SStd import SStd
 
 
-def main():
+def main(argv=[], confs=[SStd()]):
     """Print 123 in loop."""
     # program
     p = program(
         # variables ["var1", ("var2", value), "var3", ("var4", value)]
         ["lastTimedOut", ("timeout_length", 1000), ("i", 123)],
         # set fps to manual
+        confs=confs,
         fps=None,
         # program (state, [expressions])
         program=[

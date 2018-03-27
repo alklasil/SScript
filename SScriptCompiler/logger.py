@@ -4,16 +4,15 @@ Increase step count when ...
 
 """
 from src.SProgram import SProgram as program
-from src.conf.std import Std as Std
-from src.conf.mpu9250 import Mpu9250 as Mpu9250
+from src.conf.SStd import SStd
+from src.conf.SMpu9250 import SMpu9250
 
 
-def main():
+def main(argv=[], confs=[SStd(), SMpu9250()]):
     """Count steps."""
     # program
 
-    std = Std()
-    mpu9250 = Mpu9250()
+    mpu9250 = SMpu9250()
 
     p = program(
         # variables (count & thresholds)
@@ -28,7 +27,7 @@ def main():
             ("log_str", ""),
             ("space", " ")
         ],
-        confs=[std, mpu9250],
+        confs=confs,
         fps=60,
         program=[
             ("main", [

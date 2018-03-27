@@ -1,12 +1,14 @@
 """Print 103 in a loop."""
 from src.SProgram import SProgram as program
+from src.conf.SStd import SStd
 
 
-def main():
+def main(argv=[], confs=[SStd()]):
     """Print 101 in loop."""
     # program
     p = program(
         [["list1", 3]],
+        confs=confs,
         fps=None,
         initialState="init",
         program=[

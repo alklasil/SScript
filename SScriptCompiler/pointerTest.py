@@ -1,14 +1,16 @@
 """Print in a loop using pointers."""
 from src.SProgram import SProgram as program
+from src.conf.SStd import SStd
 
 
-def main():
+def main(argv=[], confs=[SStd()]):
     """Print in a loop using pointers."""
     # program
     p = program(
         # ("i", "&a") == ("i", "a"), poth set i as pointer to point to a
         # in code, the form &a is required, see below
         [("i", "&a"), ("a", 333), ("b", 555), ("th", 1000)],
+        confs=confs,
         # program (state, [expressions])
         program=[
             ("main", [

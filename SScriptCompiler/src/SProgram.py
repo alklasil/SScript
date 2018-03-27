@@ -3,7 +3,7 @@ from src.SState import SState as ss
 from src.SList import SList as sl
 from src.STDSFunctions import STDSFunctions as stdf
 from src.SCompiler import SCompiler as co
-from src.conf.std import Std as Std
+from src.conf.SStd import SStd
 
 
 class SProgram:
@@ -12,7 +12,7 @@ class SProgram:
                  variableNameValuePairs=[],
                  stringNameValuePairs=[],
                  initialState="main",
-                 confs=[Std()],
+                 confs=[SStd()],
                  fps=60,
                  program=[]):
         """parse program states & state, expression pairs (program)."""

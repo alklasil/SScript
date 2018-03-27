@@ -5,7 +5,7 @@ from src.SVariable import SVariable as sv
 # TODO: divide this into smaller confs (smath, sstring, etc..)
 
 
-class Std:
+class SStd:
     """Standard functions class for SScript."""
     def __init__(self):
         """"""

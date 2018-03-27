@@ -3,7 +3,7 @@ from src.SFunction import SFunction as sf
 from src.SVariable import SVariable as sv
 
 
-class Mpu9250:
+class SMpu9250:
     """Standard functions class for SScript."""
     def __init__(self):
         """"""
