@@ -1,15 +1,14 @@
 """Print in a loop."""
 from src.SProgram import SProgram as program
-from src.conf.std import Std as Std
-from src.conf.mpu9250 import Mpu9250 as Mpu9250
 from src.conf.SStd import SStd
+from src.conf.SMpu9250 import SMpu9250
 
 
-def main(argv=[], confs=[SStd()]):
+def main(argv=[], confs=[SStd(), SMpu9250()]):
     """Print 'Hello world!' and similar texts in loop."""
     # program
     p = program(
-        confs=[Std(), Mpu9250()],
+        confs=[SStd(), SMpu9250()],
         fps=2,
         program=[
             ("main", [

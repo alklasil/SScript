@@ -1,6 +1,5 @@
 """Print 123 in a loop with manual timers."""
-from src.SProgram
-confs=confs, import SProgram as program
+from src.SProgram import SProgram as program
 from src.conf.SStd import SStd
 
 
