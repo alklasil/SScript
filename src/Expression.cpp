@@ -35,7 +35,7 @@ int32_t Expression::execute() {
       //printf("_end_\n");
       //Serial.println("_functions[*sScript->element](); begin");
       //Serial.println(*sScript->element);
-      _functions[*sScript->element]();
+      sScript->functions[*sScript->element]();
       //Serial.println("_functions[*sScript->element](); end");
       //printf("_after_\n");
       // TODO: 0.2: remove abortExpressionExecution
@@ -68,7 +68,7 @@ int32_t Expression::execute() {
             rightValue = &elements[i];
             functionIndex = &elements[i + 1];
             rightValue = parseIndex(rightValue);
-            _functions[*functionIndex](leftValue, rightValue);
+            sScript->functions[*functionIndex](leftValue, rightValue);
             // printf("...%d...%d...%d/%d...%d\n", sScript->abortExpressionExecution, *functionIndex, i, elementCount, elements[i]);
 
             if (sScript->abortExpressionExecution != 0) {
@@ -84,7 +84,7 @@ int32_t Expression::execute() {
       if (elementCount == 1) {
          // if elementCount == 1: always only a function
          leftValue = rightValue = functionIndex = &elements[0];
-         _functions[*functionIndex](leftValue, rightValue);
+         sScript->functions[*functionIndex](leftValue, rightValue);
          // there is nothing to set, simply return
          return 2;
       } else if (elementCount == 2) {

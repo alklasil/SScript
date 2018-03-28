@@ -36,9 +36,11 @@ public:
      String *strings;
      String *_strings;
 
+     void(*(*functions))();
+
      SScript();
      ~SScript();
-     int32_t setFunctions(void(*(*__functions))());
+     int32_t setFunctions(void(*(*_functions))());
      int32_t set(char *buffer, int32_t *_variables = NULL, String *_strings = NULL, State *_states = NULL);
 
      void executeState(int32_t index);

@@ -34,9 +34,9 @@ SScript::~SScript() {
 
 }
 
-int32_t SScript::setFunctions(void(*(*__functions))()) {
+int32_t SScript::setFunctions(void(*(*_functions))()) {
 
-    _functions = __functions;
+    functions = _functions;
 
     DEBUG_PRINT("setFunctions()\n");
     return 0;

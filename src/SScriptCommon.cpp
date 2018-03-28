@@ -1,7 +1,5 @@
 #include "SScriptCommon.h"
 
-void(*(*_functions))();
-
 char *getNext(char sep) {
 
    char *next = strchr(sScript->str, sep);

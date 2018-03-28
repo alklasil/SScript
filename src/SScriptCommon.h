@@ -22,7 +22,6 @@
    #define DEBUG_PRINT(fmt, ...) ;
 #endif
 
-extern void(*(*_functions))();
 int32_t getInt();
 String getString();
 
