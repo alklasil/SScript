@@ -25,28 +25,10 @@ int32_t Expression::set(char *s) {
 
 int32_t Expression::execute() {
    sScript->element = &elements[0];
+   sScript->lastElement = &elements[elementCount-1];
 
-   while ((sScript->element - &elements[elementCount-1]) <= 0) {
-      //printf("execute %d %d %d\n", *sScript->element, *(sScript->element + 1), *(sScript->element + 2));
-      //getchar();
-      // TODO: enable function pointers
-      //printf("_begin_");
-      //printf("Expression::execute: %d|%d|%d", *sScript->element, elements[*(sScript->element + 1)], elements[*sScript->parseIndex(sScript->element + 2)]);
-      //printf("_end_\n");
-      //Serial.println("_functions[*sScript->element](); begin");
-      //Serial.println(*sScript->element);
+   while ((sScript->element - sScript->lastElement) <= 0) {
       sScript->functions[*sScript->element]();
-      //Serial.println("_functions[*sScript->element](); end");
-      //printf("_after_\n");
-      // TODO: 0.2: remove abortExpressionExecution
-      //            It is enough to simply set sScript->element = &elements[elementCount]
-      if (sScript->abortExpressionExecution != 0) {
-          // reset sScript->abortExpressionExecution -> other expressions
-          // can be executed correctly
-          sScript->abortExpressionExecution = 0;
-          return 1;
-
-      }
    }
 
    return 0;

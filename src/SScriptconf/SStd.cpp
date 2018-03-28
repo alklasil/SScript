@@ -70,18 +70,20 @@ void executeState() {
 
 void _if() {
    FUNCTION_LEFT_PARSE_RIGHT_PARSE
-   if (*rightValue != *leftValue) sScript->abortExpressionExecution = 1;
-   FUNCTION_END
+   if (*rightValue != *leftValue) {
+      sScript->element = sScript->lastElement + 1;
+   } else {
+     FUNCTION_END
+   }
 }
 
 void _abortExpressionExecution() {
-   sScript->abortExpressionExecution = 1;
-   FUNCTION_END
+   sScript->element = sScript->lastElement + 1;
 }
 
 void _abortStateExecution() {
-   sScript->abortStateExecution = 1;
-   FUNCTION_END
+   sScript->lastExpression = sScript->lastExpression + 1;
+   sScript->element = sScript->lastElement + 1;
 }
 
 // timer
@@ -108,11 +110,12 @@ void timeout(){
    FUNCTION_LEFT_PARSE_RIGHT_PARSE
    // abort executeState if timeOut
    if (sScript->millis_var - *leftValue < *rightValue) {
-      sScript->abortStateExecution = 1;
+      sScript->expression = sScript->lastExpression + 1;
+      sScript->element = sScript->lastElement + 1;
    } else {
       *leftValue = sScript->millis_var;
+      FUNCTION_END
    }
-   FUNCTION_END
 }
 
 // print

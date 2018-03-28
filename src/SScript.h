@@ -54,10 +54,11 @@ public:
 
 
      // helper variables
-     int32_t abortExpressionExecution;
-     int32_t abortStateExecution;
      int32_t millis_var;
      int32_t *element;
+     int32_t *lastElement;
+     Expression *expression;
+     Expression *lastExpression;
 
 	  char *str;
 

@@ -17,8 +17,6 @@ SScript::SScript() {
     stateCount = 0;
     states = NULL; //new State[stateCount];
 
-    abortStateExecution = 0;
-    abortExpressionExecution = 0;
 }
 
 SScript::~SScript() {
