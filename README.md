@@ -1,8 +1,14 @@
+## SScript
+
+#### Class diagram & object diagram (Not necessarily the final versions)
+![alt text](images/SScriptArchitecture%20(1).png)
+
+
+---
+
+## 0.1 documentation
 
 **HOX! This readme is somewhat outdated and will be updated for the next version (0.2).**
-
-
-
 
 = SScript scripting Library for Arduino =
 
