@@ -1,6 +1,6 @@
 ## SScript
 
-#### Class diagram & object diagram
+#### Class diagram & object diagram (Not necessarily the final versions)
 ![alt text](images/SScriptArchitecture%20(1).png)
 
 
