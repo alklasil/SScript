@@ -6,9 +6,12 @@
 python3 filename.py
 ```
 
+
+---
+
 ### Advanced
 
-#### Memory reduction when using multiple instances of SScript
+#### 1.Memory reduction when using multiple instances of SScript
 
 **Instead of using**
 ```bash
@@ -70,3 +73,24 @@ void(*functions[])() = {
    SSDCARD_FUNCTIONS_ALL
 }
 ```
+
+#### 2. Memory reduction and performance boost
+
+As longs as there are no if statements in consecutive expressions, the expressions can be merged.
+
+**Instead of**
+```
+["expr", [ "$readTimer" ]]
+["expr", [ "$getTime", 'millis' ]]
+```
+**One might want to use**
+```
+["expr", [
+   "$readTimer",
+   "$getTime", 'millis'
+]]
+```
+
+
+
+
