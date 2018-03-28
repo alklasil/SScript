@@ -5,6 +5,13 @@
 #include "SScript.h"
 #include "State.h"
 
+State::State() {
+
+   expressionCount = 0;
+   expressions = NULL;
+
+}
+
 State::~State() {
 
     delete[] expressions;
@@ -13,14 +20,16 @@ State::~State() {
 
 int32_t State::set(char *s)
 {
-
     expressionCount = getInt();
-    expressions = new Expression[expressionCount];
     DEBUG_PRINT("expressions: %d\n", expressionCount);
-
-    for (int32_t i = 0; i < expressionCount; i++) {
-
-        expressions[i].set(s);
+    if (expressionCount > 0) {
+       if (expressions != NULL) {
+          delete[] expressions;
+       }
+       expressions = new Expression[expressionCount];
+       for (int32_t i = 0; i < expressionCount; i++) {
+           expressions[i].set(s);
+       }
     }
 }
 

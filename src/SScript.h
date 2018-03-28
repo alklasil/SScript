@@ -20,23 +20,26 @@ class SScript
 {
  protected:
 
-     // for now all scriptable variables are integers
+public:
+
      int32_t stateCount;
      State *states;
-
- public:
+     State *_states;
 
      static SScript *sScript;
 
      int32_t variableCount;
      int32_t *variables;
+     int32_t *_variables;
 
      int32_t stringCount;
      String *strings;
+     String *_strings;
 
      SScript();
+     ~SScript();
      int32_t setFunctions(void(*(*__functions))());
-     int32_t set(char *buffer);
+     int32_t set(char *buffer, int32_t *_variables = NULL, String *_strings = NULL, State *_states = NULL);
 
      void executeState(int32_t index);
      void loop();

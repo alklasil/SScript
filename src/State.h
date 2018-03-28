@@ -20,6 +20,7 @@ class State
  public:
 	int32_t set(char *s);
     int32_t execute();
+    State();
     ~State();
 };
 
