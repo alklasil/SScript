@@ -24,6 +24,9 @@ int32_t Expression::set(char *s) {
 }
 
 int32_t Expression::execute() {
+   if (elementCount == 0)
+      return 1;
+
    sScript->element = &elements[0];
    sScript->lastElement = &elements[elementCount-1];
 
@@ -32,53 +35,4 @@ int32_t Expression::execute() {
    }
 
    return 0;
-
-#ifdef NOT_DEFINED
-
-    int32_t *functionIndex;
-    int32_t *rightValue;
-    int32_t *leftValue;
-
-    // There are always at least 1 elements:
-    // leftValue must alywas be of mode pointer, it does not care about accessMode (-> somewhat restricted self modification of scripts, but faster)
-    if (elementCount >= 3) { // "0 1" -> variables[0] = variables[1] or 1, TODO: perhaps combine this and the branch below into one -> clearer
-        leftValue = &elements[0];
-        leftValue = parseIndex(leftValue);
-        // leftValue = &sScript->variables[*leftValue];
-        // There can be more elements though
-        for (int32_t i = 1; i < elementCount; i += 2) {
-            rightValue = &elements[i];
-            functionIndex = &elements[i + 1];
-            rightValue = parseIndex(rightValue);
-            sScript->functions[*functionIndex](leftValue, rightValue);
-            // printf("...%d...%d...%d/%d...%d\n", sScript->abortExpressionExecution, *functionIndex, i, elementCount, elements[i]);
-
-            if (sScript->abortExpressionExecution != 0) {
-                // reset sScript->abortExpressionExecution -> other expressions
-                // can be executed correctly
-                sScript->abortExpressionExecution = 0;
-                return 1;
-
-            }
-
-        }
-    } else {
-      if (elementCount == 1) {
-         // if elementCount == 1: always only a function
-         leftValue = rightValue = functionIndex = &elements[0];
-         sScript->functions[*functionIndex](leftValue, rightValue);
-         // there is nothing to set, simply return
-         return 2;
-      } else if (elementCount == 2) {
-         //  (variable = constant)
-         leftValue = &elements[0];
-         leftValue = parseIndex(leftValue);
-         rightValue = &elements[1];
-         *leftValue = *rightValue;
-      }
-   }
-
-   return 0;
-
-#endif
 }

@@ -34,6 +34,9 @@ int32_t State::set(char *s)
 }
 
 int32_t State::execute() {
+    if (expressionCount == 0)
+      return 1;
+
     sScript->lastExpression = &expressions[expressionCount-1];
     for (sScript->expression = &expressions[0]; sScript->expression <= sScript->lastExpression; sScript->expression++) {
         sScript->expression->execute();

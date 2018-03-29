@@ -64,7 +64,21 @@ void neq() {
 // helpers
 void executeState() {
    FUNCTION_LEFT_PARSE
+
+   // set return 'address
+   int32_t *_element = sScript->element;
+   int32_t *_lastElement = sScript->lastElement;
+   Expression *_expression = sScript->expression;
+   Expression *_lastExpression = sScript->lastExpression;
+
    sScript->executeState(*leftValue);
+
+   // return
+   sScript->element = _element;
+   sScript->lastElement = _lastElement;
+   sScript->expression = _expression;
+   sScript->lastExpression = _lastExpression;
+
    FUNCTION_END
 }
 
@@ -82,7 +96,7 @@ void _abortExpressionExecution() {
 }
 
 void _abortStateExecution() {
-   sScript->lastExpression = sScript->lastExpression + 1;
+   sScript->expression = sScript->lastExpression + 1;
    sScript->element = sScript->lastElement + 1;
 }
 

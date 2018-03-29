@@ -12,16 +12,16 @@ def main(argv=[], confs=[SStd()]):
         # program (state, [expressions])
         program=[
             ("main", [
-                # print i
-                ["expr", ["$printInt_ln", "i"]],
-
 
                 # synchronous execution
-                # store state "case" into tmp
-                ["expr", ["$=(const)=", "tmp", "@case"]],
-
-                # execute tmp (=="case") as a state
-                ["expr", ["$executeState", "tmp"]],
+                ["expr", [
+                    # store state "case" into tmp
+                    "$=(const)=", "tmp", "@case",
+                    # execute tmp (=="case") as a state
+                    "$executeState", "tmp",
+                    # print i
+                    "$printInt_ln", "i"
+                ]],
 
                 # The switch-case statement (state) can also be executed asynchronously:
                 # (i.e., execute in the next loop.)
@@ -38,11 +38,11 @@ def main(argv=[], confs=[SStd()]):
                 #  but if the switch(equation) were more complex it is
                 #  recommended to do this way)
                 ["expr", ["$=", "?", "i"]],
-                    # case 0: i++
+                #   case 0: i++
                     ["expr", ["$if", "?", "0", "$+", "i", "1", "$return"]],
-                    # case 1: i++, i++ (just for test, faster ways exist)
+                #   case 1: i++, i++ (just for test, faster ways exist)
                     ["expr", ["$if", "?", "1", "$+", "i", "1", "$+", "i", "1", "$return"]],
-                    # default (i != 0 && i != 1, e.g., i == 3)
+                #   default (i != 0 && i != 1, e.g., i == 3)
                     ["expr", ["$=", "i", "0"]],
                 # }
             ]),
