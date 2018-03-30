@@ -31,7 +31,7 @@ class SProgram:
         # if there are more than 1 state, executeState is added automatically
         if len(states) > 1:
             self.states = [("_main", [
-                ["expr", ["$executeState", "state"]]
+                ["$executeState", "state"]
             ])] + self.states
 
         # create variable for timeout if fps provided
@@ -53,10 +53,10 @@ class SProgram:
                     # readTimer does not store millis in,
                     # use getTime to do that
                     # first readTimer
-                    ["expr", ["$readTimer"]],
+                    ["$readTimer"],
                     # then check if timeout
                     #  if timeout: abort stateExecution
-                    ["expr", ["$timeout", "_lastTimedOut", "_timeoutLength"]]
+                    ["$timeout", "_lastTimedOut", "_timeoutLength"]
                 ] + self.states[0][1]
             )
 
@@ -95,19 +95,13 @@ class SProgram:
         self._states = []
         print("reformat states:")
         for _state in self.states:
-            print(_state)
-            print("")
-            expressions = []
-            for expression in _state[1]:
-                if len(expression) == 1:
-                    function = getattr(self, expression[0])
-                    _expression = function()
-                else:
-                    function = getattr(self, expression[0])
-                    args = expression[1:]
-                    _expression = function(*args)
-                expressions.append(_expression)
+            print(_state, "\n")
+            expressions = [
+                self.expr(expression)
+                for expression in _state[1]
+            ]
             self._states.append((_state[0], expressions))
+
         # States -> SStates
         self.sStates = SList([
             # ss(name, [expressions])

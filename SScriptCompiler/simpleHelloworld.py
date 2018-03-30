@@ -29,12 +29,14 @@ def main(argv=[], confs=[SStd()]):
         # program (state, [expressions])
         states=[
             ("main", [
-                # increase count by one
-                ["expr", ["$+", "count", "1"]],
-                # print("Hello world!", endl=False)
-                ["expr", ["$printString_ln", "#helloworld"]],
-                # print(count, endl = True)
-                ["expr", ["$printInt_ln", "count"]],
+                [
+                    # increase count by one
+                    "$+", "count", "1",
+                    # print("Hello world!", endl=False)
+                    "$printString_ln", "#helloworld",
+                    # print(count, endl = True)
+                    "$printInt_ln", "count"
+                ],
             ])
         ])
     # compile and print the program

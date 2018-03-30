@@ -55,50 +55,57 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                 #   (Otherwise whis state is not required)
 
                 # set door open (closing does not add count)
-                ["expr", ["$=(const)=", "state", "@<t"]],
-                ["expr", ["$printInt_ln", sensorString]]
+                [
+                    "$=(const)=", "state", "@<t",
+                    "$printInt_ln", sensorString
+                ]
 
             ]),
             (">t", [
-                # read MPU
-                ["expr", ["$mpu_readSensor"]],
+                [
+                    # read MPU
+                    "$mpu_readSensor",
 
-                # get sensor value
-                ["expr", ["$mpu_get" + sensorString, sensorString, "multiplier"]],
+                    # get sensor value
+                    "$mpu_get" + sensorString, sensorString, "multiplier",
 
-                # [?] = sensor value < tDOWN
-                ["expr", ["$=", "?", sensorString, "$<", "?", "tDOWN"]],
+                    # [?] = sensor value < tDOWN
+                    "$=", "?", sensorString, "$<", "?", "tDOWN",
 
-                # if [?] state = "<t>" for processing
-                ["expr", ["$if", "1", "?", "$=(const)=", "state", "@<t>"]],
-
-                ["expr", ["$printInt_ln", sensorString]],
+                    # if [?] state = "<t>" for processing
+                    "$if", "1", "?", "$=(const)=", "state", "@<t>",
+                ]
+                #["$printInt_ln", sensorString],
             ]),
             ("<t>", [
                 # state = "opening the door",
                 #   (do not execute when closing the door)
-                # increase count by one
-                ["expr", ["$+", "count", "1"]],
-                # "debug" print the increased value
-                ["expr", ["$printString", "#count"]],
-                ["expr", ["$printInt_ln", "count"]],
-                # set state
-                ["expr", ["$=(const)=", "state", "@<t"]],
+                [
+                    # increase count by one
+                    "$+", "count", "1",
+                    # "debug" print the increased value
+                    "$printString", "#count",
+                    "$printInt_ln", "count",
+                    # set state
+                    "$=(const)=", "state", "@<t"
+                ],
             ]),
             ("<t", [
-                # read MPU
-                ["expr", ["$mpu_readSensor"]],
+                [
+                    # read MPU
+                    "$mpu_readSensor",
 
-                # get sensor value
-                ["expr", ["$mpu_get" + sensorString, sensorString, "multiplier"]],
+                    # get sensor value
+                    "$mpu_get" + sensorString, sensorString, "multiplier",
 
-                # [?] = sensor value < tDOWN
-                ["expr", ["$=", "?", sensorString, "$>", "?", "tUP"]],
+                    # [?] = sensor value < tDOWN
+                    "$=", "?", sensorString, "$>", "?", "tUP",
 
-                # if [?] state = "<t>" for processing
-                ["expr", ["$if", "1", "?", "$=(const)=", "state", "@>t"]],
+                    # if [?] state = "<t>" for processing
+                    "$if", "1", "?", "$=(const)=", "state", "@>t",
 
-                ["expr", ["$printInt_ln", sensorString]],
+                ],
+                # ["$printInt_ln", sensorString]
             ]),
         ])
     # compile and print the program

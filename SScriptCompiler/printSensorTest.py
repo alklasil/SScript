@@ -12,14 +12,16 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
         fps=2,
         states=[
             ("main", [
-                # read MPU
-                ["expr", ["$mpu_readSensor"]],
+                [
+                    # read MPU
+                    "$mpu_readSensor",
 
-                # get temperature
-                ["expr", ["$mpu_getTemperature_C", "Temperature_C", "1"]],
+                    # get temperature
+                    "$mpu_getTemperature_C", "Temperature_C", "1",
 
-                # print
-                ["expr", ["$printInt_ln", "Temperature_C"]],
+                    # print
+                    "$printInt_ln", "Temperature_C"
+                ],
 
             ])
         ])

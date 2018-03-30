@@ -13,15 +13,19 @@ def main(argv=[], confs=[SStd()]):
         initialState="init",
         states=[
             ("init", [
-                ["expr", ["$=", "list1[0]", "1"]],
-                ["expr", ["$=", "list1[2]", "1"]],
-                ["expr", ["$=(const)=", "state", "@main"]],
+                [
+                    "$=", "list1[0]", "1",
+                    "$=", "list1[2]", "1",
+                    "$=(const)=", "state", "@main"
+                ],
             ]),
             ("main", [
                 # print "101"
-                ["expr", ["$printInt", "list1[0]"]],
-                ["expr", ["$printInt", "list1[1]"]],
-                ["expr", ["$printInt_ln", "list1[2]"]]
+                [
+                    "$printInt", "list1[0]",
+                    "$printInt", "list1[1]",
+                    "$printInt_ln", "list1[2]"
+                ]
             ])
         ])
     # compile and print the program

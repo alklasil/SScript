@@ -14,14 +14,14 @@ def main(argv=[], confs=[SStd()]):
             ("main", [
 
                 # synchronous execution
-                ["expr", [
+                [
                     # store state "case" into tmp
-                    "$=(const)=", "tmp", "@case",
                     # execute tmp (=="case") as a state
+                    "$=(const)=", "tmp", "@case",
                     "$executeState", "tmp",
                     # print i
                     "$printInt_ln", "i"
-                ]],
+                ],
 
                 # The switch-case statement (state) can also be executed asynchronously:
                 # (i.e., execute in the next loop.)
@@ -37,13 +37,13 @@ def main(argv=[], confs=[SStd()]):
                 # (This is not necessary, you can use i directly in the sates,
                 #  but if the switch(equation) were more complex it is
                 #  recommended to do this way)
-                ["expr", ["$=", "?", "i"]],
+                ["$=", "?", "i"],
                 #   case 0: i++
-                    ["expr", ["$if", "?", "0", "$+", "i", "1", "$return"]],
+                    ["$if", "?", "0", "$+", "i", "1", "$return"],
                 #   case 1: i++, i++ (just for test, faster ways exist)
-                    ["expr", ["$if", "?", "1", "$+", "i", "1", "$+", "i", "1", "$return"]],
+                    ["$if", "?", "1", "$+", "i", "1", "$+", "i", "1", "$return"],
                 #   default (i != 0 && i != 1, e.g., i == 3)
-                    ["expr", ["$=", "i", "0"]],
+                    ["$=", "i", "0"],
                 # }
             ]),
 

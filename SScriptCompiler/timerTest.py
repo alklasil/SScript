@@ -16,14 +16,14 @@ def main(argv=[], confs=[SStd()]):
         states=[
             ("main", [
                 # read timer
-                ["expr", ["$readTimer"]],
+                ["$readTimer"],
 
                 # check if timeout_length since last tested
                 # if not, return, otherwise, set lastTimedOut = millis
 
-                ["expr", ["$timeout", "lastTimedOut", "timeout_length"]],
+                ["$timeout", "lastTimedOut", "timeout_length"],
                 # print
-                ["expr", ["$printInt_ln", "i"]],
+                ["$printInt_ln", "i"],
             ])
         ])
     # compile and print the program

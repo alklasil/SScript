@@ -35,7 +35,7 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                 # The program can be expressed as 1 expression,
                 # as there are no conditionals of any sort
                 #   (-> pefromance++, size--)
-                ["expr", [
+                [
                     # store get sampling time
                     "$readTimer",
                     "$getTime", 'millis',
@@ -73,7 +73,7 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                     "$printString_ln", "#log"
 
                     # store on the sdcard
-                ]],
+                ],
 
                 # TODO: store on sd-card
 
