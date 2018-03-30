@@ -5,59 +5,48 @@ class SCompiler:
     """Compiler class for SScript."""
     def __init__(self, p):
         """Set states, functions and variables."""
-        self.s = p.getSoftware()
-        self.f = p.getFunctions()
-        self.v = self.f.getVariables()
-        self.confs = p.getConfs()
-        self.compiled = []
+        self.p = p
 
     def compile(self):
         """Compile SScript."""
-        v = self.v
-        f = self.f
-        s = self.s
-
         print("\nCOMPILING...\n")
 
         c = []  # = self.compiled
-        vs = self.v.getValue2SLists()
-        variables = vs[0]
-        strings = vs[1]
 
         # number of variables
-        c.append(str(variables.getLen()))
+        c.append(self.p.sVariables.getLen())
         # initialize values (number of values to initialize)
         num = 0  # number/count of values to initialize
-        for vi, variable in enumerate(variables.getValue()):
+        for vi, variable in enumerate(self.p.sVariables.getValue()):
             if variable.getValue() != 0:
                 num += 1
         c.append(str(num))
         # initialize values (initialize values)
-        for vi, variable in enumerate(variables.getValue()):
+        for vi, variable in enumerate(self.p.sVariables.getValue()):
             if variable.getValue() != 0:
                 c.append(str(vi))
                 c.append(str(variable.getValue()))
 
         # number of strings
-        c.append(str(strings.getLen()))
-        subc = []
+        c.append(str(self.p.sStrings.getLen()))
+
         # initialize values (number of values to initialize)
         num = 0  # number/count of values to initialize
-        for si, s1 in enumerate(strings.getValue()):
+        for si, s1 in enumerate(self.p.sStrings.getValue()):
             if s1.getValue() != "":
                 num += 1
         c.append(str(num))
         # initialize values (initialize values)
-        for si, s1 in enumerate(strings.getValue()):
+        for si, s1 in enumerate(self.p.sStrings.getValue()):
             if s1.getValue() != "":
                 c.append(str(si))
                 c.append(str(s1.getValue()) + ";")
 
         # number of states
-        print("states:" + str(s.getLen()))
-        c.append(str(s.getLen()))
+        print("states:" + str(self.p.sStates.getLen()))
+        c.append(str(self.p.sStates.getLen()))
         # states::expressions
-        for si, state in enumerate(s.getValue()):
+        for si, state in enumerate(self.p.sStates.getValue()):
             # parse subexpressions
             _expressions = []
             for expression in state.getExpressions():
@@ -83,14 +72,17 @@ class SCompiler:
         self.compiled = c
 
         # print c++ template code
-        self.printCpp()
+        #self.printCpp()
 
         print("\nCOMPILED...\n")
         return self.getCompiled()
 
     def getCompiled(self):
         """Get the compiled SScript as string"""
-        return ' '.join(self.compiled)
+        return ' '.join([
+            str(element)
+            for element in self.compiled
+        ])
 
     def printCpp(self):
         # print c++ template code

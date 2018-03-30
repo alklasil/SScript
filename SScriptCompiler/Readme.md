@@ -7,6 +7,23 @@ python3 filename.py
 ```
 
 
+### Syntax
+
+
+#### Variable, String, Function, State
+```
+$name -> get function where function.name == name
+   e.g., "$mpu_readSensor" -> mpu_readSensor()
+@name -> get state where state.name == name
+   e.g., "$=(const)=", "state", "@<t>" -> state = <t>
+#name -> get string where string.name == name
+   e.g., -> "$printString", "#count" -> if "count" = "count: ", then print "count: "
+name  -> get variable where variable.name == name
+   e.g., "$+", "count", "1" -> count++ (now it is variable, not string)
+
+See for example: thresholdCounter.py for an example
+```
+
 ---
 
 ### Advanced
@@ -90,7 +107,3 @@ As longs as there are no if statements in consecutive expressions, the expressio
    "$getTime", 'millis'
 ]]
 ```
-
-
-
-

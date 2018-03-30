@@ -1,9 +1,11 @@
 """Program module for SScript."""
-from src.SState import SState as ss
-from src.SList import SList as sl
-from src.STDSFunctions import STDSFunctions as stdf
-from src.SCompiler import SCompiler as co
+from src.SState import SState
+from src.SList import SList
+from src.SCompiler import SCompiler
 from src.conf.SStd import SStd
+from src.SVariable import SVariable
+from src.SFunction import SFunction
+from src.SExpression import SExpression
 
 
 class SProgram:
@@ -14,42 +16,38 @@ class SProgram:
                  initialState="main",
                  confs=[SStd()],
                  fps=60,
-                 program=[]):
+                 states=[]):
         """parse program states & state, expression pairs (program)."""
         # stateExpressionsTuples =
         #   [(state, state.expressions) for state in states]
 
         print("INITIALIZING PROGRAM...")
-        print("")
 
+        print("")
         self.confs = confs
+        self.states = states
 
         """Set the program."""
-        if len(program) == 1:
-            self._stets = program
-        else:
-            self._stets = [("_main", [
+        # if there are more than 1 state, executeState is added automatically
+        if len(states) > 1:
+            self.states = [("_main", [
                 ["expr", ["$executeState", "state"]]
-            ])] + program
+            ])] + self.states
 
-        nameValuePairs = [
-            variableNameValuePairs,
-            stringNameValuePairs
-        ]
-
+        # create variable for timeout if fps provided
         if fps is not None:
-            # create variable for timeout with the fps provided
-            nameValuePairs[0] = [
+            print(variableNameValuePairs)
+            variableNameValuePairs = [
                 "_lastTimedOut",
                 ("_timeoutLength", int((1/fps)*1000)),
-            ] + nameValuePairs[0]
+            ] + variableNameValuePairs
             # add readTimer & timeout into main
             # (hox! if fps is None and user wants to use timer,
             #  readTimer is required to be added manually,
             #  if fps is not None, as is case here, do not add readTimer)
-            self._stets[0] = (
+            self.states[0] = (
                 # state-name
-                self._stets[0][0],
+                self.states[0][0],
                 # expressions
                 [
                     # readTimer does not store millis in,
@@ -59,70 +57,70 @@ class SProgram:
                     # then check if timeout
                     #  if timeout: abort stateExecution
                     ["expr", ["$timeout", "_lastTimedOut", "_timeoutLength"]]
-                ] + self._stets[0][1]
+                ] + self.states[0][1]
             )
 
-        # parse states list
-        self.st = []
-        for stet in self._stets:
-            self.st.append(stet[0])
+        # parse state names from states list
+        self.stateNames = []
+        for state in self.states:
+            # state[0] = state name
+            self.stateNames.append(state[0])
+        self.sStateNames = SList([
+            SFunction(_stateName)
+            for _stateName in self.stateNames
+        ])
 
-        self.f = stdf(
-            stateNames=self.st,
-            nameValuePairs=nameValuePairs,
-            initialState=initialState,
-            confs=confs)
-        # execute expression functions
-        #   (easier job for the compiler)
-        self.stets = []
-        print("states:")
-        for stet in self._stets:
-            print(stet)
+        self.sVariables = SVariable.create(
+            variableNameValuePairs=variableNameValuePairs,
+            stateNames=self.sStateNames,
+            confs=confs,
+            initialState=initialState)
+
+        # strings
+        self.sStrings = SList([
+            SVariable(stringNameValuePair[0], stringNameValuePair[1])
+            for stringNameValuePair in stringNameValuePairs
+        ])
+
+        # Get functions from chosen configurations
+        self.functions = []
+        for conf in confs:
+            self.functions += conf.getFunctions()
+        self.sFunctions = SList(self.functions)
+
+        # sConf
+        self.sConfs = self.confs
+
+        # (name) strings -> integers (index / constant)
+        self._states = []
+        print("reformat states:")
+        for _state in self.states:
+            print(_state)
             print("")
             expressions = []
-            for expression in stet[1]:
+            for expression in _state[1]:
                 if len(expression) == 1:
-                    function = getattr(self.f, expression[0])
+                    function = getattr(self, expression[0])
                     _expression = function()
                 else:
-                    function = getattr(self.f, expression[0])
+                    function = getattr(self, expression[0])
                     args = expression[1:]
                     _expression = function(*args)
                 expressions.append(_expression)
-            self.stets.append((stet[0], expressions))
-        # software, the code of the program
-        self.s = sl([
+            self._states.append((_state[0], expressions))
+        # States -> SStates
+        self.sStates = SList([
             # ss(name, [expressions])
-            ss(stet[0], stet[1])
-            for stet in self.stets
+            SState(_state[0], _state[1])
+            for _state in self._states
         ])
-        self.c = co(self)
+        self.c = SCompiler(self)
         self.compiled = None
 
         print("variables:")
-        print(nameValuePairs)
+        print(variableNameValuePairs)
         print("")
         print("PROGRAM INITIALIZED")
-
-    def getSoftware(self):
-        """Return the program."""
-        return self.s
-
-    def getStates(self):
-        """Return programs possible states."""
-        return self.st
-
-    def getFunctions(self):
-        """Return all (std) functions."""
-        return self.f
-
-    def getConfs(self):
-        """Return all (std) confs."""
-        return self.confs
-
-    def gf(self):
-        """Short verion for getFunctions."""
-        return self.getFunctions()
 
     def compile(self, printIt=True):
         """Compile the program using SCompiler."""
@@ -134,3 +132,29 @@ class SProgram:
         if printIt:
             print(self.compiled)
         return self.compiled
+
+    def expr(self, l):
+        """Enable simpler expression creation.
+
+        Args:
+            l = str[] (list of strings [states, variables, functions]
+            (l = ["fun", "var", "var", "var", "fun", 1, "fun"])
+        """
+
+        expression = []
+        for element in l:
+            # print(element)
+            if type(element) is str and element[0] == '$':
+                # function
+                expression.append(self.sFunctions.get(element[1:]))
+            elif type(element) is str and element[0] == '@':
+                # state
+                expression.append(self.sStateNames.get(element[1:]))
+            elif type(element) is str and element[0] == '#':
+                # string
+                expression.append(self.sStrings.get(element[1:]))
+            else:
+                # variable
+                expression.append(self.sVariables.get(element))
+        # convert expression into SExpression and return it
+        return SExpression(expression)

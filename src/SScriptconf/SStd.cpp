@@ -156,7 +156,7 @@ void printInt_ln() {
 }
 
 void printString() {
-   FUNCTION_LEFT_PARSE
+   FUNCTION_LEFT_NOPARSE
    #if defined(ARDUINO)
       Serial.print(sScript->strings[*leftValue]);
    #else
@@ -167,7 +167,7 @@ void printString() {
 
 void printString_ln() {
    // Serial.println("printString_ln() begin");
-   FUNCTION_LEFT_PARSE
+   FUNCTION_LEFT_NOPARSE
    #if defined(ARDUINO)
       Serial.println(sScript->strings[*leftValue]);
    #else
@@ -184,13 +184,13 @@ void clearString() {
 }
 
 void concatString_String() {
-   FUNCTION_LEFT_PARSE_RIGHT_PARSE
+   FUNCTION_LEFT_PARSE_RIGHT_NOPARSE
    sScript->strings[*leftValue] += sScript->strings[*rightValue];
    FUNCTION_END
 }
 
 void concatString_Int() {
-   FUNCTION_LEFT_PARSE_RIGHT_PARSE
+   FUNCTION_LEFT_PARSE_RIGHT_NOPARSE
    #if defined(ARDUINO)
       sScript->strings[*leftValue] += String(*rightValue);
    #else
@@ -202,7 +202,7 @@ void concatString_Int() {
 void concatString_Int_List() {
    // (where to, where from, hoe many) -> "val1, val2, ..., valn"
    // TODO: optimize (for example. first to char* and the to String)
-   int32_t *store = FUNCTION_ONE_PARSE
+   int32_t *store = FUNCTION_ONE_NOPARSE
    int32_t *to = FUNCTION_ONE_PARSE
    int32_t *from = FUNCTION_ONE_PARSE
    from--;

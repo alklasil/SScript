@@ -11,6 +11,7 @@ class SExpression:
         """Get Value (str)."""
         return ' '.join(self.value)
 
+
     def getList(self):
         """Get value (list)."""
         return self.value

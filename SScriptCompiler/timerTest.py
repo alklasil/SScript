@@ -13,7 +13,7 @@ def main(argv=[], confs=[SStd()]):
         confs=confs,
         fps=None,
         # program (state, [expressions])
-        program=[
+        states=[
             ("main", [
                 # read timer
                 ["expr", ["$readTimer"]],

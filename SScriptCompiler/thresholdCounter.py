@@ -43,13 +43,13 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
         [
             # HOX! there cannot be similarly named variables and strings
             # count and _count are equal,
-            ("count_str", "count: ")
+            ("count", "count: ")
         ],
         confs=confs,
         fps=60,
         # program (state, [expressions])
         initialState="init",
-        program=[
+        states=[
             ("init", [
                 # TODO: add sensor-configuring here
                 #   (Otherwise whis state is not required)
@@ -72,7 +72,7 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                 # if [?] state = "<t>" for processing
                 ["expr", ["$if", "1", "?", "$=(const)=", "state", "@<t>"]],
 
-                # ["expr", ["$printInt_ln", sensorString]],
+                ["expr", ["$printInt_ln", sensorString]],
             ]),
             ("<t>", [
                 # state = "opening the door",
@@ -80,7 +80,7 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                 # increase count by one
                 ["expr", ["$+", "count", "1"]],
                 # "debug" print the increased value
-                ["expr", ["$printString", "count_str"]],
+                ["expr", ["$printString", "#count"]],
                 ["expr", ["$printInt_ln", "count"]],
                 # set state
                 ["expr", ["$=(const)=", "state", "@<t"]],
@@ -98,7 +98,7 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                 # if [?] state = "<t>" for processing
                 ["expr", ["$if", "1", "?", "$=(const)=", "state", "@>t"]],
 
-                # ["expr", ["$printInt_ln", sensorString]],
+                ["expr", ["$printInt_ln", sensorString]],
             ]),
         ])
     # compile and print the program

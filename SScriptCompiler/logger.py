@@ -24,12 +24,12 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
             ("TemperatureMultiplier", 1),
         ],
         [
-            ("log_str", ""),
+            ("log", ""),
             ("space", " ")
         ],
         confs=confs,
         fps=2,
-        program=[
+        states=[
             ("main", [
                 # read mpu & get store values to respective variables
                 # The program can be expressed as 1 expression,
@@ -57,20 +57,20 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                     "$mpu_getTemperature_C", "Temperature_C", "TemperatureMultiplier",
 
                     # clear log_str
-                    "$clearString", "log_str",
+                    "$clearString", "#log",
 
                     # add sampling time to log_str
-                    "$concatString_Int", "log_str", "millis",
-                    "$concatString_String", "log_str", "space",
+                    "$concatString_Int", "#log", "millis",
+                    "$concatString_String", "#log", "#space",
 
                     # sensor values -> val1 val2 val3 ... valn
                     "$concatString_Int_List",
-                    "log_str",
+                    "#log",
                     mpu9250.lastVariable(),
                     mpu9250.firstVariable(),
 
                     # print string
-                    "$printString_ln", "log_str"
+                    "$printString_ln", "#log"
 
                     # store on the sdcard
                 ]],

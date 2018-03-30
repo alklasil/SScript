@@ -18,7 +18,7 @@ def main(argv=[], confs=[SStd()]):
         ],
         # set strings
         stringNameValuePairs=[
-            ("helloworld_str", "Hello world! "),
+            ("helloworld", "Hello world! "),
         ],
         # set frames/second = None == no fps limiter
         # (used for testing)
@@ -27,12 +27,12 @@ def main(argv=[], confs=[SStd()]):
         confs=confs,
         fps=None,
         # program (state, [expressions])
-        program=[
+        states=[
             ("main", [
                 # increase count by one
                 ["expr", ["$+", "count", "1"]],
                 # print("Hello world!", endl=False)
-                ["expr", ["$printString_ln", "helloworld_str"]],
+                ["expr", ["$printString_ln", "#helloworld"]],
                 # print(count, endl = True)
                 ["expr", ["$printInt_ln", "count"]],
             ])

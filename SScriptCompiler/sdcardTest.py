@@ -17,12 +17,12 @@ def main(argv=[], confs=[SStd(), SSdcard()]):
         [],
         [
             ("filename", "sdcart.test"),
-            ("store_str", "TEST String"),
-            "load_str"
+            ("store", "TEST String"),
+            "load"
         ],
         confs=confs,
         fps=2,
-        program=[
+        states=[
             ("main", [
 
                 # open

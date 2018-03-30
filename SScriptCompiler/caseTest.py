@@ -10,7 +10,7 @@ def main(argv=[], confs=[SStd()]):
         ["i"],
         confs=confs,
         # program (state, [expressions])
-        program=[
+        states=[
             ("main", [
 
                 # synchronous execution

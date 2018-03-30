@@ -11,7 +11,7 @@ def main(argv=[], confs=[SStd()]):
         confs=confs,
         fps=None,
         initialState="init",
-        program=[
+        states=[
             ("init", [
                 ["expr", ["$=", "list1[0]", "1"]],
                 ["expr", ["$=", "list1[2]", "1"]],

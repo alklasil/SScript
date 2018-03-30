@@ -10,7 +10,7 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
     p = program(
         confs=[SStd(), SMpu9250()],
         fps=2,
-        program=[
+        states=[
             ("main", [
                 # read MPU
                 ["expr", ["$mpu_readSensor"]],
