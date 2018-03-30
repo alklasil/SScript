@@ -10,7 +10,7 @@ args:
     multiplier -> sensorValue *= multiplier when measurement
 
 example:
-    python3 thresholdCounter.py 100 -100 GyroZ_rads 10
+    python3 thresholdCounter.py 2 -2 GyroZ_rads 10
 
 # TODO: better filter function possibilities
 """
@@ -67,10 +67,10 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                 ["expr", ["$mpu_get" + sensorString, sensorString, "multiplier"]],
 
                 # [?] = sensor value < tDOWN
-                ["expr", ["$=", "?", sensorString, "$<", "?", "tUP"]],
+                ["expr", ["$=", "?", sensorString, "$<", "?", "tDOWN"]],
 
                 # if [?] state = "<t>" for processing
-                ["expr", ["$if", "0", "?", "$=(const)=", "state", "@<t>"]],
+                ["expr", ["$if", "1", "?", "$=(const)=", "state", "@<t>"]],
 
                 # ["expr", ["$printInt_ln", sensorString]],
             ]),
@@ -93,10 +93,10 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                 ["expr", ["$mpu_get" + sensorString, sensorString, "multiplier"]],
 
                 # [?] = sensor value < tDOWN
-                ["expr", ["$=", "?", sensorString, "$>", "?", "tDOWN"]],
+                ["expr", ["$=", "?", sensorString, "$>", "?", "tUP"]],
 
                 # if [?] state = "<t>" for processing
-                ["expr", ["$if", "0", "?", "$=(const)=", "state", "@>t"]],
+                ["expr", ["$if", "1", "?", "$=(const)=", "state", "@>t"]],
 
                 # ["expr", ["$printInt_ln", sensorString]],
             ]),

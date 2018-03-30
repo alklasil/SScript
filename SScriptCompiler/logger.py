@@ -28,7 +28,7 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
             ("space", " ")
         ],
         confs=confs,
-        fps=60,
+        fps=2,
         program=[
             ("main", [
                 # read mpu & get store values to respective variables
