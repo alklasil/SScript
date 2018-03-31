@@ -18,7 +18,7 @@ class SVariable:
         return self.value
 
     @staticmethod
-    def create(variableNameValuePairs, stateNames, confs, initialState="init"):
+    def create(variableNameValuePairs, states, confs, initialState="init"):
         """nameValuePairs -> [[variables(name, value)],[strings(name, value)]]."""
 
         # if values are lists. Add list elements as individual variables
@@ -40,7 +40,7 @@ class SVariable:
             # get variables from the configurations used
             for conf in confs:
                 variables += conf.getVariables({
-                    "stateNames": stateNames,
+                    "states": states,
                     "initialState": initialState
                 })
 

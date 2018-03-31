@@ -72,7 +72,7 @@ class SCompiler:
         self.compiled = c
 
         # print c++ template code
-        #self.printCpp()
+        self.printCpp()
 
         print("\nCOMPILED...\n")
         return self.getCompiled()
@@ -88,7 +88,7 @@ class SCompiler:
         # print c++ template code
         cppIncludes = []
         cppFunctionsAll = []
-        for conf in self.confs:
+        for conf in self.p.sConfs:
             if hasattr(conf, "getCpp"):
                 cppIncludes = cppIncludes + conf.getCpp("include")
                 cppFunctionsAll = cppFunctionsAll + conf.getCpp("functions_all")

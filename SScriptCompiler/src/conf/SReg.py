@@ -1,5 +1,5 @@
 """Helper module for accessing functions."""
-from src.SVariable import SVariable as sv
+from src.SVariable import SVariable
 
 
 class SReg:
@@ -18,9 +18,9 @@ class SReg:
 
         return [
             # a few 'registers' for general use
-            sv("r1"), sv("r2"),
-            sv("r3"), sv("r4"),
-            sv("r5"), sv("r6"),
-            sv("r7"), sv("r8"),
+            SVariable("r1"), SVariable("r2"),
+            SVariable("r3"), SVariable("r4"),
+            SVariable("r5"), SVariable("r6"),
+            SVariable("r7"), SVariable("r8"),
         ]
         pass

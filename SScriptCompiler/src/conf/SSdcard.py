@@ -1,6 +1,6 @@
 """Helper module for accessing functions."""
-from src.SFunction import SFunction as sf
-from src.SVariable import SVariable as sv
+from src.SFunction import SFunction
+from src.SVariable import SVariable
 
 
 class SSdcard:
@@ -12,11 +12,11 @@ class SSdcard:
         """"Return a list of functions."""
         return [
             # basic operations
-            sf("sdcard_open"),
-            sf("sdcard_reopen"),
-            sf("sdcard_write"),
-            sf("sdcard_readString"),
-            sf("sdcard_close"),
+            SFunction("sdcard_open"),
+            SFunction("sdcard_reopen"),
+            SFunction("sdcard_write"),
+            SFunction("sdcard_readString"),
+            SFunction("sdcard_close"),
         ]
 
     def getVariables(self, sdict):

@@ -1,6 +1,5 @@
 """Helper module for accessing functions."""
-from src.SFunction import SFunction as sf
-from src.SVariable import SVariable as sv
+from src.SFunction import SFunction
 
 
 class SEsp8266:
@@ -12,8 +11,8 @@ class SEsp8266:
         """"Return a list of functions."""
         return [
             # basic operations
-            sf("esp_setRequestString"),
-            sf("esp_setRequestStringGenerator")
+            SFunction("esp_setRequestString"),
+            SFunction("esp_setRequestStringGenerator")
         ]
 
     def getVariables(self, sdict):

@@ -1,7 +1,6 @@
 """Helper module for accessing functions."""
-from src.SFunction import SFunction as sf
-from src.SVariable import SVariable as sv
-
+from src.SFunction import SFunction
+from src.SVariable import SVariable
 # TODO: divide this into smaller confs (smath, sstring, etc..)
 
 
@@ -14,37 +13,37 @@ class SStd:
         """"Return a list of functions."""
         return [
             # basic operations
-            sf("+"),                # leftValue += righValue
-            sf("-"),
-            sf("*"),                # leftValue /= rightValue
-            sf("/"),
-            sf("="),                # leftValue = rightValue
-            sf("=(const)="),       # leftValue = const(rightValue),
+            SFunction("+"),                # leftValue += righValue
+            SFunction("-"),
+            SFunction("*"),                # leftValue /= rightValue
+            SFunction("/"),
+            SFunction("="),                # leftValue = rightValue
+            SFunction("=(const)="),       # leftValue = const(rightValue),
                                     # do not parse rightValue
-            sf("<"),                # leftValue < rightValue
-            sf(">"),                # leftValue > rightValue
-            sf("=="),               # leftValue == rightValue
-            sf("!="),               # leftValue != rightValue
+            SFunction("<"),                # leftValue < rightValue
+            SFunction(">"),                # leftValue > rightValue
+            SFunction("=="),               # leftValue == rightValue
+            SFunction("!="),               # leftValue != rightValue
             # helper functions
-            sf("executeState"),
-            sf("if"),
-            sf(";"),                # abort expression execution,
-            sf("return"),           # abort state execution
+            SFunction("executeState"),
+            SFunction("if"),
+            SFunction(";"),                # abort expression execution,
+            SFunction("return"),           # abort state execution
                                     # leftvalue does not change
             # timer
-            sf("readTimer"),
-            sf("getTime"),
-            sf("timeout"),
+            SFunction("readTimer"),
+            SFunction("getTime"),
+            SFunction("timeout"),
 
             # print (only int32_t for now)
-            sf("printInt"),
-            sf("printInt_ln"),
-            sf("printString"),
-            sf("printString_ln"),
-            sf("clearString"),
-            sf("concatString_String"),
-            sf("concatString_Int"),
-            sf("concatString_Int_List"),
+            SFunction("printInt"),
+            SFunction("printInt_ln"),
+            SFunction("printString"),
+            SFunction("printString_ln"),
+            SFunction("clearString"),
+            SFunction("concatString_String"),
+            SFunction("concatString_Int"),
+            SFunction("concatString_Int_List"),
         ]
 
     def getVariables(self, sdict):
@@ -52,19 +51,19 @@ class SStd:
         if not self.useVariables:
             return []
 
-        stateNames = sdict["stateNames"]
+        stateNames = sdict["states"]
         initialState = stateNames.get(sdict["initialState"])
 
         return [
             # basic variables
-            sv("tmp"),
-            sv("?"),
-            sv("0"),
-            sv("1", 1),
-            sv("state", initialState),
+            SVariable("tmp"),
+            SVariable("?"),
+            SVariable("0"),
+            SVariable("1", 1),
+            SVariable("state", initialState),
 
             # timer
-            sv("millis"),
+            SVariable("millis"),
         ]
 
     def getCpp(self, identifier):

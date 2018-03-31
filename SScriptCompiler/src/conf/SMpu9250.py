@@ -1,6 +1,6 @@
 """Helper module for accessing functions."""
-from src.SFunction import SFunction as sf
-from src.SVariable import SVariable as sv
+from src.SFunction import SFunction
+from src.SVariable import SVariable
 
 
 class SMpu9250:
@@ -11,17 +11,17 @@ class SMpu9250:
     def getFunctions(self):
         """"Return a list of functions by mpu9250."""
         return [
-            sf("mpu_readSensor"),
-            sf("mpu_getAccelX_mss"),
-            sf("mpu_getAccelY_mss"),
-            sf("mpu_getAccelZ_mss"),
-            sf("mpu_getGyroX_rads"),
-            sf("mpu_getGyroY_rads"),
-            sf("mpu_getGyroZ_rads"),
-            sf("mpu_getMagX_uT"),
-            sf("mpu_getMagY_uT"),
-            sf("mpu_getMagZ_uT"),
-            sf("mpu_getTemperature_C")
+            SFunction("mpu_readSensor"),
+            SFunction("mpu_getAccelX_mss"),
+            SFunction("mpu_getAccelY_mss"),
+            SFunction("mpu_getAccelZ_mss"),
+            SFunction("mpu_getGyroX_rads"),
+            SFunction("mpu_getGyroY_rads"),
+            SFunction("mpu_getGyroZ_rads"),
+            SFunction("mpu_getMagX_uT"),
+            SFunction("mpu_getMagY_uT"),
+            SFunction("mpu_getMagZ_uT"),
+            SFunction("mpu_getTemperature_C")
         ]
 
     def getVariables(self, sdict):
@@ -35,25 +35,25 @@ class SMpu9250:
             # to be a list
             # sensor variables
             # accelerometer
-            sv("Accel_mss"),              # amplitude of [x,y,z]
-            sv("AccelX_mss"),             # amplitude in x-direction
-            sv("AccelZ_mss"),             # amplitude in z-direction
-            sv("AccelY_mss"),             # amplitude in y-direction
+            SVariable("Accel_mss"),              # amplitude of [x,y,z]
+            SVariable("AccelX_mss"),             # amplitude in x-direction
+            SVariable("AccelZ_mss"),             # amplitude in z-direction
+            SVariable("AccelY_mss"),             # amplitude in y-direction
 
             # gyroscope
-            sv("Gyro_rads"),
-            sv("GyroX_rads"),
-            sv("GyroY_rads"),
-            sv("GyroZ_rads"),
+            SVariable("Gyro_rads"),
+            SVariable("GyroX_rads"),
+            SVariable("GyroY_rads"),
+            SVariable("GyroZ_rads"),
 
             # magnetometer
-            sv("Mag_uT"),
-            sv("MagY_uT"),
-            sv("MagX_uT"),
-            sv("MagZ_uT"),
+            SVariable("Mag_uT"),
+            SVariable("MagY_uT"),
+            SVariable("MagX_uT"),
+            SVariable("MagZ_uT"),
 
             # temperature
-            sv("Temperature_C"),
+            SVariable("Temperature_C"),
         ]
 
     def firstVariable(self):
