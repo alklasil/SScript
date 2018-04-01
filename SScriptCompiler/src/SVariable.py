@@ -20,21 +20,6 @@ class SVariable:
     @staticmethod
     def create(variableNameValuePairs, states, confs, initialState="init"):
         """nameValuePairs -> [[variables(name, value)],[strings(name, value)]]."""
-
-        # if values are lists. Add list elements as individual variables
-        # [name, count] -> variableNameValuePairs += name[i]*count
-        _variableNameValuePairs = []
-        for variableNameValuePair in variableNameValuePairs:
-            if type(variableNameValuePair) is list:
-                for i in range(0, variableNameValuePair[1]):
-                    _s = variableNameValuePair[0] + "[" + str(i) + "]"
-                    _variableNameValuePairs.append(_s)
-            else:
-                _variableNameValuePairs.append(variableNameValuePair)
-            #_nvpss.append(_nvps)
-        variableNameValuePairs = _variableNameValuePairs
-
-        # a list of variables
         variables = []
         if confs is not None:
             # get variables from the configurations used

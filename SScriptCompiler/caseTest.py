@@ -37,14 +37,14 @@ def main(argv=[], confs=[SStd()]):
                 # (This is not necessary, you can use i directly in the sates,
                 #  but if the switch(equation) were more complex it is
                 #  recommended to do this way)
-                ["$=", "?", "i"],
-                #   case 0: i++
+                ["$=", "?", "i"], [
+                    # case 0: i++
                     ["$if", "?", "0", "$+", "i", "1", "$return"],
-                #   case 1: i++, i++ (just for test, faster ways exist)
+                    # case 1: i++, i++ (just for test, faster ways exist)
                     ["$if", "?", "1", "$+", "i", "1", "$+", "i", "1", "$return"],
-                #   default (i != 0 && i != 1, e.g., i == 3)
+                    # default (i != 0 && i != 1, e.g., i == 3)
                     ["$=", "i", "0"],
-                # }
+                ]
             ]),
 
         ])

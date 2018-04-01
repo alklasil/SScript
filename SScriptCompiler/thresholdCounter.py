@@ -73,7 +73,9 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                     "$=", "?", sensorString, "$<", "?", "tDOWN",
 
                     # if [?] state = "<t>" for processing
-                    "$if", "1", "?", "$=(const)=", "state", "@<t>",
+                    "$if", "1", "?", [
+                        "$=(const)=", "state", "@<t>"
+                    ],
                 ]
                 #["$printInt_ln", sensorString],
             ]),
@@ -102,7 +104,9 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                     "$=", "?", sensorString, "$>", "?", "tUP",
 
                     # if [?] state = "<t>" for processing
-                    "$if", "1", "?", "$=(const)=", "state", "@>t",
+                    "$if", "1", "?", [
+                        "$=(const)=", "state", "@>t"
+                    ],
 
                 ],
                 # ["$printInt_ln", sensorString]

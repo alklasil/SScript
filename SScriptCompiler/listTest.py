@@ -7,7 +7,9 @@ def main(argv=[], confs=[SStd()]):
     """Print 101 in loop."""
     # program
     p = program(
-        [["list1", 3]],
+        [
+            ["list1[" + str(i) + "]" for i in range(3)]
+        ],
         confs=confs,
         fps=None,
         initialState="init",

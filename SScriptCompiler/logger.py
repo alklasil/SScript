@@ -18,10 +18,12 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
         # variables (count & thresholds)
         [
             ("listLen", len(mpu9250.getVariables(None))),
-            ("AccelMultiplier", 10),
-            ("GyroMultiplier", 10),
-            ("MagnMultiplier", 10),
-            ("TemperatureMultiplier", 1),
+            [   # multipliers for sensors
+                ("AccelMultiplier", 10),
+                ("GyroMultiplier", 10),
+                ("MagnMultiplier", 10),
+                ("TemperatureMultiplier", 1),
+            ]
         ],
         [
             ("log", ""),
@@ -40,22 +42,22 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                     "$readTimer",
                     "$getTime", 'millis',
                     # sample
-                    "$mpu_readSensor",
-                    # Accel
-                    "$mpu_getAccelX_mss", "AccelX_mss", "AccelMultiplier",
-                    "$mpu_getAccelY_mss", "AccelY_mss", "AccelMultiplier",
-                    "$mpu_getAccelZ_mss", "AccelZ_mss", "AccelMultiplier",
-                    # Gyro
-                    "$mpu_getGyroX_rads", "GyroX_rads", "GyroMultiplier",
-                    "$mpu_getGyroY_rads", "GyroY_rads", "GyroMultiplier",
-                    "$mpu_getGyroZ_rads", "GyroZ_rads", "GyroMultiplier",
-                    # Magn
-                    "$mpu_getMagX_uT", "MagX_uT", "MagnMultiplier",
-                    "$mpu_getMagY_uT", "MagY_uT", "MagnMultiplier",
-                    "$mpu_getMagZ_uT", "MagZ_uT", "MagnMultiplier",
-                    # Temperature
-                    "$mpu_getTemperature_C", "Temperature_C", "TemperatureMultiplier",
-
+                    "$mpu_readSensor", [
+                        # Accel
+                        "$mpu_getAccelX_mss", "AccelX_mss", "AccelMultiplier",
+                        "$mpu_getAccelY_mss", "AccelY_mss", "AccelMultiplier",
+                        "$mpu_getAccelZ_mss", "AccelZ_mss", "AccelMultiplier",
+                        # Gyro
+                        "$mpu_getGyroX_rads", "GyroX_rads", "GyroMultiplier",
+                        "$mpu_getGyroY_rads", "GyroY_rads", "GyroMultiplier",
+                        "$mpu_getGyroZ_rads", "GyroZ_rads", "GyroMultiplier",
+                        # Magn
+                        "$mpu_getMagX_uT", "MagX_uT", "MagnMultiplier",
+                        "$mpu_getMagY_uT", "MagY_uT", "MagnMultiplier",
+                        "$mpu_getMagZ_uT", "MagZ_uT", "MagnMultiplier",
+                        # Temperature
+                        "$mpu_getTemperature_C", "Temperature_C", "TemperatureMultiplier",
+                    ],
                     # clear log_str
                     "$clearString", "#log",
 
@@ -64,11 +66,11 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                     "$concatString_String", "#log", "#space",
 
                     # sensor values -> val1 val2 val3 ... valn
-                    "$concatString_Int_List",
-                    "#log",
-                    mpu9250.lastVariable(),
-                    mpu9250.firstVariable(),
-
+                    "$concatString_Int_List", [
+                        "#log",                     # store in log
+                        mpu9250.lastVariable(),     # to (last element)
+                        mpu9250.firstVariable(),    # from (first element)
+                    ],
                     # print string
                     "$printString_ln", "#log"
 

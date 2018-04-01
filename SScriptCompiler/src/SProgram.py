@@ -25,7 +25,7 @@ class SProgram:
 
         print("")
         self.sConfs = confs
-        self.states = states
+        self.states = self.flattenList(states)
 
         """Set the program."""
 
@@ -46,7 +46,7 @@ class SProgram:
 
         # variables
         self.sVariables = SVariable.create(
-            variableNameValuePairs=variableNameValuePairs,
+            variableNameValuePairs=self.flattenList(variableNameValuePairs),
             states=self.sStates,
             confs=self.sConfs,
             initialState=initialState)
@@ -54,7 +54,7 @@ class SProgram:
         # strings
         self.sStrings = SList([
             SVariable(stringNameValuePair[0], stringNameValuePair[1])
-            for stringNameValuePair in stringNameValuePairs
+            for stringNameValuePair in self.flattenList(stringNameValuePairs)
         ])
 
         # Get functions from chosen configurations
@@ -92,6 +92,15 @@ class SProgram:
             print(self.compiled)
         return self.compiled
 
+    def flattenList(self, l):
+        l_flattened = []
+        for item in l:
+            if type(item) is list:
+                l_flattened.extend(self.flattenList(item))
+            else:
+                l_flattened.append(item)
+        return l_flattened
+
     def expr(self, l):
         """Enable simpler expression creation.
 
@@ -101,7 +110,7 @@ class SProgram:
         """
 
         expression = []
-        for element in l:
+        for element in self.flattenList(l):
             # print(element)
             if type(element) is str and element[0] == '$':
                 # function
