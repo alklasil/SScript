@@ -107,7 +107,7 @@ void _sdcard_loop() {
 // SSCRIPT
 
 void sdcard_open() {
-    FUNCTION_LEFT_PARSE
+    FUNCTION_LEFT_NOPARSE
 #if defined(ARDUINO)
     _sdcard_open(sScript->strings[*leftValue].c_str());
 #endif
@@ -115,7 +115,7 @@ void sdcard_open() {
 }
 
 void sdcard_reopen() {
-    FUNCTION_LEFT_PARSE
+    FUNCTION_LEFT_NOPARSE
 #if defined(ARDUINO)
     _sdcard_open(sScript->strings[*leftValue].c_str());
 #endif
@@ -123,16 +123,17 @@ void sdcard_reopen() {
 }
 
 void sdcard_write() {
-    FUNCTION_LEFT_PARSE
+    FUNCTION_LEFT_NOPARSE
 #if defined(ARDUINO)
     _sdcard_write(sScript->strings[*leftValue].c_str());
 #else
-    cout << sScript->strings[*leftValue].c_str();
+    cout << "(Store on sd-card:[" << sScript->strings[*leftValue].c_str() << "])";
 #endif
+   FUNCTION_END
 }
 
 void sdcard_readString() {
-    FUNCTION_LEFT_PARSE
+    FUNCTION_LEFT_NOPARSE
 #if defined(ARDUINO)
     _sdcard_readString(&sScript->strings[*leftValue]);
 #else

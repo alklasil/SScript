@@ -190,7 +190,7 @@ void concatString_String() {
 }
 
 void concatString_Int() {
-   FUNCTION_LEFT_PARSE_RIGHT_NOPARSE
+   FUNCTION_LEFT_NOPARSE_RIGHT_PARSE
    #if defined(ARDUINO)
       sScript->strings[*leftValue] += String(*rightValue);
    #else
