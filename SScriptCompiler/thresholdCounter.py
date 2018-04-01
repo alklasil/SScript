@@ -44,8 +44,6 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
             ("multiplier", multiplier)
         ],
         [
-            # HOX! there cannot be similarly named variables and strings
-            # count and _count are equal,
             ("count", " count: "),
             ("requestString", ""),
             ("logFile", logFile)
