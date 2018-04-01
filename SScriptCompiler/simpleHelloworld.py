@@ -25,7 +25,7 @@ def main(argv=[], confs=[SStd()]):
         #   (How to set fps for invidual states: See timerTest)
         #   (i.e., simple multithreading)
         confs=confs,
-        fps=None,
+        fps=60,
         # program (state, [expressions])
         states=[
             ("main", [

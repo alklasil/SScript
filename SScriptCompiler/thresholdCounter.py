@@ -83,7 +83,7 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
                     "$if", "1", "?", [
                         "$=(const)=", "state", "@<t>"
                     ],
-                ]
+                ],
                 #["$printInt_ln", sensorString],
             ]),
             ("<t>", [
