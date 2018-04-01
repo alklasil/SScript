@@ -144,8 +144,6 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
             ]),
             ("requestStringGeneratorState", [
                 [
-                    # format requestString
-                    "$printString_ln", "#requestString",
                     # set esp requestString
                     "$esp_setRequestString", [
                         "#requestString",
