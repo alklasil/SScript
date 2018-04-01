@@ -25,14 +25,14 @@ String *generateAndGetRequestString(){
 }
 
 void esp_setRequestString() {
-    FUNCTION_LEFT_PARSE
+    FUNCTION_LEFT_NOPARSE
     requestString = sScript->strings[*leftValue];
     FUNCTION_END
 }
 
 void esp_setRequestStringGenerator() {
-   int32_t *val = FUNCTION_ONE_PARSE;
+   FUNCTION_LEFT_NOPARSE;
    requestStringGeneratorSscript = sScript;
-   requestStringGeneratorStateNum = *val;
+   requestStringGeneratorStateNum = *leftValue;
    FUNCTION_END
 }
