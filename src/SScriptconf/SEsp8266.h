@@ -16,8 +16,11 @@ void esp_setRequestString();
 // share information (for example variable values, strings, etc, depending
 // on need.)
 void esp_setRequestStringGenerator();
+//void esp_setRequestStringHTML() {}
+void esp_setRequestStringHTMLWithTime();
 
 #define SESP_FUNCTIONS_ALL esp_setRequestString, \
-    esp_setRequestStringGenerator
+    esp_setRequestStringGenerator, \
+    esp_setRequestStringHTMLWithTime
 
 #endif
