@@ -5,8 +5,8 @@
 args:
     tUP = threshold up
     tDOWN = threshold down
-    sensorString = see src.conf.mpu9255 variables (all but amplitudes)
-        e.g. sensorString = "Temperature_C"
+    sensorIdentifier = see src.conf.mpu9255 variables (all but amplitudes)
+        e.g. sensorIdentifier = "Temperature_C"
     multiplier -> sensorValue *= multiplier when measurement
 
 example:
@@ -30,8 +30,10 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
     # TODO: better commandline argument parser
     tUP = int(argv[0])
     tDOWN = int(argv[1])
-    sensorString = argv[2]
+    sensorIdentifier = argv[2]
     multiplier = int(argv[3])
+    # set filename (logFile) for example to current time in milliseconds (millis)
+    #     This way you will be able to easily approximate the timings of events
     logFile = argv[4]
 
     # program
@@ -41,12 +43,16 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
             "count",
             ("tUP", tUP),
             ("tDOWN", tDOWN),
-            ("multiplier", multiplier)
+            ("multiplier", multiplier),
+            "configuration_millis",
+            "sample_millis",
+            "timeOffset_millis"
         ],
         [
-            ("count", " count: "),
+            ("space", " "),
             ("requestString", ""),
-            ("logFile", logFile)
+            ("logFile", logFile),
+            ("timeOffset_millis", "")
         ],
         confs=confs,
         fps=60,
@@ -58,9 +64,12 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
                 #   (Otherwise whis state is not required)
 
                 [
+                    # set configuration time
+                    "$getTime", "configuration_millis",
+
                     # set door open (closing does not add count)
                     "$=(const)=", "state", "@<t",
-                    "$printInt_ln", sensorString,
+                    "$printInt_ln", sensorIdentifier,
 
                     # set requestStringGenerator
                     "$esp_setRequestStringGenerator", [
@@ -74,17 +83,17 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
                     "$mpu_readSensor",
 
                     # get sensor value
-                    "$mpu_get" + sensorString, sensorString, "multiplier",
+                    "$mpu_get" + sensorIdentifier, sensorIdentifier, "multiplier",
 
                     # [?] = sensor value < tDOWN
-                    "$=", "?", sensorString, "$<", "?", "tDOWN",
+                    "$=", "?", sensorIdentifier, "$<", "?", "tDOWN",
 
                     # if [?] state = "<t>" for processing
                     "$if", "1", "?", [
                         "$=(const)=", "state", "@<t>"
                     ],
                 ],
-                #["$printInt_ln", sensorString],
+                #["$printInt_ln", sensorIdentifier],
             ]),
             ("<t>", [
                 # state = "opening the door",
@@ -93,15 +102,20 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
                     # increase count by one
                     "$+", "count", "1",
 
-                    # Generate string: time #count: count
+                    # Generate string: time count
                     [
-                        # clear
-                        "$clearString", "#requestString",
                         # time
-                        "$getTime", "millis",
-                        "$concatString_Int", "#requestString", "millis",
-                        # count string
-                        "$concatString_String", "#requestString", "#count",
+                        "$getTime", "sample_millis",
+                        # clear (requestString)
+                        "$clearString", "#requestString",
+                        # concat configuration time
+                        "$concatString_Int", "#requestString", "configuration_millis",
+                        # space
+                        "$concatString_String", "#requestString", "#space",
+                        # concat current time
+                        "$concatString_Int", "#requestString", "sample_millis",
+                        # space
+                        "$concatString_String", "#requestString", "#space",
                         # count integer
                         "$concatString_Int", "#requestString", "count",
                         # print
@@ -129,10 +143,10 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
                     "$mpu_readSensor",
 
                     # get sensor value
-                    "$mpu_get" + sensorString, sensorString, "multiplier",
+                    "$mpu_get" + sensorIdentifier, sensorIdentifier, "multiplier",
 
                     # [?] = sensor value < tDOWN
-                    "$=", "?", sensorString, "$>", "?", "tUP",
+                    "$=", "?", sensorIdentifier, "$>", "?", "tUP",
 
                     # if [?] state = "<t>" for processing
                     "$if", "1", "?", [
@@ -140,13 +154,26 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
                     ],
 
                 ],
-                # ["$printInt_ln", sensorString]
+                # ["$printInt_ln", sensorIdentifier]
             ]),
             ("requestStringGeneratorState", [
                 [
+                    # time
+                    "$readTimer",
+                    "$getTime", "millis",
+                    # timeOffset
+                    [
+                        # as int
+                        "$=", "timeOffset_millis", "millis",
+                        "$-", "timeOffset_millis", "sample_millis",
+                        # as string
+                        "$clearString", "#timeOffset_millis",
+                        # concat configuration time
+                        "$concatString_Int", "#timeOffset_millis", "timeOffset_millis",
+                    ],
                     # set esp requestString
-                    "$esp_setRequestString", [
-                        "#requestString",
+                    "$esp_setRequestStringHTMLWithTime", [
+                        "#requestString", "#timeOffset_millis"
                     ]
                 ]
             ]),

@@ -12,7 +12,8 @@ class SEsp8266:
         return [
             # basic operations
             SFunction("esp_setRequestString"),
-            SFunction("esp_setRequestStringGenerator")
+            SFunction("esp_setRequestStringGenerator"),
+            SFunction("esp_setRequestStringHTMLWithTime"),
         ]
 
     def getVariables(self, sdict):
