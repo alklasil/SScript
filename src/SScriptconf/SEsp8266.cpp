@@ -45,11 +45,14 @@ void esp_setRequestStringHTMLWithTime() {
    requestString = "";
    requestString += "<script>";
    requestString += "function f(o) {";
-   requestString += "    document.getElementById('s').innerHTML = new Date(new Date().getTime() - o) + ': ' + " + sScript->strings[*str] + ";";
+   requestString += "    document.getElementById('s').innerHTML = new Date(new Date().getTime() - o) + ': " + sScript->strings[*str] + ";'";
    requestString += "}";
    requestString += "</script>";
-   requestString += "<body onload='f('>" + sScript->strings[*timeOffset_millis] + ")'>";
+   requestString += "<body onload='f(" + sScript->strings[*timeOffset_millis] + ")'>";
    requestString += "<p id='s'>df</p>";
+
+   Serial.print("str:");
+   Serial.println(sScript->strings[*str]);
 
    FUNCTION_END
 }
