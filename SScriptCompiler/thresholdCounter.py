@@ -1,6 +1,4 @@
 """Increase count when value below threshold from above threshold.
-
-
 # TODO: better args comments
 args:
     tUP = threshold up
@@ -8,11 +6,14 @@ args:
     sensorIdentifier = see src.conf.mpu9255 variables (all but amplitudes)
         e.g. sensorIdentifier = "Temperature_C"
     multiplier -> sensorValue *= multiplier when measurement
-
 example:
-    python3 thresholdCounter.py 2 -2 GyroZ_rads 10
-
+    python3 thresholdCounter.py 2 -2 GyroZ_rads 10 log.txt
 # TODO: better filter function possibilities
+# TODO(FIX): why does this return Wed Apr 04 2018 00:44:33 GMT+0300 (EEST): ;
+        it should return Wed Apr 04 2018 00:44:33 GMT+0300 (EEST): x y z; where x, y, z are int32_t
+    * (either SScript or ESP propably not working exactly right)
+    * HOTFIX: either do not care, or use the version from history that worked
+      (before esp_setRequestStringHTMLWithTime)
 """
 
 import sys
