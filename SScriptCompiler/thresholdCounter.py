@@ -146,10 +146,10 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
                     # get sensor value
                     "$mpu_get" + sensorIdentifier, sensorIdentifier, "multiplier",
 
-                    # [?] = sensor value < tDOWN
+                    # [?] = sensor value > tUP
                     "$=", "?", sensorIdentifier, "$>", "?", "tUP",
 
-                    # if [?] state = "<t>" for processing
+                    # if [?] state = "t>"
                     "$if", "1", "?", [
                         "$=(const)=", "state", "@>t"
                     ],
@@ -169,7 +169,6 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
                         "$-", "timeOffset_millis", "sample_millis",
                         # as string
                         "$clearString", "#timeOffset_millis",
-                        # concat configuration time
                         "$concatString_Int", "#timeOffset_millis", "timeOffset_millis",
                     ],
                     # set esp requestString
