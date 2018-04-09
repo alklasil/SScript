@@ -3,7 +3,7 @@
 ### Compile
 
 ```bash
-python3 filename.py
+python3 -m examples.scriptname <arguments>
 ```
 
 
@@ -32,9 +32,9 @@ See for example: thresholdCounter.py for an example
 
 **Instead of using**
 ```bash
-python3 simpleHelloworld.py
-python3 sdcardTest.py
-python3 thresholdCounter.py 100 -100 GyroZ_rads 10
+python3 -m examples.simpleHelloworld
+python3 -m examples.sdcardTest
+python3 -m examples.thresholdCounter 100 -100 GyroZ_rads 10
 ```
 **which would result into**
 ```c++
@@ -71,9 +71,9 @@ $ python3
 >>> from src.conf.SStd import SStd
 >>> from src.conf.SMpu9250 import SMpu9250
 >>> from src.conf.SSdcard import SSdcard
->>> from simpleHelloworld import main as simpleHelloworldMain
->>> from sdcardTest import main as sdcardTestMain
->>> from thresholdCounter import main as thresholdCounterMain
+>>> from examples.simpleHelloworld import main as simpleHelloworldMain
+>>> from examples.sdcardTest import main as sdcardTestMain
+>>> from examples.thresholdCounter import main as thresholdCounterMain
 >>> simpleHelloworldMain(None, [SStd(), SMpu9250(False), SSdcard(False)])
 >>> sdcardTestMain(None, [SStd(), SMpu9250(False), SSdcard()])
 >>> thresholdCounterMain(['100', '-100', 'GyroZ_rads', '10'], [SStd(), SMpu9250(), SSdcard(False)])

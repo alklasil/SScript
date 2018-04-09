@@ -7,7 +7,7 @@ args:
         e.g. sensorIdentifier = "Temperature_C"
     multiplier -> sensorValue *= multiplier when measurement
 example:
-    python3 thresholdCounter.py 2 -2 GyroZ_rads 10 log.txt
+    python3 -m examples.thresholdCounter 2 -2 GyroZ_rads 10 log.txt
 # TODO: better filter function possibilities
 # TODO(FIX): why does this return Wed Apr 04 2018 00:44:33 GMT+0300 (EEST): ;
         it should return Wed Apr 04 2018 00:44:33 GMT+0300 (EEST): x y z; where x, y, z are int32_t
@@ -174,7 +174,7 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
                     # set esp requestString
                     "$esp_setRequestStringHTMLWithTime", [
                         "#requestString", "#timeOffset_millis"
-                    ]
+                    ],
                 ]
             ]),
         ])
