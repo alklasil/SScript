@@ -178,7 +178,7 @@ void printString_ln() {
 }
 
 void clearString() {
-   FUNCTION_LEFT_PARSE
+   FUNCTION_LEFT_NOPARSE
    sScript->strings[*leftValue] = "";
    FUNCTION_END
 }
