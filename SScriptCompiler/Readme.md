@@ -95,15 +95,27 @@ void(*functions[])() = {
 
 As longs as there are no if statements in consecutive expressions, the expressions can be merged.
 
-**Instead of**
+**Instead of (1)**
 ```
-["expr", [ "$readTimer" ]]
-["expr", [ "$getTime", 'millis' ]]
+("state", [
+   ["$readTimer" ],
+   ["$getTime", 'millis' ]
+)]
 ```
-**One might want to use**
+**One might want to use (2)**
 ```
-["expr", [
+("state", [
    "$readTimer",
    "$getTime", 'millis'
-]]
+)]
 ```
+**Or (3)**
+```
+("state", [
+   "$readTimer",
+   "$getTime", [
+      'millis'
+   ]
+)]
+```
+**As, 2 and 3 reduce memory & performance requirements.**
