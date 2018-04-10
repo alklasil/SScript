@@ -16,6 +16,7 @@ class SProgram:
                  initialState="main",
                  confs=[SStd()],
                  fps=60,
+                 isAddMain=True,
                  states=[]):
         """parse program states & state, expression pairs (program)."""
         # stateExpressionsTuples =
@@ -30,7 +31,7 @@ class SProgram:
         """Set the program."""
 
         # if there are more than 1 state, executeState is added automatically
-        if len(self.states) > 1:
+        if len(self.states) > 1 and isAddMain:
             self.addMain()
 
         # create variable for timeout if fps provided
