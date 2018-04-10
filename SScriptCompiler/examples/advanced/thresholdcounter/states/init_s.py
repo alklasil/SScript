@@ -1,8 +1,5 @@
 def init_s(sensorIdentifier):
     return ("init", [
-        # TODO: add sensor-configuring here
-        #   (Otherwise whis state is not required)
-
         [
             # set configuration time
             "$getTime", "configuration_millis",
