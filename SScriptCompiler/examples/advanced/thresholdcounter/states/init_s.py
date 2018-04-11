@@ -1,15 +1,12 @@
-def init_s(sensorIdentifier):
+def init_s(data):
     return ("init", [
-        # TODO: add sensor-configuring here
-        #   (Otherwise whis state is not required)
-
         [
             # set configuration time
             "$getTime", "configuration_millis",
 
             # set state initially below lower threshold
             "$=(const)=", "state", "@<t",
-            "$printInt_ln", sensorIdentifier,
+            "$printInt_ln", data['sensorIdentifier'],
 
             # set requestStringGenerator
             "$esp_setRequestStringGenerator", [

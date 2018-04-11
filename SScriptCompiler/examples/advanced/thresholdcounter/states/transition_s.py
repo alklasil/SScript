@@ -1,7 +1,5 @@
-def transition_s():
+def transition_s(data):
     return ("<t>", [
-        # state = "opening the door",
-        #   (do not execute when closing the door)
         [
             # increase count by one
             "$+", "count", "1",

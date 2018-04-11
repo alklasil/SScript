@@ -1,0 +1,9 @@
+{
+   "tUP": 2,
+   "tDOWN": -2,
+   "sensorIdentifier": "GyroZ_rads",
+   "multiplier": 10,
+   "logFile": "log.txt",
+   "fps":60,
+   "initialState":"init"
+}

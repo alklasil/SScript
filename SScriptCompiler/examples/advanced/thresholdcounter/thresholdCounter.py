@@ -1,18 +1,7 @@
-"""Increase count when value below threshold from above threshold.
-# TODO: better args comments
-args:
-    tUP = threshold up
-    tDOWN = threshold down
-    sensorIdentifier = see src.conf.mpu9255 variables (all but amplitudes)
-        e.g. sensorIdentifier = "Temperature_C"
-    multiplier -> sensorValue *= multiplier when measurement
-example:
-    stepcounter:
-        python3 -m examples.advanced.thresholdCounter 2 -2 GyroZ_rads 10 log.txt
-"""
-
-# commandline arguments
+"""Increase count when value goes below threshold from above threshold."""
+# 'std'
 import sys
+import json
 
 # SScript
 from src.SProgram import SProgram as program
@@ -31,43 +20,45 @@ from .states.lower_s import lower_s
 from .states.requestStringGenerator_s import requestStringGenerator_s
 
 # common
-from .common import parseCommandline
-from .common import programData
+from .common import variables
+from .common import strings
 
 
 def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
     """Increase count based on thresholding."""
-    # TODO: read variables, strings, etc from a json file/files
-    #       stepCounter.json,
-    #       doorCounter.json,
-    #       etc,
 
-    data = parseCommandline(argv)
-    data['confs'] = confs
+    # check if json file provided
+    if len(argv) is not 1:
+        print("usage: python3 -m examples.advanced.thresholdcounter.thresholdCounter 'examples/advanced/thresholdcounter/json/<file.json>'")
+        print("example: python3 -m examples.advanced.thresholdcounter.thresholdCounter 'examples/advanced/thresholdcounter/json/stepcounter.json'")
+        sys.exit(2)
+
+    # if json file provided, load it into data as dict
+    data = json.load(open(argv[0]))
 
     # program
     p = program(
         # initialize variables (see common.py)
-        **programData(data),
+        variableNameValuePairs=variables(data),
+        stringNameValuePairs=strings(data),
+        confs=confs,
+        fps=data['fps'],
+        initialState=data['initialState'],
         # set states (see states/*)
         states=[
-            # init (set values, handles, etc..)
+            # init state (set values & handles)
             [
-                init_s(data['sensorIdentifier']),
+                init_s(data),   # init
             ],
-            # main (measure, process, store)
+            # main states (measure & process & store)
             [
-                # value above upper threshold state
-                upper_s(data['sensorIdentifier']),
-                # transition state from above upper threshold to below lower threshold
-                transition_s(),
-                # value below lower threshold state
-                lower_s(data['sensorIdentifier']),
+                upper_s(data),          # value above upper threshold state
+                transition_s(data),     # transition from upper to lower state
+                lower_s(data),          # value below lower threshold state
             ],
-            # handles (not called internally)
+            # other (calls from c++)
             [
-                # generate requestString if esp receives get-request
-                requestStringGenerator_s(),
+                requestStringGenerator_s(data),     # generate requestString
             ]
         ])
     # compile and print the program

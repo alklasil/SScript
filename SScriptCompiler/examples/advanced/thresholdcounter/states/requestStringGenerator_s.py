@@ -1,4 +1,4 @@
-def requestStringGenerator_s():
+def requestStringGenerator_s(data):
     return ("requestStringGeneratorState", [
         [
             # time

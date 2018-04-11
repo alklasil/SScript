@@ -1,14 +1,14 @@
-def lower_s(sensorIdentifier):
+def lower_s(data):
     return ("<t", [
         [
             # read MPU
             "$mpu_readSensor",
 
             # get sensor value
-            "$mpu_get" + sensorIdentifier, sensorIdentifier, "multiplier",
+            "$mpu_get" + data['sensorIdentifier'], data['sensorIdentifier'], "multiplier",
 
             # [?] = sensor value > tUP
-            "$=", "?", sensorIdentifier, "$>", "?", "tUP",
+            "$=", "?", data['sensorIdentifier'], "$>", "?", "tUP",
 
             # if [?] state = "t>"
             "$if", "1", "?", [

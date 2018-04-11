@@ -1,14 +1,14 @@
-def upper_s(sensorIdentifier):
+def upper_s(data):
     return (">t", [
         [
             # read MPU
             "$mpu_readSensor",
 
             # get sensor value
-            "$mpu_get" + sensorIdentifier, sensorIdentifier, "multiplier",
+            "$mpu_get" + data['sensorIdentifier'], data['sensorIdentifier'], "multiplier",
 
             # [?] = sensor value < tDOWN
-            "$=", "?", sensorIdentifier, "$<", "?", "tDOWN",
+            "$=", "?", data['sensorIdentifier'], "$<", "?", "tDOWN",
 
             # if [?] state = "<t>" for processing
             "$if", "1", "?", [
