@@ -1,8 +1,6 @@
 #ifndef _SCONF_h
 #define _SCONF_h
 
-#include <cstdint>
-#include <cstdlib>
 #include <stdio.h>
 #include <string.h>
 #include <SScript.h>
