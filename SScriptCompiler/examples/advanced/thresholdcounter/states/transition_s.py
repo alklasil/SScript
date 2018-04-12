@@ -1,7 +1,7 @@
 def transition_s(data):
     return ("<t>", [
         [
-            # increase count by one
+            # increase count by 1
             "$+", "count", "1",
 
             # Generate string: time count

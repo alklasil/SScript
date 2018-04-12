@@ -12,7 +12,7 @@ def upper_s(data):
             readSensors(data),
 
             # compare sensors. store result in '?'
-            compareSensors(data),
+            compareSensors(data, "$<", 'tDOWN'),
 
             # if [?] state = "<t>" for processing
             "$if", "1", "?", [

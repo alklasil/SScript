@@ -1,8 +1,8 @@
 {
-   "tUP": 2,
-   "tDOWN": -2,
+   "tUP": 4,
+   "tDOWN": -4,
    "sensorIdentifier": "Gyro_rads",
-   "sensorFunction": "$maxXYZ",
+   "sensorFunction": "$sumXYZ",
    "multiplier": 10,
    "logFile": "log.txt",
    "fps":60,

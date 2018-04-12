@@ -27,8 +27,8 @@ def readSensors(data):
         return res
 
 
-def compareSensors(data):
+def compareSensors(data, operator, threshold):
     return [
         # [?] = sensor value > tUP
-        "$=", "?", data['sensorIdentifier'], "$>", "?", "tUP",
+        "$=", "?", data['sensorIdentifier'], operator, "?", threshold,
     ]

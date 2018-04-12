@@ -12,7 +12,7 @@ def lower_s(data):
             readSensors(data),
 
             # compare sensors. store result in '?'
-            compareSensors(data),
+            compareSensors(data, "$>", 'tUP'),
 
             # if [?] state = "t>"
             "$if", "1", "?", [
