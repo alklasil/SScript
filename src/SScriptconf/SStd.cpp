@@ -72,6 +72,15 @@ void maxXYZ() {
    FUNCTION_END
 }
 
+void sumXYZ() {
+   int32_t *storeHere = FUNCTION_ONE_PARSE
+   int32_t *x = storeHere + 1;
+   int32_t *y = storeHere + 2;
+   int32_t *z = storeHere + 3;
+   *storeHere = *x + *y + *z;
+   FUNCTION_END
+}
+
 // helpers
 void executeState() {
    FUNCTION_LEFT_PARSE

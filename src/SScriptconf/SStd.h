@@ -15,6 +15,7 @@ void gt();
 void eq();
 void neq();
 void maxXYZ();
+void sumXYZ();
 
 // helpers
 void executeState();
@@ -48,6 +49,7 @@ void concatString_Int_List();
     eq, \
     neq, \
     maxXYZ, \
+    sumXYZ, \
     /* helpers */ \
     executeState, \
     _if, \
