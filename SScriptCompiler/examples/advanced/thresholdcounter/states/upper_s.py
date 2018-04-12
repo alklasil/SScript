@@ -1,19 +1,22 @@
+from .common import readSensors
+from .common import compareSensors
+
+
 def upper_s(data):
     return (">t", [
         [
             # read MPU
             "$mpu_readSensor",
 
-            # get sensor value
-            "$mpu_get" + data['sensorIdentifier'], data['sensorIdentifier'], "multiplier",
+            # read sensors
+            readSensors(data),
 
-            # [?] = sensor value < tDOWN
-            "$=", "?", data['sensorIdentifier'], "$<", "?", "tDOWN",
+            # compare sensors. store result in '?'
+            compareSensors(data),
 
             # if [?] state = "<t>" for processing
             "$if", "1", "?", [
                 "$=(const)=", "state", "@<t>"
             ],
         ],
-        #["$printInt_ln", sensorIdentifier],
     ])

@@ -1,14 +1,18 @@
+from .common import readSensors
+from .common import compareSensors
+
+
 def lower_s(data):
     return ("<t", [
         [
             # read MPU
             "$mpu_readSensor",
 
-            # get sensor value
-            "$mpu_get" + data['sensorIdentifier'], data['sensorIdentifier'], "multiplier",
+            # read sensors
+            readSensors(data),
 
-            # [?] = sensor value > tUP
-            "$=", "?", data['sensorIdentifier'], "$>", "?", "tUP",
+            # compare sensors. store result in '?'
+            compareSensors(data),
 
             # if [?] state = "t>"
             "$if", "1", "?", [
@@ -16,5 +20,4 @@ def lower_s(data):
             ],
 
         ],
-        # ["$printInt_ln", sensorIdentifier]
     ])

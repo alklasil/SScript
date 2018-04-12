@@ -14,6 +14,7 @@ void lt();
 void gt();
 void eq();
 void neq();
+void maxXYZ();
 
 // helpers
 void executeState();
@@ -46,6 +47,7 @@ void concatString_Int_List();
     gt, \
     eq, \
     neq, \
+    maxXYZ, \
     /* helpers */ \
     executeState, \
     _if, \

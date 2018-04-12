@@ -51,8 +51,5 @@ void esp_setRequestStringHTMLWithTime() {
    requestString += "<body onload='f(" + sScript->strings[*timeOffset_millis] + ")'>";
    requestString += "<p id='s'>df</p>";
 
-   Serial.print("str:");
-   Serial.println(sScript->strings[*str]);
-
    FUNCTION_END
 }

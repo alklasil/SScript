@@ -24,6 +24,7 @@ class SStd:
             SFunction(">"),                # leftValue > rightValue
             SFunction("=="),               # leftValue == rightValue
             SFunction("!="),               # leftValue != rightValue
+            SFunction("maxXYZ"),           # max(x, y, z)
             # helper functions
             SFunction("executeState"),
             SFunction("if"),
