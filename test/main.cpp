@@ -45,18 +45,6 @@ int main(int argc, char* argv[])
       //sScript->set(buffer, _sScript[0].variables, _sScript[0].strings, _sScript[0].states);
      //}
   }
- /*
-for (int i = 0; i < 1; i++) {
-
-   sScript = &_sScript[i];
-   sScript->setFunctions(_functions);
-   strcpy(buffer, argv[i + 1]);
-   if (i == 0)
-    sScript->set(buffer);
-   else {
-    sScript->set(buffer, _sScript[0].variables, _sScript[0].strings, _sScript[0].states);
-   }
-}*/
 
   // HOX! when setting sScript. the buffer gets destroyed
   // If there is a change you may need to reuse the configuration,
