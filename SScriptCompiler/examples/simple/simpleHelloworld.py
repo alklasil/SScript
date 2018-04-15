@@ -3,31 +3,19 @@ from src.SProgram import SProgram as program
 from src.conf.SStd import SStd
 
 
-def main(argv=[], confs=[SStd()]):
-    print(confs)
-    """Print 'Hello world!' int(count) in a loop."""
-    # program
-    p = program(
-        variableNameValuePairs=[
-            # initialize count = 0
+def get_programData():
+    return {
+        "confs": [
+            SStd
+        ],
+        "variableNameValuePairs": [
             "count"
-            # initialize count = 1
-            # ("count", 1)
-            # create list("count", 3) (= count[0], count[1], count[2])
-            # ["count", 3]
         ],
-        # set strings
-        stringNameValuePairs=[
-            ("helloworld", "Hello world! "),
+        "stringNameValuePairs": [
+            ("helloworld", "Hello world! ")
         ],
-        # set frames/second = None == no fps limiter
-        # (used for testing)
-        #   (How to set fps for invidual states: See timerTest)
-        #   (i.e., simple multithreading)
-        confs=confs,
-        fps=60,
-        # program (state, [expressions])
-        states=[
+        "fps": 60,
+        "states": [
             ("main", [
                 [
                     # increase count by one
@@ -38,7 +26,13 @@ def main(argv=[], confs=[SStd()]):
                     "$printInt_ln", "count"
                 ],
             ])
-        ])
+        ]
+    }
+
+
+def main(argv=[], programData=get_programData()):
+    # program
+    p = program(**programData)
     # compile and print the program
     p.compile()
 

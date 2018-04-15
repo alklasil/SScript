@@ -6,6 +6,7 @@ from src.conf.SStd import SStd
 from src.SVariable import SVariable
 from src.SFunction import SFunction
 from src.SExpression import SExpression
+from .common import flattenList
 
 
 class SProgram:
@@ -14,7 +15,7 @@ class SProgram:
                  variableNameValuePairs=[],
                  stringNameValuePairs=[],
                  initialState="main",
-                 confs=[SStd()],
+                 confs=[SStd],
                  fps=60,
                  isAddMain=True,
                  states=[]):
@@ -25,8 +26,9 @@ class SProgram:
         print("INITIALIZING PROGRAM...")
 
         print("")
+        confs = [conf() for conf in confs]
         self.sConfs = confs
-        self.states = self.flattenList(states)
+        self.states = flattenList(states)
 
         """Set the program."""
 
@@ -47,7 +49,7 @@ class SProgram:
 
         # variables
         self.sVariables = SVariable.create(
-            variableNameValuePairs=self.flattenList(variableNameValuePairs),
+            variableNameValuePairs=flattenList(variableNameValuePairs),
             states=self.sStates,
             confs=self.sConfs,
             initialState=initialState)
@@ -55,7 +57,7 @@ class SProgram:
         # strings
         self.sStrings = SList([
             SVariable(stringNameValuePair[0], stringNameValuePair[1])
-            for stringNameValuePair in self.flattenList(stringNameValuePairs)
+            for stringNameValuePair in flattenList(stringNameValuePairs)
         ])
 
         # Get functions from chosen configurations
@@ -93,15 +95,6 @@ class SProgram:
             print(self.compiled)
         return self.compiled
 
-    def flattenList(self, l):
-        l_flattened = []
-        for item in l:
-            if type(item) is list:
-                l_flattened.extend(self.flattenList(item))
-            else:
-                l_flattened.append(item)
-        return l_flattened
-
     def expr(self, l):
         """Enable simpler expression creation.
 
@@ -111,7 +104,7 @@ class SProgram:
         """
 
         expression = []
-        for element in self.flattenList(l):
+        for element in flattenList(l):
             # print(element)
             if type(element) is str and element[0] == '$':
                 # function

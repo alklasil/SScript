@@ -3,14 +3,15 @@ from src.SProgram import SProgram as program
 from src.conf.SStd import SStd
 
 
-def main(argv=[], confs=[SStd()]):
-    """Print 0 1 3 0...."""
-    # program
-    p = program(
-        ["i"],
-        confs=confs,
-        # program (state, [expressions])
-        states=[
+def get_programData():
+    return {
+        "confs": [
+            SStd
+        ],
+        "variableNameValuePairs": [
+            "i"
+        ],
+        "states": [
             ("main", [
 
                 # synchronous execution
@@ -50,7 +51,13 @@ def main(argv=[], confs=[SStd()]):
                 ]
             ]),
 
-        ])
+        ]
+    }
+
+
+def main(argv=[], programData=get_programData()):
+    # program
+    p = program(**programData)
     # compile and print the program
     p.compile()
 

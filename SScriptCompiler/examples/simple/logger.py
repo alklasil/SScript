@@ -8,16 +8,14 @@ from src.conf.SStd import SStd
 from src.conf.SMpu9250 import SMpu9250
 
 
-def main(argv=[], confs=[SStd(), SMpu9250()]):
-    """Count steps."""
-    # program
-
-    mpu9250 = SMpu9250()
-
-    p = program(
-        # variables (count & thresholds)
-        [
-            ("listLen", len(mpu9250.getVariables(None))),
+def get_programData():
+    return {
+        "confs": [
+            SStd,
+            SMpu9250
+        ],
+        "variableNameValuePairs": [
+            ("listLen", len(SMpu9250().getVariables(None))),
             [   # multipliers for sensors
                 ("AccelMultiplier", 10),
                 ("GyroMultiplier", 10),
@@ -25,13 +23,12 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                 ("TemperatureMultiplier", 1),
             ]
         ],
-        [
+        "stringNameValuePairs": [
             ("log", ""),
             ("space", " ")
         ],
-        confs=confs,
-        fps=2,
-        states=[
+        "fps": 2,
+        "states": [
             ("main", [
                 # read mpu & get store values to respective variables
                 # The program can be expressed as 1 expression,
@@ -68,8 +65,8 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                     # sensor values -> val1 val2 val3 ... valn
                     "$concatString_Int_List", [
                         "#log",                     # store in log
-                        mpu9250.lastVariable(),     # to (last element)
-                        mpu9250.firstVariable(),    # from (first element)
+                        SMpu9250().lastVariable(),     # to (last element)
+                        SMpu9250().firstVariable(),    # from (first element)
                     ],
                     # print string
                     "$printString_ln", "#log"
@@ -80,7 +77,13 @@ def main(argv=[], confs=[SStd(), SMpu9250()]):
                 # TODO: store on sd-card
 
             ])
-        ])
+        ]
+    }
+
+
+def main(argv=[], programData=get_programData()):
+    # program
+    p = program(**programData)
     # compile and print the program
     p.compile()
 

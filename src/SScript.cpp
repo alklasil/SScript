@@ -21,13 +21,13 @@ SScript::SScript() {
 
 SScript::~SScript() {
 
-   if ( variables != NULL && _variables == NULL)
+   if ( variables != NULL && lastProvidedVariables == NULL)
       delete[] variables;
 
-   if ( strings != NULL && _strings == NULL)
+   if ( strings != NULL && lastProvidedStrings == NULL)
       delete[] strings;
 
-   if ( states != NULL && _states == NULL)
+   if ( states != NULL && lastProvidedStates == NULL)
       delete[] states;
 
 }
@@ -41,10 +41,14 @@ int32_t SScript::setFunctions(void(*(*_functions))()) {
 
 }
 
-int32_t SScript::set(char *buffer, int32_t *__variables, String *__strings, State *__states) {
+int32_t SScript::set(
+   char *buffer,
+   int32_t *providedVariables,
+   String *providedStrings,
+   State *providedStates) {
 
-    // if _variables == NULL, allocate new array -> remove if reconfiguration
-    //      same goes for _strings & _states
+    // if lastProvidedVariables == NULL, allocate new array -> remove if reconfiguration
+    //      same goes for lastProvidedStrings & lastProvidedStates
     DEBUG_PRINT("SScript::set");
 
     char *s = buffer;
@@ -53,17 +57,17 @@ int32_t SScript::set(char *buffer, int32_t *__variables, String *__strings, Stat
     variableCount = getInt();
     DEBUG_PRINT("variableCount:%d\n", variableCount);
     DEBUG_PRINT("delete[] variables\n");
-    if (variables != NULL && _variables == NULL) {
+    if (variables != NULL && lastProvidedVariables == NULL) {
         delete[] variables;
     }
     // DEBUG_PRINT(variableCount);
-    if (__variables == NULL) {
+    if (providedVariables == NULL) {
       variables = new int32_t[variableCount];
       for (int32_t i = 0; i < variableCount; i++) variables[i] = 0;
     } else {
       // IF shared variables with for example another SScript instance
       // TODO: check that the sizes match?
-      variables = __variables;
+      variables = providedVariables;
     }
     // initialize variables
     int32_t variablesToInitialize = getInt();
@@ -79,15 +83,15 @@ int32_t SScript::set(char *buffer, int32_t *__variables, String *__strings, Stat
     // allocate strings
     stringCount = getInt();
     DEBUG_PRINT("stringCount:%d\n", stringCount);
-    if ( strings != NULL && _strings == NULL) {
+    if ( strings != NULL && lastProvidedStrings == NULL) {
         delete[] strings;
     }
 
-    if (__strings == NULL) {
+    if (providedStrings == NULL) {
       strings = new String[stringCount];
       for (int32_t i = 0; i < stringCount; i++) strings[i] = String(" ");
     } else {
-      strings = __strings;
+      strings = providedStrings;
     }
     // initialize strings
     int32_t stringsToInitialize = getInt();
@@ -104,10 +108,10 @@ int32_t SScript::set(char *buffer, int32_t *__variables, String *__strings, Stat
     // allocate states
     stateCount = getInt();
     DEBUG_PRINT("stateCount: %d\n", stateCount);
-    if (states != NULL && _states == NULL) {
+    if (states != NULL && lastProvidedStates == NULL) {
         delete[] states;
     }
-    if (__states == NULL) {
+    if (providedStates == NULL) {
        states = new State[stateCount];
        // initialize states
        DEBUG_PRINT("Initialize states\n");
@@ -115,8 +119,8 @@ int32_t SScript::set(char *buffer, int32_t *__variables, String *__strings, Stat
            states[i].set(s);
        }
     } else {
-       states = __states;
-       DEBUG_PRINT("Initialize states (_states != NULL)\n");
+       states = providedStates;
+       DEBUG_PRINT("Initialize states (lastProvidedStates != NULL)\n");
        for (int32_t i = 0; i < stateCount; i++) {
            // if states[i].expressionCount == 0:
            //   the state is not modified
@@ -126,10 +130,11 @@ int32_t SScript::set(char *buffer, int32_t *__variables, String *__strings, Stat
        }
     }
 
-    // store _variables, _strings & _states for delete purposes
-    _variables = __variables;
-    _strings = __strings;
-    _states = __states;
+    // store lastProvidedVariables, lastProvidedStrings & lastProvidedStates
+    // for reconfiguration purposes
+    lastProvidedVariables = providedVariables;
+    lastProvidedStrings = providedStrings;
+    lastProvidedStates = providedStates;
 
 }
 

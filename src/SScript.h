@@ -24,24 +24,28 @@ public:
 
      int32_t stateCount;
      State *states;
-     State *_states;
+     State *lastProvidedStates;
 
      static SScript *sScript;
 
      int32_t variableCount;
      int32_t *variables;
-     int32_t *_variables;
+     int32_t *lastProvidedVariables;
 
      int32_t stringCount;
      String *strings;
-     String *_strings;
+     String *lastProvidedStrings;
 
      void(*(*functions))();
 
      SScript();
      ~SScript();
      int32_t setFunctions(void(*(*_functions))());
-     int32_t set(char *buffer, int32_t *_variables = NULL, String *_strings = NULL, State *_states = NULL);
+     int32_t set(
+        char *buffer,
+        int32_t *providedVariables = NULL,
+        String *providedStrings = NULL,
+        State *providedStates = NULL);
 
      void executeState(int32_t index);
      void loop();
@@ -51,7 +55,6 @@ public:
        if (*p < 0) p = &variables[-(*p)];
        return &variables[*p];
      }
-
 
      // helper variables
      int32_t millis_var;

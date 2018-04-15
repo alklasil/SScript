@@ -24,8 +24,10 @@ from .common import variables
 from .common import strings
 
 
-def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
-    """Increase count based on thresholding."""
+argv = sys.argv[1:]
+
+
+def get_programData(argv=argv):
 
     # check if json file provided
     if len(argv) is not 1:
@@ -36,16 +38,24 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
     # if json file provided, load it into data as dict
     data = json.load(open(argv[0]))
 
-    # program
-    p = program(
-        # initialize variables (see common.py)
-        variableNameValuePairs=variables(data),
-        stringNameValuePairs=strings(data),
-        confs=confs,
-        fps=data['fps'],
-        initialState=data['initialState'],
-        # set states (see states/*)
-        states=[
+    return {
+        "confs": [
+            SStd,
+            SMpu9250,
+            SEsp8266,
+            SSdcard
+        ],
+        "variableNameValuePairs": [
+            variables(data)
+        ],
+        "stringNameValuePairs": [
+            strings(data)
+        ],
+        "fps":
+            data['fps'],
+        "initialState":
+            data['initialState'],
+        "states": [
             # init state (set values & handles)
             [
                 init_s(data),   # init
@@ -60,11 +70,17 @@ def main(argv=[], confs=[SStd(), SMpu9250(), SEsp8266(), SSdcard()]):
             [
                 requestStringGenerator_s(data),     # generate requestString
             ]
-        ])
+        ]
+    }
+
+
+def main(argv=[], programData=get_programData()):
+    # program
+    p = program(**programData)
     # compile and print the program
     p.compile()
 
 
 if __name__ == "__main__":
     # execute only if run as a script
-    main(sys.argv[1:])
+    main(argv)
