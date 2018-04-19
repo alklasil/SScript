@@ -23,7 +23,7 @@ class SEsp8266:
     def getCpp(self, identifier):
         """Return c++ code related to this conf."""
         if identifier == "include":
-            return ['#include "SEsp8266"']
+            return ['#include <SEsp8266>']
         elif identifier == "functions_all":
             return ["SESP_FUNCTIONS_ALL"]
         return []

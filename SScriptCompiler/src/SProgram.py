@@ -92,7 +92,7 @@ class SProgram:
     def getCopiled(self, printIt=True):
         """Get the compiled program."""
         if printIt:
-            print(self.compiled)
+            print(self.compiled.get('compiled_str'))
         return self.compiled
 
     def expr(self, l):
