@@ -9,7 +9,7 @@ class SCompiler:
         self.data["compiled"] = []
         self.data["info"] = {}
 
-    def doInitializeElements(self, elements, defaultVal):
+    def doInitializeElements(self, elements, defaultVal, delimiter=None):
         # number of elements
         self.data["compiled"].append(elements.getLen())
         # count how many elements to initialize
@@ -22,13 +22,16 @@ class SCompiler:
         for i, element in enumerate(elements.getValue()):
             if element.getValue() != defaultVal:
                 self.data["compiled"].append(str(i))
-                self.data["compiled"].append(str(element.getValue()))
+                if delimiter is None:
+                    self.data["compiled"].append(str(element.getValue()))
+                else:
+                    self.data["compiled"].append(str(element.getValue()) + delimiter)
 
     def doInitializeVariables(self):
         self.doInitializeElements(self.p.sVariables, 0)
 
     def doInitializeStrings(self):
-        self.doInitializeElements(self.p.sStrings, "")
+        self.doInitializeElements(self.p.sStrings, "", ";")
 
     def doInitializeStates(self):
         # number of states
