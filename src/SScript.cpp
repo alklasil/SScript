@@ -51,7 +51,6 @@ void SScript::allocateVariables(int32_t *variablesMasterNew) {
    if (IS_VARIABLES_MASTER) delete[] variables;
 
    variableCount = getInt();
-   DEBUG_PRINT(variableCount);
    if (variablesMasterNew == NULL) {
      variables = new int32_t[variableCount];
      for (int32_t i = 0; i < variableCount; i++) variables[i] = 0;
