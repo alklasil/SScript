@@ -31,8 +31,8 @@ def get_programData(argv=argv):
 
     # check if json file provided
     if len(argv) is not 1:
-        print("usage: python3 -m examples.advanced.thresholdcounter.thresholdCounter 'examples/advanced/thresholdcounter/json/<file.json>'")
-        print("example: python3 -m examples.advanced.thresholdcounter.thresholdCounter 'examples/advanced/thresholdcounter/json/stepcounter.json'")
+        print("usage: python3 -m examples.thresholdcounter.thresholdCounter 'examples/thresholdcounter/json/<file.json>'")
+        print("example: python3 -m examples.thresholdcounter.thresholdCounter 'examples/thresholdcounter/json/stepcounter.json'")
         sys.exit(2)
 
     # if json file provided, load it into data as dict

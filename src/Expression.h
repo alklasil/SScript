@@ -3,12 +3,6 @@
 #ifndef _EXPRESSION_h
 #define _EXPRESSION_h
 
-//#if defined(ARDUINO) && ARDUINO >= 100
-//	#include "wprogram.h"
-//#elif defined(ARDUINO)
-//	#include "WProgram.h"
-//#endif
-
 #if defined(ARDUINO)
 	#include "Arduino.h"
 #endif

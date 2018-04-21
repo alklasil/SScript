@@ -22,30 +22,42 @@ class SScript
 
 public:
 
+     static SScript *sScript;
+
      int32_t stateCount;
      State *states;
-     State *lastProvidedStates;
-
-     static SScript *sScript;
+     State *statesMaster;
 
      int32_t variableCount;
      int32_t *variables;
-     int32_t *lastProvidedVariables;
+     int32_t *variablesMaster;
 
      int32_t stringCount;
      String *strings;
-     String *lastProvidedStrings;
+     String *stringsMaster;
 
      void(*(*functions))();
 
      SScript();
      ~SScript();
      int32_t setFunctions(void(*(*_functions))());
+
+     int32_t deAllocate();
+
+     void allocateVariables(int32_t *variablesMasterNew);
+     void initializeVariables();
+
+     void allocateStrings(String *stringsMasterNew);
+     void initializeStrings();
+
+     void allocateStates(State *statesMasterNew);
+     void initializeStates();
+
      int32_t set(
         char *buffer,
-        int32_t *providedVariables = NULL,
-        String *providedStrings = NULL,
-        State *providedStates = NULL);
+        int32_t *variablesMasterNew = NULL,
+        String *stringsMasterNew = NULL,
+        State *statesMasterNew = NULL);
 
      void executeState(int32_t index);
      void loop();
