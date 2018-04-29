@@ -15,9 +15,6 @@
 #include <SScriptconf\SEsp8266.h>
 #include <SScriptconf\SSdcard.h>
 
-#include "webServer.h"
-
-WebServer webServer;
 SScript _sScript;
 
 void(*functions[])() = {
@@ -35,30 +32,30 @@ void(*(*__functions))() = functions;
 
 void setup() {
   Serial.println("begin setup.");
-  
+
   // usb
   Serial.begin(9600);
-  
+
   // ESP
   Serial1.begin(115200);
   while (!Serial1) {}
-  webServer.setupWiFi();
-  
+  webserver_setup();
+
   // sd-card
   _sdcard_setupSdCard(15); // _chipSelect = 15
-  
+
   // SScript
   sScript = &_sScript;
   sScript->setFunctions(__functions);
-  
+
   Serial.println("end setup.");
 }
 
 void loop() {
   // get -> serve html page.
   // post -> configure.
-  webServer.loop();
-  
+  webserver_loop();
+
   // if configured, run configuration.
   sScript->loop();
 }
