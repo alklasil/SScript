@@ -16,6 +16,7 @@
 #define OKrn  "OK\r\n"
 #define BUFFER_SIZE 2048
 
+#if defined(ARDUINO)
 void webserver_setup();
 byte webserver_wait_for_esp_response(int timeout, char* term = (char *)("OK\r\n"));
 bool webserver_read_till_eol(int timeout);
@@ -23,6 +24,7 @@ void webserver_serve_page(int ch_id);
 void webserver_setupWiFi();
 void webserver_loop();
 void webserver_htmlRootPage(String *requestString);
+#endif
 
 String *generateAndGetRequestString();
 void esp_setRequestString();

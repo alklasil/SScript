@@ -3,13 +3,18 @@
 // external sources:
 //  * https://forum.pjrc.com/threads/27850-A-Guide-To-Using-ESP8266-With-TEENSY-3
 
+#if defined(ARDUINO)
 int bufferIndex;
 char *buffer;
 String header;
 String content;
+#endif
+
 String requestString;
 SScript *requestStringGeneratorSscript;
 int32_t requestStringGeneratorStateNum;
+
+#if defined(ARDUINO)
 
 void webserver_setup() {
     buffer = new char[BUFFER_SIZE];
@@ -201,6 +206,8 @@ void webserver_htmlRootPage(String *requestString)
     header += (int)(content.length());
     header += "\r\n\r\n";
 }
+
+#endif
 
 String *generateAndGetRequestString(){
 

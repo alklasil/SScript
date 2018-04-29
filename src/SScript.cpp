@@ -43,7 +43,7 @@ int32_t SScript::setFunctions(void(*(*_functions))()) {
 
 }
 
-void SScript::allocateVariables(int32_t *variablesMasterNew) {
+char * SScript::allocateVariables(int32_t *variablesMasterNew) {
 
    DEBUG_PRINT("variableCount:%d\n", variableCount);
    DEBUG_PRINT("delete[] variables\n");
@@ -60,9 +60,10 @@ void SScript::allocateVariables(int32_t *variablesMasterNew) {
 
    variablesMaster = variablesMasterNew;
 
+   return str;
 }
 
-void SScript::initializeVariables() {
+char * SScript::initializeVariables() {
 
    int32_t variablesToInitialize = getInt();
    DEBUG_PRINT("variablesToInitialize:%d\n", variablesToInitialize);
@@ -74,10 +75,11 @@ void SScript::initializeVariables() {
       }
    }
 
+   return str;
 }
 
 
-void SScript::allocateStrings(String *stringsMasterNew) {
+char * SScript::allocateStrings(String *stringsMasterNew) {
 
    DEBUG_PRINT("stringCount:%d\n", stringCount);
 
@@ -93,9 +95,10 @@ void SScript::allocateStrings(String *stringsMasterNew) {
 
    stringsMaster = stringsMasterNew;
 
+   return str;
 }
 
-void SScript::initializeStrings() {
+char * SScript::initializeStrings() {
 
    int32_t stringsToInitialize = getInt();
    DEBUG_PRINT("stringsToInitialize:%d\n", stringsToInitialize);
@@ -106,9 +109,10 @@ void SScript::initializeStrings() {
        }
    }
 
+   return str;
 }
 
-void SScript::allocateStates(State *statesMasterNew) {
+char * SScript::allocateStates(State *statesMasterNew) {
 
    DEBUG_PRINT("stateCount: %d\n", stateCount);
 
@@ -123,18 +127,23 @@ void SScript::allocateStates(State *statesMasterNew) {
 
    statesMaster = statesMasterNew;
 
+   return str;
 }
 
-void SScript::initializeStates() {
+char * SScript::initializeStates() {
 
    for (int32_t i = 0; i < stateCount; i++) {
        states[i].set(str);
    }
 
+   return str;
 }
 
+void SScript::setStr(char *buffer) {
+   str = buffer;
+}
 
-int32_t SScript::set(
+char * SScript::set(
     char *buffer,
     int32_t *variablesMasterNew,
     String *stringsMasterNew,
@@ -153,6 +162,7 @@ int32_t SScript::set(
     allocateStates(statesMasterNew);
     initializeStates();
 
+    return str;
 }
 
 void SScript::executeState(int32_t index) {

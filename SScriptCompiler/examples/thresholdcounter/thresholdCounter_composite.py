@@ -4,8 +4,8 @@ import sys
 from src.SComposite import SComposite
 
 # programData
-from examples.advanced.thresholdcounter.thresholdCounter import get_programData as thresholdCounter
-from examples.simple.logger import get_programData as logger
+from examples.thresholdcounter.thresholdCounter import get_programData as thresholdCounter
+from examples.logger import get_programData as logger
 
 
 argv = sys.argv[1:]
@@ -17,17 +17,13 @@ def get_compositeData(argv=argv):
     #       (current compositeData was used for testing)
 
     compositeData = {
-        "programData": {
-            "thresholdcounter": thresholdCounter(argv),
-            "logger": logger()
+        "thresholdcounter": {
+            'programData': thresholdCounter(argv)
         },
-        "shared": {
-            "variableNameValuePairs": [
-                ["thresholdcounter", "logger"]
-            ],
-            "confs": [
-                ["thresholdcounter", "logger"]
-            ]
+        "logger": {
+            'programData': logger(),
+            'variableNameValuePairs': 'thresholdcounter',
+            'confs': 'thresholdcounter'
         }
     }
 

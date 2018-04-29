@@ -44,16 +44,18 @@ public:
 
      int32_t deAllocate();
 
-     void allocateVariables(int32_t *variablesMasterNew);
-     void initializeVariables();
+     char * allocateVariables(int32_t *variablesMasterNew);
+     char * initializeVariables();
 
-     void allocateStrings(String *stringsMasterNew);
-     void initializeStrings();
+     char * allocateStrings(String *stringsMasterNew);
+     char * initializeStrings();
 
-     void allocateStates(State *statesMasterNew);
-     void initializeStates();
+     char * allocateStates(State *statesMasterNew);
+     char * initializeStates();
 
-     int32_t set(
+     void setStr(char *buffer);
+
+     char * set(
         char *buffer,
         int32_t *variablesMasterNew = NULL,
         String *stringsMasterNew = NULL,
