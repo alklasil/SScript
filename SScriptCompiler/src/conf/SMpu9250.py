@@ -37,8 +37,8 @@ class SMpu9250:
             # accelerometer
             SVariable("Accel_mss"),              # amplitude of [x,y,z]
             SVariable("AccelX_mss"),             # amplitude in x-direction
-            SVariable("AccelZ_mss"),             # amplitude in z-direction
             SVariable("AccelY_mss"),             # amplitude in y-direction
+            SVariable("AccelZ_mss"),             # amplitude in z-direction
 
             # gyroscope
             SVariable("Gyro_rads"),
@@ -48,8 +48,8 @@ class SMpu9250:
 
             # magnetometer
             SVariable("Mag_uT"),
-            SVariable("MagY_uT"),
             SVariable("MagX_uT"),
+            SVariable("MagY_uT"),
             SVariable("MagZ_uT"),
 
             # temperature

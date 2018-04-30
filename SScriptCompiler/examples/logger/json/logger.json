@@ -1,0 +1,30 @@
+{
+   "fps": 2,
+   "multipliers": {
+      "AccelMultiplier": 10,
+      "GyroMultiplier": 10,
+      "MagnMultiplier": 10,
+      "TemperatureMultiplier": 1
+   },
+   "variables": {},
+   "strings": {},
+   "getSensors": [
+      ["$mpu_getAccelX_mss", "AccelX_mss", "AccelMultiplier"],
+      ["$mpu_getAccelY_mss", "AccelY_mss", "AccelMultiplier"],
+      ["$mpu_getAccelZ_mss", "AccelZ_mss", "AccelMultiplier"],
+
+      ["$mpu_getGyroX_rads", "GyroX_rads", "GyroMultiplier"],
+      ["$mpu_getGyroY_rads", "GyroY_rads", "GyroMultiplier"],
+      ["$mpu_getGyroZ_rads", "GyroZ_rads", "GyroMultiplier"],
+
+      ["$mpu_getMagX_uT", "MagX_uT", "MagnMultiplier"],
+      ["$mpu_getMagY_uT", "MagY_uT", "MagnMultiplier"],
+      ["$mpu_getMagZ_uT", "MagZ_uT", "MagnMultiplier"],
+
+      ["$mpu_getTemperature_C", "Temperature_C", "TemperatureMultiplier"]
+   ],
+   "log": {
+      "from": "Accel_mss",
+      "to": "Temperature_C"
+   }
+}

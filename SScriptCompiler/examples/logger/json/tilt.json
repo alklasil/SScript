@@ -1,0 +1,20 @@
+{
+   "fps": 2,
+   "multipliers": {
+      "AccelMultiplier": 10
+   },
+   "variables": {
+      "tilt": ["roll", "pitch", "yaw"]
+   },
+   "strings": {},
+   "getSensors": [
+      ["$mpu_getAccelX_mss", "AccelX_mss", "AccelMultiplier"],
+      ["$mpu_getAccelY_mss", "AccelY_mss", "AccelMultiplier"],
+      ["$mpu_getAccelZ_mss", "AccelZ_mss", "AccelMultiplier"]
+   ],
+   "processSensors": "tilt",
+   "log": {
+      "from": "roll",
+      "to": "yaw"
+   }
+}
