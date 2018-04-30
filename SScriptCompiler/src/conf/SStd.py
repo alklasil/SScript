@@ -26,6 +26,8 @@ class SStd:
             SFunction("!="),               # leftValue != rightValue
             SFunction("maxXYZ"),           # leftValue = max(x, y, z)
             SFunction("sumXYZ"),           # leftValue = sum(x, y, z)
+            SFunction("atan2"),            # leftValue = atan2(in1, in2)
+            SFunction("sqrt"),             # leftValue = sqrt(in)
             # helper functions
             SFunction("executeState"),
             SFunction("if"),

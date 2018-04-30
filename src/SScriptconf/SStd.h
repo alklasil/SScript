@@ -16,6 +16,8 @@ void eq();
 void neq();
 void maxXYZ();
 void sumXYZ();
+void _atan2();
+void _sqrt();
 
 // helpers
 void executeState();
@@ -40,8 +42,8 @@ void concatString_Int_List();
 
 #define SSTD_FUNCTIONS_ALL add, \
     sub, \
-    div, \
     mul, \
+    div, \
     set, \
     set_const, \
     lt, \
@@ -50,6 +52,8 @@ void concatString_Int_List();
     neq, \
     maxXYZ, \
     sumXYZ, \
+    _atan2, \
+    _sqrt, \
     /* helpers */ \
     executeState, \
     _if, \

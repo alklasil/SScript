@@ -8,7 +8,27 @@ def readSensors(data):
 
 
 def tilt(data):
-    return []
+    return [
+        # roll (roll = atan2(y, z))
+        [
+            "$atan2", ["roll", "AccelY_mss", "AccelZ_mss"]
+        ],
+        # pitch (pitch = atan2(-x, sqrt(y*y + z*z)))
+        [
+            # "-x" = -AccelX_mss
+            "$=", "-x", "0", "$-", "-x", "AccelX_mss",
+            # y*y = AccelY_mss * AccelY_mss
+            "$=", "y*y", "AccelY_mss", "$*", "y*y", "AccelY_mss",
+            # z*z = AccelZ_mss * AccelZ_mss
+            "$=", "z*z", "AccelZ_mss", "$*", "z*z", "AccelZ_mss",
+            # y*y + z*z
+            "$=", "y*y + z*z", "y*y", "$+", "y*y + z*z", "z*z",
+            # sqrt(y*y + z*z) = sqrt(y*y + z*z)
+            "$sqrt", ["sqrt(y*y + z*z)", "y*y + z*z"],
+            # pitch =
+            "$atan2", ["roll", "-x", "sqrt(y*y + z*z)"]
+        ]
+    ]
 
 
 def processSensors(data):

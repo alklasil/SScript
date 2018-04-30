@@ -81,6 +81,21 @@ void sumXYZ() {
    FUNCTION_END
 }
 
+void _atan2() {
+   int32_t *storeHere = FUNCTION_ONE_PARSE
+   int32_t *in1 = FUNCTION_ONE_PARSE
+   int32_t *in2 = FUNCTION_ONE_PARSE
+   *storeHere = (int32_t)atan2(*in1, *in2);
+   FUNCTION_END
+}
+
+void _sqrt() {
+   int32_t *storeHere = FUNCTION_ONE_PARSE
+   int32_t *in = FUNCTION_ONE_PARSE
+   *storeHere = (int32_t)sqrt(*in);
+   FUNCTION_END
+}
+
 // helpers
 void executeState() {
    FUNCTION_LEFT_PARSE

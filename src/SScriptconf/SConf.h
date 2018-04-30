@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <SScript.h>
+#include <math.h>
+
 
 #define FUNCTION_LEFT_PARSE_RIGHT_PARSE \
    int32_t *leftValue = sScript->parseIndex(++sScript->element); \
